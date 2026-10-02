@@ -1,0 +1,35 @@
+:host {
+  display: grid;
+  min-height: 65dvh;
+  place-items: center;
+}
+
+.not-found {
+  width: min(36rem, calc(100% - 2rem));
+  padding-block: 4rem;
+  text-align: center;
+}
+
+.error-code {
+  color: var(--mc-accent);
+  font-size: clamp(4rem, 15vw, 8rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+h1 {
+  margin: 1rem 0;
+  color: var(--mc-text);
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+p {
+  margin: 0 auto 2rem;
+  color: var(--mc-secondary-text);
+  line-height: 1.7;
+}
+
+a {
+  background: var(--mc-accent) !important;
+  color: var(--mc-background) !important;
+}
