@@ -1,20 +1,113 @@
-<section class="page-container">
-  <span class="eyebrow">Fleet Management</span>
-  <h1>Catálogo de maquinaria</h1>
+<section class="catalog">
+  <header class="catalog-header">
+    <div>
+      <span class="eyebrow">Fleet Management</span>
+      <h1>Catálogo de maquinaria</h1>
+      <p>
+        Consulta maquinaria disponible, tarifas referenciales y ubicaciones
+        actualizadas.
+      </p>
+    </div>
 
-  <p>
-    Aquí podrás consultar la disponibilidad, categoría y tarifa de la
-    maquinaria registrada en MaquiControl.
-  </p>
+    <div class="catalog-summary" aria-label="Resumen del catálogo">
+      <div>
+        <strong>{{ store.machineryCount() }}</strong>
+        <span>equipos registrados</span>
+      </div>
+      <div>
+        <strong>{{ store.availableMachineryCount() }}</strong>
+        <span>disponibles</span>
+      </div>
+    </div>
+  </header>
 
-  <div class="placeholder-card">
-    <span aria-hidden="true">🏗️</span>
-    <h2>Catálogo en preparación</h2>
-    <p>
-      La consulta y filtrado de maquinaria se implementará en la siguiente
-      historia de usuario.
-    </p>
-  </div>
+  @if (store.loading()) {
+    <div class="state-message" role="status" aria-live="polite">
+      <span class="spinner" aria-hidden="true"></span>
+      <h2>Cargando maquinaria</h2>
+      <p>Estamos consultando la disponibilidad del catálogo.</p>
+    </div>
+  } @else if (store.error()) {
+    <div class="state-message error-message" role="alert">
+      <span class="state-icon" aria-hidden="true">!</span>
+      <h2>No pudimos cargar el catálogo</h2>
+      <p>
+        Verifica que la API simulada se encuentre ejecutándose en el puerto
+        3000.
+      </p>
+      <button mat-flat-button type="button" (click)="store.loadMachinery()">
+        Intentar nuevamente
+      </button>
+    </div>
+  } @else if (store.machineryCount() === 0) {
+    <div class="state-message">
+      <span class="state-icon" aria-hidden="true">0</span>
+      <h2>No hay maquinaria registrada</h2>
+      <p>El catálogo todavía no cuenta con equipos para mostrar.</p>
+    </div>
+  } @else {
+    <div class="machinery-grid">
+      @for (machinery of store.machinery(); track machinery.id) {
+        <article class="machinery-card">
+          <div class="card-heading">
+            <span class="machinery-icon material-symbols-outlined" aria-hidden="true">
+              construction
+            </span>
 
-  <a mat-stroked-button routerLink="/home">Volver al inicio</a>
+            <span
+              class="status"
+              [class]="machineryStatusClass(machinery.status)"
+            >
+              {{ machineryStatusLabel(machinery.status) }}
+            </span>
+          </div>
+
+          <div class="card-body">
+            <span class="machinery-type">
+              {{ machineryTypeLabel(machinery.type) }}
+            </span>
+
+            <h2>{{ machinery.name }}</h2>
+
+            <p class="description">{{ machinery.description }}</p>
+
+            <dl class="details">
+              <div>
+                <dt>Marca y modelo</dt>
+                <dd>{{ machinery.brand }} {{ machinery.model }}</dd>
+              </div>
+
+              <div>
+                <dt>Año</dt>
+                <dd>{{ machinery.manufactureYear }}</dd>
+              </div>
+
+              <div>
+                <dt>Ubicación</dt>
+                <dd>
+                  {{ machinery.location.district }},
+                  {{ machinery.location.department }}
+                </dd>
+              </div>
+            </dl>
+          </div>
+
+          <footer class="card-footer">
+            <div>
+              <span>Tarifa desde</span>
+              <strong>
+                S/
+                {{ machinery.hourlyRate.amount | number: '1.0-0' }}
+                <small>/ hora</small>
+              </strong>
+            </div>
+
+            <span class="currency">
+              {{ machinery.hourlyRate.currency }}
+            </span>
+          </footer>
+        </article>
+      }
+    </div>
+  }
 </section>
