@@ -1,0 +1,170 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Excavadoras"
+    },
+    {
+      "id": 2,
+      "name": "Retroexcavadoras"
+    },
+    {
+      "id": 3,
+      "name": "Cargadores"
+    },
+    {
+      "id": 4,
+      "name": "Grúas"
+    },
+    {
+      "id": 5,
+      "name": "Bulldozers"
+    }
+  ],
+  "machinery": [
+    {
+      "id": 1,
+      "ownerProfileId": 101,
+      "categoryId": 1,
+      "name": "Excavadora CAT 320",
+      "description": "Excavadora hidráulica para movimiento de tierra y trabajos de construcción.",
+      "type": "EXCAVATOR",
+      "brand": "Caterpillar",
+      "model": "320",
+      "manufactureYear": 2022,
+      "hourlyRate": {
+        "amount": 280,
+        "currency": "PEN"
+      },
+      "status": "AVAILABLE",
+      "location": {
+        "department": "Lima",
+        "province": "Lima",
+        "district": "Ate",
+        "address": "Av. Nicolás Ayllón 2450"
+      },
+      "createdAt": "2026-09-01T10:00:00Z",
+      "updatedAt": "2026-09-25T15:30:00Z"
+    },
+    {
+      "id": 2,
+      "ownerProfileId": 102,
+      "categoryId": 2,
+      "name": "Retroexcavadora JCB 3CX",
+      "description": "Equipo versátil para excavación, carga y trabajos urbanos.",
+      "type": "BACKHOE_LOADER",
+      "brand": "JCB",
+      "model": "3CX",
+      "manufactureYear": 2021,
+      "hourlyRate": {
+        "amount": 190,
+        "currency": "PEN"
+      },
+      "status": "AVAILABLE",
+      "location": {
+        "department": "Cusco",
+        "province": "Cusco",
+        "district": "San Sebastián",
+        "address": "Prolongación La Cultura 810"
+      },
+      "createdAt": "2026-09-03T09:15:00Z",
+      "updatedAt": "2026-09-26T11:20:00Z"
+    },
+    {
+      "id": 3,
+      "ownerProfileId": 103,
+      "categoryId": 3,
+      "name": "Cargador frontal Volvo L90H",
+      "description": "Cargador de alto rendimiento para manipulación de materiales.",
+      "type": "LOADER",
+      "brand": "Volvo",
+      "model": "L90H",
+      "manufactureYear": 2020,
+      "hourlyRate": {
+        "amount": 230,
+        "currency": "PEN"
+      },
+      "status": "RESERVED",
+      "location": {
+        "department": "Arequipa",
+        "province": "Arequipa",
+        "district": "Cerro Colorado",
+        "address": "Vía de Evitamiento 1250"
+      },
+      "createdAt": "2026-09-05T14:00:00Z",
+      "updatedAt": "2026-09-27T08:45:00Z"
+    },
+    {
+      "id": 4,
+      "ownerProfileId": 104,
+      "categoryId": 4,
+      "name": "Grúa Liebherr LTM 1050",
+      "description": "Grúa móvil para montaje industrial y elevación de cargas pesadas.",
+      "type": "CRANE",
+      "brand": "Liebherr",
+      "model": "LTM 1050-3.1",
+      "manufactureYear": 2019,
+      "hourlyRate": {
+        "amount": 420,
+        "currency": "PEN"
+      },
+      "status": "AVAILABLE",
+      "location": {
+        "department": "Callao",
+        "province": "Callao",
+        "district": "Ventanilla",
+        "address": "Av. Néstor Gambetta 620"
+      },
+      "createdAt": "2026-09-07T12:30:00Z",
+      "updatedAt": "2026-09-28T17:10:00Z"
+    },
+    {
+      "id": 5,
+      "ownerProfileId": 105,
+      "categoryId": 5,
+      "name": "Bulldozer Komatsu D65",
+      "description": "Tractor de orugas para nivelación y preparación de terrenos.",
+      "type": "BULLDOZER",
+      "brand": "Komatsu",
+      "model": "D65EX",
+      "manufactureYear": 2021,
+      "hourlyRate": {
+        "amount": 260,
+        "currency": "PEN"
+      },
+      "status": "RENTED",
+      "location": {
+        "department": "Piura",
+        "province": "Piura",
+        "district": "Castilla",
+        "address": "Carretera Piura-Chulucanas km 4"
+      },
+      "createdAt": "2026-09-09T16:20:00Z",
+      "updatedAt": "2026-09-29T10:00:00Z"
+    },
+    {
+      "id": 6,
+      "ownerProfileId": 106,
+      "categoryId": 1,
+      "name": "Excavadora Hyundai HX220L",
+      "description": "Excavadora de gran capacidad para obras viales y movimiento de tierras.",
+      "type": "EXCAVATOR",
+      "brand": "Hyundai",
+      "model": "HX220L",
+      "manufactureYear": 2018,
+      "hourlyRate": {
+        "amount": 210,
+        "currency": "PEN"
+      },
+      "status": "IN_MAINTENANCE",
+      "location": {
+        "department": "La Libertad",
+        "province": "Trujillo",
+        "district": "Moche",
+        "address": "Panamericana Norte km 558"
+      },
+      "createdAt": "2026-09-11T08:40:00Z",
+      "updatedAt": "2026-09-30T13:25:00Z"
+    }
+  ]
+}
