@@ -268,6 +268,27 @@ h1 {
   }
 }
 
+.publish-action {
+  align-self: center;
+  background: var(--mc-accent) !important;
+  color: var(--mc-background) !important;
+}
+
+.card-management {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0 1.5rem 1.25rem;
+}
+
+.card-management a {
+  border-color: var(--mc-border) !important;
+  color: var(--mc-text) !important;
+}
+
+.card-management button {
+  color: #fca5a5 !important;
+}
+
 @media (max-width: 800px) {
   .catalog-header {
     align-items: stretch;
@@ -281,5 +302,9 @@ h1 {
   .catalog-summary div {
     flex: 1;
     min-width: 0;
+  }
+
+  .publish-action {
+    align-self: stretch;
   }
 }

@@ -1,0 +1,142 @@
+<section class="form-screen">
+  <form class="form-card" [formGroup]="form" (ngSubmit)="performSave()">
+    <span class="eyebrow">Fleet Management</span>
+    <h1>{{ editingId ? 'Editar maquinaria' : 'Publicar maquinaria' }}</h1>
+
+    <label for="categoryId">Categoría</label>
+    <select id="categoryId" formControlName="categoryId">
+      <option [ngValue]="null" disabled>Selecciona una categoría</option>
+      @for (category of store.categories(); track category.id) {
+        <option [ngValue]="category.id">{{ category.name }}</option>
+      }
+    </select>
+    @if (form.controls.categoryId.touched && form.controls.categoryId.invalid) {
+      <span class="error-message">Selecciona una categoría.</span>
+    }
+    @if (store.categories().length === 0) {
+      <span class="error-message">No se pudieron cargar las categorías. Verifica que la API simulada esté corriendo.</span>
+    }
+
+    <label for="name">Nombre</label>
+    <input id="name" type="text" formControlName="name" />
+    @if (form.controls.name.touched && form.controls.name.invalid) {
+      <span class="error-message">El nombre es obligatorio.</span>
+    }
+
+    <label for="description">Descripción</label>
+    <textarea id="description" rows="3" formControlName="description"></textarea>
+    @if (form.controls.description.touched && form.controls.description.invalid) {
+      <span class="error-message">La descripción es obligatoria.</span>
+    }
+
+    <label for="type">Tipo</label>
+    <select id="type" formControlName="type">
+      @for (type of machineryTypes; track type) {
+        <option [ngValue]="type">{{ type }}</option>
+      }
+    </select>
+
+    <div class="field-row">
+      <div>
+        <label for="brand">Marca</label>
+        <input id="brand" type="text" formControlName="brand" />
+        @if (form.controls.brand.touched && form.controls.brand.invalid) {
+          <span class="error-message">Obligatorio.</span>
+        }
+      </div>
+
+      <div>
+        <label for="model">Modelo</label>
+        <input id="model" type="text" formControlName="model" />
+        @if (form.controls.model.touched && form.controls.model.invalid) {
+          <span class="error-message">Obligatorio.</span>
+        }
+      </div>
+    </div>
+
+    <label for="manufactureYear">Año de fabricación</label>
+    <input id="manufactureYear" type="number" formControlName="manufactureYear" />
+    @if (form.controls.manufactureYear.touched && form.controls.manufactureYear.invalid) {
+      <span class="error-message">Ingresa un año válido (desde 1900).</span>
+    }
+
+    <div class="field-row">
+      <div>
+        <label for="amount">Tarifa por hora</label>
+        <input id="amount" type="number" min="0" formControlName="amount" />
+        @if (form.controls.amount.touched && form.controls.amount.invalid) {
+          <span class="error-message">Ingresa una tarifa válida.</span>
+        }
+      </div>
+
+      <div>
+        <label for="currency">Moneda</label>
+        <select id="currency" formControlName="currency">
+          @for (currency of currencies; track currency) {
+            <option [ngValue]="currency">{{ currency }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <label for="status">Estado</label>
+    <select id="status" formControlName="status">
+      @for (status of machineryStatuses; track status) {
+        <option [ngValue]="status">{{ status }}</option>
+      }
+    </select>
+
+    <h2>Ubicación</h2>
+
+    <div class="field-row">
+      <div>
+        <label for="department">Departamento</label>
+        <input id="department" type="text" formControlName="department" />
+        @if (form.controls.department.touched && form.controls.department.invalid) {
+          <span class="error-message">Obligatorio.</span>
+        }
+      </div>
+
+      <div>
+        <label for="province">Provincia</label>
+        <input id="province" type="text" formControlName="province" />
+        @if (form.controls.province.touched && form.controls.province.invalid) {
+          <span class="error-message">Obligatorio.</span>
+        }
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div>
+        <label for="district">Distrito</label>
+        <input id="district" type="text" formControlName="district" />
+        @if (form.controls.district.touched && form.controls.district.invalid) {
+          <span class="error-message">Obligatorio.</span>
+        }
+      </div>
+
+      <div>
+        <label for="address">Dirección</label>
+        <input id="address" type="text" formControlName="address" />
+        @if (form.controls.address.touched && form.controls.address.invalid) {
+          <span class="error-message">Obligatorio.</span>
+        }
+      </div>
+    </div>
+
+    @if (form.invalid && form.touched) {
+      <span class="error-message">Revisa los campos marcados antes de guardar.</span>
+    }
+
+    @if (store.saveError()) {
+      <span class="error-message">{{ store.saveError() }}</span>
+    }
+
+    <div class="form-actions">
+      <a mat-stroked-button routerLink="/fleet/machinery">Cancelar</a>
+      <button mat-flat-button class="submit-action" type="submit" [disabled]="store.saving()">
+        {{ store.saving() ? 'Guardando…' : 'Guardar' }}
+      </button>
+    </div>
+  </form>
+</section>
