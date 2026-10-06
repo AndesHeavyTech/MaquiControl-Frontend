@@ -19,6 +19,10 @@
         <span>disponibles</span>
       </div>
     </div>
+
+    <a mat-flat-button class="publish-action" routerLink="/fleet/machinery/new">
+      Publicar maquinaria
+    </a>
   </header>
 
   @if (store.loading()) {
@@ -106,6 +110,15 @@
               {{ machinery.hourlyRate.currency }}
             </span>
           </footer>
+
+          <div class="card-management">
+            <a mat-stroked-button [routerLink]="['/fleet/machinery', machinery.id, 'edit']">
+              Editar
+            </a>
+            <button mat-button type="button" (click)="performDelete(machinery.id, machinery.name)">
+              Eliminar
+            </button>
+          </div>
         </article>
       }
     </div>

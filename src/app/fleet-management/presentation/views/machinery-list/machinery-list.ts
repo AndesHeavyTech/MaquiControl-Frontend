@@ -1,5 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { FleetManagementStore } from '../../../application/fleet-management-store';
 import { MachineryStatus } from '../../../domain/model/machinery-status';
@@ -7,7 +8,7 @@ import { MachineryType } from '../../../domain/model/machinery-type';
 
 @Component({
   selector: 'app-machinery-list',
-  imports: [DecimalPipe, MatButtonModule],
+  imports: [DecimalPipe, RouterLink, MatButtonModule],
   templateUrl: './machinery-list.html',
   styleUrl: './machinery-list.scss',
 })
@@ -41,5 +42,11 @@ export class MachineryList {
 
   protected machineryStatusClass(status: MachineryStatus): string {
     return status.toLowerCase().replaceAll('_', '-');
+  }
+
+  protected performDelete(id: number, name: string): void {
+    if (confirm(`¿Eliminar "${name}" del catálogo? Esta acción no se puede deshacer.`)) {
+      this.store.deleteMachinery(id);
+    }
   }
 }
