@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { Home } from './shared/presentation/views/home/home';
 import { MachineryList } from './fleet-management/presentation/views/machinery-list/machinery-list';
+import { MachineryForm } from './fleet-management/presentation/views/machinery-form/machinery-form';
 import { PageNotFound } from './shared/presentation/views/page-not-found/page-not-found';
 import { identityAccessGuard } from './identity-access-management/infrastructure/identity-access.guard';
 
@@ -25,6 +26,18 @@ export const routes: Routes = [
     path: 'fleet/machinery',
     component: MachineryList,
     title: 'Catálogo de maquinaria | MaquiControl',
+    canActivate: [identityAccessGuard],
+  },
+  {
+    path: 'fleet/machinery/new',
+    component: MachineryForm,
+    title: 'Publicar maquinaria | MaquiControl',
+    canActivate: [identityAccessGuard],
+  },
+  {
+    path: 'fleet/machinery/:id/edit',
+    component: MachineryForm,
+    title: 'Editar maquinaria | MaquiControl',
     canActivate: [identityAccessGuard],
   },
   {
