@@ -166,5 +166,33 @@
       "createdAt": "2026-09-11T08:40:00Z",
       "updatedAt": "2026-09-30T13:25:00Z"
     }
-  ]
+  ],
+  "roles": [
+    {
+      "id": 1,
+      "name": "CONTRACTOR",
+      "description": "Alquila maquinaria publicada por otros usuarios."
+    },
+    {
+      "id": 2,
+      "name": "FLEET_OWNER",
+      "description": "Publica y administra su propia maquinaria."
+    },
+    {
+      "id": 3,
+      "name": "FLEET_ADMINISTRATOR",
+      "description": "Administra la flota y el personal de una organización."
+    },
+    {
+      "id": 4,
+      "name": "OPERATOR",
+      "description": "Opera maquinaria en nombre de una organización."
+    },
+    {
+      "id": 5,
+      "name": "SYSTEM_ADMINISTRATOR",
+      "description": "Administra la plataforma MaquiControl."
+    }
+  ],
+  "user-accounts": []
 }
