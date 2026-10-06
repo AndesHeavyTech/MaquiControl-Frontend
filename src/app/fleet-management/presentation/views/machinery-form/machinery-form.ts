@@ -10,10 +10,9 @@ import { MachineryStatus } from '../../../domain/model/machinery-status';
 import { MachineryType } from '../../../domain/model/machinery-type';
 import { Currency, Money } from '../../../domain/model/money.value-object';
 
-/** A new machinery's id is assigned by the backend; `json-server` ignores
- *  whatever id is sent on create, ours just satisfies Machinery's
- *  constructor until the real one comes back in the response. */
-const DRAFT_ENTITY_ID = 1;
+/** Fallback owner reference while there is no Profiles bounded context yet
+ *  to resolve a real Profile id from the signed-in account. */
+const FALLBACK_OWNER_PROFILE_ID = 1;
 
 @Component({
   selector: 'app-machinery-form',
@@ -86,6 +85,19 @@ export class MachineryForm implements OnInit {
     });
   }
 
+  /**
+   * `json-server` respects an id sent on create and throws a 500 if it
+   * already exists in the collection (lodash-id's `insert()` rejects
+   * duplicates) — it only auto-assigns one when none is sent. Since
+   * `BaseAssembler`/`BaseResource` require every resource to carry an id,
+   * we compute the next free one from what's already loaded instead of
+   * leaving it out.
+   */
+  private nextMachineryId(): number {
+    const existingIds = this.store.machinery().map((machinery) => machinery.id);
+    return existingIds.length > 0 ? Math.max(...existingIds) + 1 : 1;
+  }
+
   protected performSave(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -95,8 +107,8 @@ export class MachineryForm implements OnInit {
     const value = this.form.getRawValue();
 
     const machinery = new Machinery({
-      id: this.editingId ?? DRAFT_ENTITY_ID,
-      ownerProfileId: this.#identityAccessStore.currentUserId() ?? DRAFT_ENTITY_ID,
+      id: this.editingId ?? this.nextMachineryId(),
+      ownerProfileId: this.#identityAccessStore.currentUserId() ?? FALLBACK_OWNER_PROFILE_ID,
       categoryId: value.categoryId!,
       name: value.name,
       description: value.description,
