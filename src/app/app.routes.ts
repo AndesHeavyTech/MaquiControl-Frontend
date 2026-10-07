@@ -3,6 +3,8 @@ import { Home } from './shared/presentation/views/home/home';
 import { MachineryList } from './fleet-management/presentation/views/machinery-list/machinery-list';
 import { MachineryForm } from './fleet-management/presentation/views/machinery-form/machinery-form';
 import { ProfilePage } from './profiles-management/presentation/views/profile-page/profile-page';
+import { RentalRequestPage } from './rental-management/presentation/views/rental-request-page/rental-request-page';
+import { ReservationList } from './rental-management/presentation/views/reservation-list/reservation-list';
 import { PageNotFound } from './shared/presentation/views/page-not-found/page-not-found';
 import { identityAccessGuard } from './identity-access-management/infrastructure/identity-access.guard';
 
@@ -45,6 +47,18 @@ export const routes: Routes = [
     path: 'profile',
     component: ProfilePage,
     title: 'Mi perfil | MaquiControl',
+    canActivate: [identityAccessGuard],
+  },
+  {
+    path: 'rental/request/:machineryId',
+    component: RentalRequestPage,
+    title: 'Solicitar alquiler | MaquiControl',
+    canActivate: [identityAccessGuard],
+  },
+  {
+    path: 'rental/reservations',
+    component: ReservationList,
+    title: 'Reservas | MaquiControl',
     canActivate: [identityAccessGuard],
   },
   {

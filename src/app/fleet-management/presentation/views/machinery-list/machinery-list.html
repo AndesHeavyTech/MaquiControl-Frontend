@@ -112,12 +112,19 @@
           </footer>
 
           <div class="card-management">
-            <a mat-stroked-button [routerLink]="['/fleet/machinery', machinery.id, 'edit']">
-              Editar
-            </a>
-            <button mat-button type="button" (click)="performDelete(machinery.id, machinery.name)">
-              Eliminar
-            </button>
+            @if (isOwner(machinery)) {
+              <span class="relation-tag">Tu maquinaria</span>
+              <a mat-stroked-button [routerLink]="['/fleet/machinery', machinery.id, 'edit']">
+                Editar
+              </a>
+              <button mat-button type="button" (click)="performDelete(machinery.id, machinery.name)">
+                Eliminar
+              </button>
+            } @else if (machinery.isAvailable()) {
+              <a mat-flat-button class="rent-action" [routerLink]="['/rental/request', machinery.id]">
+                Alquilar
+              </a>
+            }
           </div>
         </article>
       }
