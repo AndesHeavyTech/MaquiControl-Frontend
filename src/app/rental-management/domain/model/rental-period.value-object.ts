@@ -19,11 +19,17 @@ export class RentalPeriod {
     return this.#endDate;
   }
 
+  /**
+   * Inclusive, like `overlaps()`: a rental from the 7th to the 8th blocks
+   * both days for other contractors, so both days are billed (2, not 1).
+   * A same-day rental counts as 1 day.
+   */
   durationInDays(): number {
     const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
-    const days = Math.round((this.#endDate.getTime() - this.#startDate.getTime()) / MILLISECONDS_PER_DAY);
+    const toCalendarDay = (date: Date) => Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+    const days = Math.round((toCalendarDay(this.#endDate) - toCalendarDay(this.#startDate)) / MILLISECONDS_PER_DAY);
 
-    return Math.max(days, 1);
+    return Math.max(days + 1, 1);
   }
 
   overlaps(other: RentalPeriod): boolean {

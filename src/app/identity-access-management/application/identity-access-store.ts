@@ -2,10 +2,40 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { IdentityAccessApi } from '../infrastructure/identity-access-api';
 import { Role } from '../domain/model/role.entity';
+import { RoleName } from '../domain/model/role-name';
 import { SignInCommand } from '../domain/model/sign-in.command';
 import { SignUpCommand } from '../domain/model/sign-up.command';
 
 const TOKEN_STORAGE_KEY = 'mc-token';
+const SESSION_STORAGE_KEY = 'mc-session';
+
+/**
+ * What survives a page reload next to the token: without it a refresh, a new
+ * tab or a shared internal link would find `isSignedIn` back at `false` and
+ * send the user to the sign-in page.
+ */
+interface StoredSession {
+  email: string;
+  userId: number;
+  roleIds: number[];
+}
+
+function readStoredSession(): (StoredSession & { token: string }) | null {
+  try {
+    const token = localStorage.getItem(TOKEN_STORAGE_KEY);
+    const rawSession = localStorage.getItem(SESSION_STORAGE_KEY);
+    if (!token || !rawSession) {
+      return null;
+    }
+    const session = JSON.parse(rawSession) as StoredSession;
+    if (typeof session.email !== 'string' || typeof session.userId !== 'number' || !Array.isArray(session.roleIds)) {
+      return null;
+    }
+    return { ...session, token };
+  } catch {
+    return null;
+  }
+}
 
 @Injectable({
   providedIn: 'root',
@@ -45,7 +75,29 @@ export class IdentityAccessStore {
   );
 
   constructor() {
+    this.#restoreSession();
     this.loadRoles();
+  }
+
+  hasRole(roleName: RoleName): boolean {
+    return this.currentRoles().some((role) => role.name === roleName);
+  }
+
+  #restoreSession(): void {
+    const session = readStoredSession();
+    if (!session) {
+      this.#clearStoredSession();
+      return;
+    }
+    this.#isSignedIn.set(true);
+    this.#currentEmail.set(session.email);
+    this.#currentUserId.set(session.userId);
+    this.#currentRoleIds.set(session.roleIds);
+  }
+
+  #clearStoredSession(): void {
+    localStorage.removeItem(TOKEN_STORAGE_KEY);
+    localStorage.removeItem(SESSION_STORAGE_KEY);
   }
 
   loadRoles(): void {
@@ -88,6 +140,8 @@ export class IdentityAccessStore {
     this.#api.signIn(command).subscribe({
       next: (resource) => {
         localStorage.setItem(TOKEN_STORAGE_KEY, resource.token);
+        const session: StoredSession = { email: resource.email, userId: resource.id, roleIds: resource.roleIds };
+        localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(session));
         this.#isSignedIn.set(true);
         this.#currentEmail.set(resource.email);
         this.#currentUserId.set(resource.id);
@@ -107,7 +161,7 @@ export class IdentityAccessStore {
   }
 
   signOut(router: Router): void {
-    localStorage.removeItem(TOKEN_STORAGE_KEY);
+    this.#clearStoredSession();
     this.#isSignedIn.set(false);
     this.#currentEmail.set(null);
     this.#currentUserId.set(null);
