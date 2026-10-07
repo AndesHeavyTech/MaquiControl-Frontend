@@ -1,0 +1,25 @@
+<form class="hours-form" [formGroup]="form" (ngSubmit)="performSubmit()">
+  <h3>Registrar horas trabajadas</h3>
+
+  <div class="field-row">
+    <div>
+      <label for="workDate">Fecha</label>
+      <input id="workDate" type="date" formControlName="workDate" />
+    </div>
+    <div>
+      <label for="startTime">Inicio</label>
+      <input id="startTime" type="time" formControlName="startTime" />
+    </div>
+    <div>
+      <label for="endTime">Fin</label>
+      <input id="endTime" type="time" formControlName="endTime" />
+    </div>
+  </div>
+
+  <label for="observations">Observaciones (opcional)</label>
+  <input id="observations" type="text" formControlName="observations" />
+
+  <div class="form-actions">
+    <button mat-flat-button class="submit-action" type="submit">Registrar</button>
+  </div>
+</form>

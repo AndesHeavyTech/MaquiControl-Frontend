@@ -15,7 +15,7 @@ import { OrganizationForm } from '../organization-form/organization-form';
 })
 export class ProfilePage {
   protected readonly store = inject(ProfilesManagementStore);
-  readonly #identityAccessStore = inject(IdentityAccessStore);
+  protected readonly identityAccessStore = inject(IdentityAccessStore);
 
   /** Guards against the reactive patch effect overwriting what the user is typing. */
   private formPatched = false;
@@ -82,7 +82,7 @@ export class ProfilePage {
 
     const profile = new Profile({
       id: existingProfile?.id ?? this.nextProfileId(),
-      userAccountId: this.#identityAccessStore.currentUserId()!,
+      userAccountId: this.identityAccessStore.currentUserId()!,
       organizationId: existingProfile?.organizationId ?? null,
       firstName: value.firstName,
       lastName: value.lastName,

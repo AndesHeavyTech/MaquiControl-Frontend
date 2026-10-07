@@ -30,5 +30,6 @@ export class Layout {
     { link: '/fleet/machinery', label: 'Maquinaria' },
     { link: '/profile', label: 'Mi perfil' },
     { link: '/rental/reservations', label: 'Reservas' },
+    { link: '/maintenance', label: 'Mantenimiento' },
   ]);
 }

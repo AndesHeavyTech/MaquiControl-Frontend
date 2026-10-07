@@ -93,6 +93,10 @@
               }
             } @else if (rental.isActive() && (isMachineryOwner(rental) || isRequester(rental))) {
               <button mat-button type="button" (click)="performCancel(rental)">Cancelar</button>
+              @if (isRequester(rental)) {
+                <a mat-button [routerLink]="['/maintenance/report', rental.machineryId]">Reportar avería</a>
+              }
+              <a mat-button [routerLink]="['/operations', rental.id]">Ver operación</a>
             }
           </div>
         </article>

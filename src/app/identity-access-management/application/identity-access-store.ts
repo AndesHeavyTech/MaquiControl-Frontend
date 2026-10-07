@@ -1,6 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { IdentityAccessApi } from '../infrastructure/identity-access-api';
+import { Role } from '../domain/model/role.entity';
 import { SignInCommand } from '../domain/model/sign-in.command';
 import { SignUpCommand } from '../domain/model/sign-up.command';
 
@@ -16,6 +17,7 @@ export class IdentityAccessStore {
   readonly #currentEmail = signal<string | null>(null);
   readonly #currentUserId = signal<number | null>(null);
   readonly #currentRoleIds = signal<number[]>([]);
+  readonly #roles = signal<Role[]>([]);
   readonly #submitting = signal(false);
   readonly #error = signal<string | null>(null);
 
@@ -23,12 +25,39 @@ export class IdentityAccessStore {
   readonly currentEmail = this.#currentEmail.asReadonly();
   readonly currentUserId = this.#currentUserId.asReadonly();
   readonly currentRoleIds = this.#currentRoleIds.asReadonly();
+  readonly roles = this.#roles.asReadonly();
   readonly submitting = this.#submitting.asReadonly();
   readonly error = this.#error.asReadonly();
 
   readonly currentToken = computed(() =>
     this.isSignedIn() ? localStorage.getItem(TOKEN_STORAGE_KEY) : null,
   );
+
+  /**
+   * Roles are platform-defined reference data (see `RoleName`): loaded
+   * once, independently of sign-in, so they are available as soon as a
+   * `UserAccount`'s `roleIds` need to be labeled anywhere in the UI.
+   */
+  readonly currentRoles = computed(() =>
+    this.#currentRoleIds()
+      .map((id) => this.roleById(id))
+      .filter((role): role is Role => role !== undefined),
+  );
+
+  constructor() {
+    this.loadRoles();
+  }
+
+  loadRoles(): void {
+    this.#api.getRoles().subscribe({
+      next: (roles) => this.#roles.set(roles),
+      error: () => this.#roles.set([]),
+    });
+  }
+
+  roleById(id: number): Role | undefined {
+    return this.#roles().find((role) => role.id === id);
+  }
 
   /**
    * Sign-up and sign-in are POST/GET requests that create a record or start

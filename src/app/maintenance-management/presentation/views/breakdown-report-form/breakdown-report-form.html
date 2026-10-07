@@ -1,0 +1,39 @@
+<section class="form-screen">
+  <form class="form-card" [formGroup]="form" (ngSubmit)="performReport()">
+    <span class="eyebrow">Maintenance Management</span>
+    <h1>Reportar avería</h1>
+
+    @if (!machinery) {
+      <p class="hint">Cargando maquinaria…</p>
+    } @else {
+      <div class="machinery-summary">
+        <h2>{{ machinery.name }}</h2>
+        <p>{{ machinery.brand }} {{ machinery.model }}</p>
+      </div>
+
+      <label for="severity">Gravedad</label>
+      <select id="severity" formControlName="severity">
+        @for (severity of severities; track severity) {
+          <option [value]="severity">{{ severity }}</option>
+        }
+      </select>
+
+      <label for="description">Descripción de la falla</label>
+      <textarea id="description" rows="4" formControlName="description"></textarea>
+      @if (form.controls.description.touched && form.controls.description.invalid) {
+        <span class="error-message">Obligatorio.</span>
+      }
+
+      @if (store.saveError()) {
+        <span class="error-message">{{ store.saveError() }}</span>
+      }
+
+      <div class="form-actions">
+        <a mat-stroked-button routerLink="/fleet/machinery">Cancelar</a>
+        <button mat-flat-button class="submit-action" type="submit" [disabled]="store.saving()">
+          {{ store.saving() ? 'Enviando…' : 'Reportar avería' }}
+        </button>
+      </div>
+    }
+  </form>
+</section>

@@ -7,6 +7,14 @@
       identifica tus publicaciones y reservas dentro de MaquiControl.
     </p>
 
+    @if (identityAccessStore.currentRoles().length > 0) {
+      <div class="role-badges">
+        @for (role of identityAccessStore.currentRoles(); track role.id) {
+          <span class="role-badge">{{ role.description }}</span>
+        }
+      </div>
+    }
+
     @if (store.loading()) {
       <p class="hint">Cargando tu perfil…</p>
     } @else if (!store.currentProfile()) {
