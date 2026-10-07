@@ -22,15 +22,37 @@
       }
 
       <label for="startDate">{{ 'rental-request.start-date' | translate }}</label>
-      <input id="startDate" type="date" formControlName="startDate" />
+      <input
+        id="startDate"
+        type="date"
+        formControlName="startDate"
+        [min]="today"
+        [attr.aria-invalid]="form.controls.startDate.touched && form.controls.startDate.invalid"
+        aria-describedby="startDate-error"
+      />
       @if (form.controls.startDate.touched && form.controls.startDate.invalid) {
-        <span class="error-message">{{ 'common.required' | translate }}</span>
+        <span id="startDate-error" class="error-message" role="alert">
+          {{ (form.controls.startDate.hasError('pastDate') ? 'rental-request.past-date' : 'common.required') | translate }}
+        </span>
       }
 
       <label for="endDate">{{ 'rental-request.end-date' | translate }}</label>
-      <input id="endDate" type="date" formControlName="endDate" />
+      <input
+        id="endDate"
+        type="date"
+        formControlName="endDate"
+        [min]="form.controls.startDate.value || today"
+        [attr.aria-invalid]="form.controls.endDate.touched && (form.controls.endDate.invalid || form.hasError('endBeforeStart'))"
+        aria-describedby="endDate-error"
+      />
       @if (form.controls.endDate.touched && form.controls.endDate.invalid) {
-        <span class="error-message">{{ 'common.required' | translate }}</span>
+        <span id="endDate-error" class="error-message" role="alert">
+          {{ (form.controls.endDate.hasError('pastDate') ? 'rental-request.past-date' : 'common.required') | translate }}
+        </span>
+      } @else if (form.controls.endDate.touched && form.hasError('endBeforeStart')) {
+        <span id="endDate-error" class="error-message" role="alert">
+          {{ 'rental-request.end-before-start' | translate }}
+        </span>
       }
 
       @if (estimatedTotal(); as total) {
