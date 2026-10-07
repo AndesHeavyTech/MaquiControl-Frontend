@@ -7,7 +7,6 @@ import { Plan } from '../domain/model/plan.entity';
 import { Subscription } from '../domain/model/subscription.entity';
 import { SubscriptionManagementApi } from '../infrastructure/subscription-management-api';
 
-/** Where Mercado Pago sends the buyer back after paying (see `CheckoutResult`). */
 export const CHECKOUT_RESULT_PATH = '/plans/checkout-result';
 
 export type CheckoutOutcome = 'approved' | 'pending' | 'rejected';
@@ -46,7 +45,6 @@ export class SubscriptionManagementStore {
   constructor() {
     this.loadPlans();
 
-    // Subscriptions belong to the signed-in account: reload them whenever it changes.
     effect(() => {
       const userAccountId = this.#identityAccessStore.currentUserId();
       untracked(() => (userAccountId === null ? this.#subscriptions.set([]) : this.loadSubscriptions(userAccountId)));
@@ -86,11 +84,6 @@ export class SubscriptionManagementStore {
     return this.#plans().find((plan) => plan.id === id);
   }
 
-  /**
-   * US-042: records the subscription as pending payment, asks the platform
-   * API for a Mercado Pago checkout and leaves the app to pay there.
-   * Never retried: a retry could create a second subscription or checkout.
-   */
   subscribe(plan: Plan, checkoutTitle: string): void {
     const userAccountId = this.#identityAccessStore.currentUserId();
     if (userAccountId === null) {
@@ -100,7 +93,6 @@ export class SubscriptionManagementStore {
     this.#processing.set(true);
     this.#processError.set(null);
 
-    // json-server keeps the id it receives: a timestamp cannot collide with another owner's request.
     const subscription = Subscription.request({ id: Date.now(), userAccountId, planId: plan.id });
 
     this.#api
@@ -125,10 +117,6 @@ export class SubscriptionManagementStore {
       });
   }
 
-  /**
-   * Back from Mercado Pago: the payment is read again through the platform
-   * API, because the status in the return URL can be edited by anyone.
-   */
   confirmCheckout(paymentId: string | null): void {
     this.#checkoutOutcome.set(null);
     this.#processError.set(null);
@@ -170,7 +158,6 @@ export class SubscriptionManagementStore {
           throw new Error('The payment belongs to another account.');
         }
 
-        // Reloading this page must not activate it twice.
         if (subscription.isActive() && subscription.paymentId === payment.id) {
           return of<CheckoutOutcome>('approved');
         }
@@ -185,7 +172,6 @@ export class SubscriptionManagementStore {
     );
   }
 
-  /** The new plan replaces any plan the owner had active. */
   #activate(subscription: Subscription, paymentId: string): Observable<CheckoutOutcome> {
     const replaced = this.#subscriptions()
       .filter((other) => other.id !== subscription.id && other.isActive())

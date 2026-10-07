@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { FleetManagementStore } from '../../../../fleet-management/application/fleet-management-store';
+import { MachineryStatus } from '../../../../fleet-management/domain/model/machinery-status';
 import { ProfilesManagementStore } from '../../../../profiles-management/application/profiles-management-store';
 import { MaintenanceManagementStore } from '../../../application/maintenance-management-store';
 import { Maintenance } from '../../../domain/model/maintenance.entity';
@@ -32,7 +33,6 @@ export class MaintenanceSchedulePage {
     scheduledDate: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
   });
 
-  /** US-001/US-003: only the owner schedules maintenance on their own fleet. */
   protected get ownedMachinery() {
     const profile = this.#profilesManagementStore.currentProfile();
 
@@ -88,7 +88,9 @@ export class MaintenanceSchedulePage {
       return;
     }
 
-    this.store.startMaintenance(maintenance, technicianName.trim());
+    this.store.startMaintenance(maintenance, technicianName.trim(), () =>
+      this.fleetManagementStore.changeMachineryStatus(maintenance.machineryId, MachineryStatus.InMaintenance),
+    );
   }
 
   protected performComplete(maintenance: Maintenance): void {
@@ -104,6 +106,20 @@ export class MaintenanceSchedulePage {
       return;
     }
 
-    this.store.completeMaintenance(maintenance, new Money({ amount, currency: 'PEN' }));
+    this.store.completeMaintenance(maintenance, new Money({ amount, currency: 'PEN' }), () =>
+      this.#releaseMachinery(maintenance.machineryId),
+    );
+  }
+
+  #releaseMachinery(machineryId: number): void {
+    const stillInProgress = this.store
+      .maintenanceForMachinery(machineryId)
+      .some((maintenance) => maintenance.status === MaintenanceStatus.InProgress);
+
+    if (stillInProgress || !this.fleetManagementStore.machineryById(machineryId)?.isInMaintenance()) {
+      return;
+    }
+
+    this.fleetManagementStore.changeMachineryStatus(machineryId, MachineryStatus.Available);
   }
 }

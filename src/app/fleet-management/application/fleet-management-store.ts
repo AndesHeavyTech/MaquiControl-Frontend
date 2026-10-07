@@ -2,6 +2,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { finalize, retry } from 'rxjs';
 import { Category } from '../domain/model/category.entity';
 import { Machinery } from '../domain/model/machinery.entity';
+import { MachineryStatus } from '../domain/model/machinery-status';
 import { FleetManagementApi } from '../infrastructure/fleet-management-api';
 
 @Injectable({
@@ -72,17 +73,14 @@ export class FleetManagementStore {
     return this.#categories().find((category) => category.id === id);
   }
 
-  /** Machinery published under a category; a category in use cannot be deleted. */
   machineryCountByCategory(categoryId: number): number {
     return this.#machinery().filter((machinery) => machinery.categoryId === categoryId).length;
   }
 
-  /** Two categories cannot share a name; `exceptId` lets a category keep its own name. */
   isCategoryNameTaken(name: string, exceptId: number | null = null): boolean {
     return this.#categories().some((category) => category.id !== exceptId && category.hasName(name));
   }
 
-  /** Same reasoning as `MachineryForm.nextMachineryId()`: json-server keeps the id it receives. */
   #nextCategoryId(): number {
     const existingIds = this.#categories().map((category) => category.id);
     return existingIds.length > 0 ? Math.max(...existingIds) + 1 : 1;
@@ -141,7 +139,6 @@ export class FleetManagementStore {
     });
   }
 
-
   createMachinery(machinery: Machinery, onSuccess: () => void): void {
     this.#saving.set(true);
     this.#saveError.set(null);
@@ -172,6 +169,22 @@ export class FleetManagementStore {
         },
         error: (error: Error) => this.#saveError.set(error.message),
       });
+  }
+
+  changeMachineryStatus(machineryId: number, status: MachineryStatus): void {
+    const machinery = this.machineryById(machineryId);
+
+    if (!machinery || machinery.status === status) {
+      return;
+    }
+
+    this.#saveError.set(null);
+
+    this.#api.updateMachinery(machinery.withStatus(status), machineryId).subscribe({
+      next: (updated) =>
+        this.#machinery.set(this.#machinery().map((item) => (item.id === machineryId ? updated : item))),
+      error: (error: Error) => this.#saveError.set(error.message),
+    });
   }
 
   deleteMachinery(id: number): void {

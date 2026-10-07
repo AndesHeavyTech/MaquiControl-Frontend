@@ -82,23 +82,12 @@ export class MachineryForm implements OnInit {
     });
   }
 
-  /**
-   * `json-server` respects an id sent on create and throws a 500 if it
-   * already exists in the collection (lodash-id's `insert()` rejects
-   * duplicates) — it only auto-assigns one when none is sent. Since
-   * `BaseAssembler`/`BaseResource` require every resource to carry an id,
-   * we compute the next free one from what's already loaded instead of
-   * leaving it out.
-   */
   private nextMachineryId(): number {
     const existingIds = this.store.machinery().map((machinery) => machinery.id);
     return existingIds.length > 0 ? Math.max(...existingIds) + 1 : 1;
   }
 
   protected performSave(): void {
-    // `ownerProfileId` references Profiles Management's `Profile`, not the
-    // signed-in `UserAccount` directly (per the Fleet Management database
-    // diagram): without a profile there is no owner to publish under.
     const ownerProfile = this.#profilesManagementStore.currentProfile();
     if (this.form.invalid || !ownerProfile) {
       this.form.markAllAsTouched();

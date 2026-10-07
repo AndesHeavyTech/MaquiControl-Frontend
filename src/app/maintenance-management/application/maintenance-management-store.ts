@@ -57,9 +57,6 @@ export class MaintenanceManagementStore {
     return this.#maintenances().filter((maintenance) => maintenance.machineryId === machineryId);
   }
 
-  /** Same reasoning as `nextProfileId()`/`nextMachineryId()`: json-server
-   *  rejects a create whose id already exists, so the next free id is
-   *  computed client-side from what is already loaded. */
   private nextMaintenanceId(): number {
     const existingIds = this.#maintenances().map((maintenance) => maintenance.id);
     return existingIds.length > 0 ? Math.max(...existingIds) + 1 : 1;
@@ -103,7 +100,7 @@ export class MaintenanceManagementStore {
       });
   }
 
-  startMaintenance(maintenance: Maintenance, technicianName: string): void {
+  startMaintenance(maintenance: Maintenance, technicianName: string, onSuccess: () => void = () => {}): void {
     this.#saveError.set(null);
 
     const started = new Maintenance({
@@ -121,15 +118,17 @@ export class MaintenanceManagementStore {
     });
 
     this.#api.updateMaintenance(started, maintenance.id).subscribe({
-      next: (updated) =>
+      next: (updated) => {
         this.#maintenances.set(
           this.#maintenances().map((item) => (item.id === updated.id ? updated : item)),
-        ),
+        );
+        onSuccess();
+      },
       error: (error: Error) => this.#saveError.set(error.message),
     });
   }
 
-  completeMaintenance(maintenance: Maintenance, cost: Money): void {
+  completeMaintenance(maintenance: Maintenance, cost: Money, onSuccess: () => void = () => {}): void {
     this.#saveError.set(null);
 
     const completed = new Maintenance({
@@ -147,20 +146,16 @@ export class MaintenanceManagementStore {
     });
 
     this.#api.updateMaintenance(completed, maintenance.id).subscribe({
-      next: (updated) =>
+      next: (updated) => {
         this.#maintenances.set(
           this.#maintenances().map((item) => (item.id === updated.id ? updated : item)),
-        ),
+        );
+        onSuccess();
+      },
       error: (error: Error) => this.#saveError.set(error.message),
     });
   }
 
-  /**
-   * US-034 (reportar avería en obra): a contractor using a rented machine
-   * may not have an open `Maintenance` record yet, so reporting a
-   * breakdown creates a new CORRECTIVE one carrying the report, instead
-   * of requiring an existing record to attach to first.
-   */
   reportBreakdown(
     machineryId: number,
     report: { description: string; severity: BreakdownSeverity },

@@ -286,7 +286,8 @@
     "overlap": "Esta maquinaria ya tiene una reserva activa que se superpone con el periodo elegido.",
     "submit": "Solicitar alquiler",
     "past-date": "La fecha no puede estar en el pasado.",
-    "end-before-start": "La fecha de fin no puede ser anterior a la de inicio."
+    "end-before-start": "La fecha de fin no puede ser anterior a la de inicio.",
+    "not-available": "Esta máquina no está disponible para alquilar ahora (puede estar en mantenimiento o ya alquilada)."
   },
   "reservations": {
     "title": "Reservas",

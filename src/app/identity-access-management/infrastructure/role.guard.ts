@@ -5,11 +5,6 @@ import { filter, map, take } from 'rxjs';
 import { IdentityAccessStore } from '../application/identity-access-store';
 import { RoleName } from '../domain/model/role-name';
 
-/**
- * Lets the route through only when the signed-in account has one of
- * `allowedRoles`; anyone else is sent home. Roles come from the API after
- * startup, so on a reload the decision waits until they have been loaded.
- */
 export const roleGuard =
   (...allowedRoles: RoleName[]): CanActivateFn =>
   () => {

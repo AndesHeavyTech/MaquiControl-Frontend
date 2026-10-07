@@ -11,8 +11,6 @@ export interface WorkedHoursSubmission {
   observations: string | null;
 }
 
-/** "Worked Hours Form" per the Operations Management frontend component
- *  diagram: a dumb presentational component, the parent page owns the store. */
 @Component({
   selector: 'app-worked-hours-form',
   imports: [ReactiveFormsModule, MatButtonModule, TranslatePipe],
@@ -53,11 +51,6 @@ export class WorkedHoursForm {
     this.form.reset({ workDate: '', startTime: '', endTime: '', observations: '' });
   }
 
-  /** `WorkedHours.calculateHours()` per the class diagram: kept here, at
-   *  the point where raw start/end strings turn into a duration, since
-   *  that is a one-shot UI calculation rather than behaviour the
-   *  immutable `WorkedHours` entity carries (same convention as
-   *  `Rental`'s transitions, decided in the store, not on the entity). */
   private calculateHours(startTime: string, endTime: string): number {
     const [startHour, startMinute] = startTime.split(':').map(Number);
     const [endHour, endMinute] = endTime.split(':').map(Number);

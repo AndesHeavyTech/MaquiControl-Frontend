@@ -19,13 +19,6 @@ export class Credential {
     return this.#changedAt;
   }
 
-  /**
-   * Compares a plain-text password against this credential.
-   *
-   * The real backend hashes passwords before they ever reach here; while the
-   * frontend talks to the fake API this is a direct comparison, never a
-   * substitute for real hashing.
-   */
   matches(plainPassword: string): boolean {
     return this.#passwordHash === plainPassword;
   }

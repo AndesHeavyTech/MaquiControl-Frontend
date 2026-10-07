@@ -18,7 +18,6 @@ export class CategoryManagement {
   protected readonly store = inject(FleetManagementStore);
   readonly #translate = inject(TranslateService);
 
-  /** The category being renamed, if any: only one row is edited at a time. */
   protected readonly editingId = signal<number | null>(null);
 
   protected readonly newName = new FormControl('', {
@@ -35,7 +34,6 @@ export class CategoryManagement {
     ],
   });
 
-  // `ngSubmit` only fires on a form bound to a `FormGroup`.
   protected readonly createForm = new FormGroup({ name: this.newName });
   protected readonly editForm = new FormGroup({ name: this.editedName });
 

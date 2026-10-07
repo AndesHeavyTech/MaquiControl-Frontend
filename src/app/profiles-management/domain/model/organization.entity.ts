@@ -65,11 +65,6 @@ export class Organization implements BaseEntity {
     return this.#address;
   }
 
-  /**
-   * Peru's RUC (tax id) is 11 digits; other document numbers used as a
-   * fallback tax id are still numeric. Mirrors the backend's
-   * `isValidTaxId()` as a lightweight client-side check for the form.
-   */
   isValidTaxId(): boolean {
     return /^\d{8,20}$/.test(this.#taxId);
   }

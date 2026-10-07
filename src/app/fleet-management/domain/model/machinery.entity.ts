@@ -121,4 +121,26 @@ export class Machinery implements BaseEntity {
   isAvailable(): boolean {
     return this.#status === MachineryStatus.Available;
   }
+
+  isInMaintenance(): boolean {
+    return this.#status === MachineryStatus.InMaintenance;
+  }
+
+  withStatus(status: MachineryStatus): Machinery {
+    return new Machinery({
+      id: this.#id,
+      ownerProfileId: this.#ownerProfileId,
+      categoryId: this.#categoryId,
+      name: this.#name,
+      description: this.#description,
+      brand: this.#brand,
+      model: this.#model,
+      manufactureYear: this.#manufactureYear,
+      hourlyRate: this.#hourlyRate,
+      status,
+      location: this.#location,
+      createdAt: this.#createdAt,
+      updatedAt: new Date(),
+    });
+  }
 }

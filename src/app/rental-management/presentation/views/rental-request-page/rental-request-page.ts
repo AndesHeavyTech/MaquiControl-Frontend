@@ -12,7 +12,6 @@ import { Rental } from '../../../domain/model/rental.entity';
 import { RentalPeriod } from '../../../domain/model/rental-period.value-object';
 import { RentalStatus } from '../../../domain/model/rental-status';
 
-/** ISO dates compare correctly as strings, so no Date parsing is needed here. */
 function notBeforeToday(control: AbstractControl<string>): ValidationErrors | null {
   return control.value && control.value < RentalPeriod.todayIsoDate() ? { pastDate: true } : null;
 }
@@ -48,8 +47,6 @@ export class RentalRequestPage {
   );
 
   constructor() {
-    // Opening the URL directly (or reloading) arrives before the fleet is loaded,
-    // so only redirect once loading has finished and the machinery really is missing.
     effect(() => {
       if (!this.fleetManagementStore.loading() && !this.fleetManagementStore.machineryById(this.machineryId)) {
         this.#router.navigate(['/fleet/machinery']).then();
@@ -65,12 +62,6 @@ export class RentalRequestPage {
     return !!this.#profilesManagementStore.currentProfile();
   }
 
-  /**
-   * Cross-bounded-context translation: Fleet Management's `Money` and
-   * Rental Management's own `Money` are separate value objects (each
-   * context owns its model, per the class diagrams), so the boundary
-   * between them is this small conversion in the presentation layer.
-   */
   protected estimatedTotal(): Money | null {
     const machinery = this.machinery;
     const period = this.buildPeriod();
@@ -99,7 +90,6 @@ export class RentalRequestPage {
     }
   }
 
-  /** Same reasoning as `MachineryForm.nextMachineryId()`. */
   private nextRentalId(): number {
     const existingIds = this.store.rentals().map((rental) => rental.id);
     return existingIds.length > 0 ? Math.max(...existingIds) + 1 : 1;
@@ -115,7 +105,7 @@ export class RentalRequestPage {
     const profile = this.#profilesManagementStore.currentProfile();
     const period = this.buildPeriod();
 
-    if (!machinery || !profile || !period) {
+    if (!machinery || !machinery.isAvailable() || !profile || !period) {
       return;
     }
 

@@ -65,10 +65,6 @@ export class OperationsManagementStore {
     return existingIds.length > 0 ? Math.max(...existingIds) + 1 : 1;
   }
 
-  /** US-010 is triggered the first time hours are recorded for a rental
-   *  with no `ServiceOperation` yet: starting the operation and recording
-   *  the first entry happen together, same simplification already used
-   *  for `MaintenanceManagementStore.reportBreakdown()`. */
   startOperation(rentalId: number, machineryId: number, onSuccess: (created: ServiceOperation) => void): void {
     this.#saving.set(true);
     this.#saveError.set(null);
@@ -96,8 +92,6 @@ export class OperationsManagementStore {
       });
   }
 
-  /** US-010 "Registrar horas trabajadas": appends a PENDING entry that
-   *  the owner must later validate (US-011). */
   recordWorkedHours(
     operation: ServiceOperation,
     record: { workDate: Date; startTime: string; endTime: string; totalHours: number; observations: string | null },
@@ -128,8 +122,6 @@ export class OperationsManagementStore {
     this.persist(updated);
   }
 
-  /** US-011 "Validar horas trabajadas": the owner approves or rejects one
-   *  pending entry. */
   validateWorkedHours(operation: ServiceOperation, workedHoursId: number, approve: boolean): void {
     this.#saveError.set(null);
 

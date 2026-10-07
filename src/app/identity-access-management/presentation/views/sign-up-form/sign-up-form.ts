@@ -7,14 +7,8 @@ import { IdentityAccessStore } from '../../../application/identity-access-store'
 import { SignUpCommand } from '../../../domain/model/sign-up.command';
 import { RoleName } from '../../../domain/model/role-name';
 
-/**
- * The two roles a person can pick for themselves when signing up. The other
- * three (Fleet Administrator, Operator, System Administrator) are granted by
- * an organization or by the platform, never self-assigned.
- */
 const SELF_SERVICE_ROLES: RoleName[] = [RoleName.Contractor, RoleName.FleetOwner];
 
-/** `?role=` values the landing page links with, e.g. `/identity/sign-up?role=fleet-owner`. */
 const ROLE_QUERY_VALUES: Record<string, RoleName> = {
   contractor: RoleName.Contractor,
   'fleet-owner': RoleName.FleetOwner,

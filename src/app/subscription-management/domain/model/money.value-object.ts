@@ -1,7 +1,3 @@
-/**
- * Subscription Management keeps its own `Money`, like every other bounded
- * context, so a change in how plans are priced never ripples elsewhere.
- */
 export type Currency = 'PEN' | 'USD';
 
 export class Money {

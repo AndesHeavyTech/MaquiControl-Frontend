@@ -10,7 +10,6 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './terms-of-service.scss',
 })
 export class TermsOfService {
-  /** Keys under `terms.sections` in the i18n dictionaries, in reading order. */
   protected readonly sections = [
     'service',
     'accounts',

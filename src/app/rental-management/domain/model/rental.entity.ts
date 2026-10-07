@@ -3,8 +3,6 @@ import { Money } from './money.value-object';
 import { RentalPeriod } from './rental-period.value-object';
 import { RentalStatus } from './rental-status';
 
-/** One standard construction workday, used to translate an hourly rate
- *  into a rental total until EP-04 (horometer readings) is modelled. */
 const STANDARD_WORK_HOURS_PER_DAY = 8;
 
 export class Rental implements BaseEntity {
@@ -103,13 +101,6 @@ export class Rental implements BaseEntity {
     return this.#status === RentalStatus.Confirmed || this.#status === RentalStatus.InProgress;
   }
 
-  /**
-   * `calculateTotal()` per the class diagram, kept as an instance method
-   * operating on this rental's own period. Delegates to the static helper
-   * below so the same formula can also price a *draft* period before a
-   * `Rental` even exists yet (see `RentalRequestPage`), without needing a
-   * placeholder `totalAmount` just to construct one.
-   */
   calculateTotal(hourlyRate: Money): Money {
     return Rental.estimateTotal(this.#period, hourlyRate);
   }

@@ -35,10 +35,6 @@ export class IdentityAccessApi extends BaseApi {
     return this.#roleEndpoint.getAll();
   }
 
-  /**
-   * Only a 404 means the account is gone: a network error or a server
-   * that is still starting must not sign the user out.
-   */
   userAccountExists(id: number): Observable<boolean> {
     return this.http.get(`${environment.apiBaseUrl}/user-accounts/${id}`).pipe(
       map(() => true),

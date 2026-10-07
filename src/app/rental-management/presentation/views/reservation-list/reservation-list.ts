@@ -25,13 +25,6 @@ export class ReservationList {
     return this.#fleetManagementStore.machineryById(machineryId)?.name ?? this.#translate.instant('reservations.machinery-fallback', { id: machineryId });
   }
 
-  /**
-   * US-019 "Aprobar o rechazar reservas" is the fleet owner's job, not the
-   * contractor who made the request: confirming/rejecting is only offered
-   * to whoever owns the machinery being reserved (`Machinery.ownerProfileId`
-   * matching the signed-in user's own `Profile.id`), never to the
-   * requester themselves.
-   */
   protected isMachineryOwner(rental: Rental): boolean {
     const profile = this.#profilesManagementStore.currentProfile();
     const machinery = this.#fleetManagementStore.machineryById(rental.machineryId);
@@ -39,7 +32,6 @@ export class ReservationList {
     return !!profile && !!machinery && machinery.ownerProfileId === profile.id;
   }
 
-  /** The contractor who requested this specific rental. */
   protected isRequester(rental: Rental): boolean {
     const profile = this.#profilesManagementStore.currentProfile();
 

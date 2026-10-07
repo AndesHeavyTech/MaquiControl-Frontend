@@ -43,8 +43,6 @@ export class ServiceOperationPage implements OnInit {
     return this.store.operationByRentalId(this.rentalId);
   }
 
-  /** US-011: validating is the machinery owner's job, same ownership
-   *  pattern already used for confirming/rejecting a rental. */
   protected get isMachineryOwner(): boolean {
     const profile = this.#profilesManagementStore.currentProfile();
     const machinery = this.rental && this.fleetManagementStore.machineryById(this.rental.machineryId);
@@ -52,8 +50,6 @@ export class ServiceOperationPage implements OnInit {
     return !!profile && !!machinery && machinery.ownerProfileId === profile.id;
   }
 
-  /** US-010: recording hours is the contractor's job, as the one actually
-   *  operating the rented machine in the field. */
   protected get isContractor(): boolean {
     const profile = this.#profilesManagementStore.currentProfile();
     return !!profile && !!this.rental && this.rental.contractorProfileId === profile.id;

@@ -12,7 +12,6 @@ import { RoleName } from '../../../../identity-access-management/domain/model/ro
 interface NavigationOption {
   link: string;
   label: string;
-  /** Only these roles see the option; every signed-in user when omitted. */
   roles?: RoleName[];
 }
 

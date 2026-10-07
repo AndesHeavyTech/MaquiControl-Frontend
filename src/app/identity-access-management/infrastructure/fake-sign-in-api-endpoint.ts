@@ -9,12 +9,6 @@ import { SignInPort } from './sign-in.port';
 
 const userAccountsEndpointUrl = `${environment.apiBaseUrl}/user-accounts`;
 
-/**
- * Development-only adapter: `json-server` can create a record with POST
- * but it cannot verify a password, so sign-in here is a GET that filters
- * the `user-accounts` collection by email and by the (unhashed, dev-only)
- * password stored in `credential.passwordHash`. Never used in production.
- */
 export class FakeSignInApiEndpoint implements SignInPort {
   readonly #http = inject(HttpClient);
 

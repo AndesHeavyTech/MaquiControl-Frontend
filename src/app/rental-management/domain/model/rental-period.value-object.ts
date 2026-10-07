@@ -11,11 +11,6 @@ export class RentalPeriod {
     this.#endDate = props.endDate;
   }
 
-  /**
-   * Builds a period from `YYYY-MM-DD` strings (date inputs and the API).
-   * `new Date('2026-10-07')` is read as UTC midnight, which in Lima (UTC-5)
-   * is still the 6th, so the parts are read as a local calendar date instead.
-   */
   static fromIsoDates(startDate: string, endDate: string): RentalPeriod {
     return new RentalPeriod({
       startDate: RentalPeriod.parseIsoDate(startDate),
@@ -28,7 +23,6 @@ export class RentalPeriod {
     return new Date(year, month - 1, day);
   }
 
-  /** Local calendar date as `YYYY-MM-DD`; `toISOString()` would shift it to UTC. */
   static toIsoDate(date: Date): string {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
@@ -47,11 +41,6 @@ export class RentalPeriod {
     return this.#endDate;
   }
 
-  /**
-   * Inclusive, like `overlaps()`: a rental from the 7th to the 8th blocks
-   * both days for other contractors, so both days are billed (2, not 1).
-   * A same-day rental counts as 1 day.
-   */
   durationInDays(): number {
     const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
     const toCalendarDay = (date: Date) => Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());

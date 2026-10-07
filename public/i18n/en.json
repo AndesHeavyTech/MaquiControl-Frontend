@@ -286,7 +286,8 @@
     "overlap": "This machinery already has an active reservation that overlaps the selected period.",
     "submit": "Request rental",
     "past-date": "The date cannot be in the past.",
-    "end-before-start": "The end date cannot be before the start date."
+    "end-before-start": "The end date cannot be before the start date.",
+    "not-available": "This machine is not available for rent right now (it may be in maintenance or already rented)."
   },
   "reservations": {
     "title": "Reservations",

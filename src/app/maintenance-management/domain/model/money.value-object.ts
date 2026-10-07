@@ -1,9 +1,3 @@
-/**
- * Maintenance Management keeps its own `Money`, separate from Fleet's and
- * Rental's, per this context's own class diagram — only `add()` and
- * `isNonNegative()` are needed here (no `multiply()`: a repair cost is
- * entered directly by the technician, never derived from a rate).
- */
 export type Currency = 'PEN' | 'USD';
 
 export class Money {

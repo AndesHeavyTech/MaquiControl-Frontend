@@ -9,14 +9,6 @@ import { SignUpCommand } from '../domain/model/sign-up.command';
 const TOKEN_STORAGE_KEY = 'mc-token';
 const SESSION_STORAGE_KEY = 'mc-session';
 
-/**
- * What survives a page reload next to the token: without it a refresh would
- * find `isSignedIn` back at `false` and send the user to the sign-in page.
- *
- * Kept in `sessionStorage`, not `localStorage`: it survives a reload (F5)
- * but is discarded when the tab or browser is closed, so reopening the app
- * always starts signed out.
- */
 interface StoredSession {
   email: string;
   userId: number;
@@ -45,11 +37,6 @@ function readStoredSession(): (StoredSession & { token: string }) | null {
 })
 export class IdentityAccessStore {
   readonly #api = inject(IdentityAccessApi);
-  /**
-   * `Router` is read lazily: injecting it here creates a cycle at startup
-   * (Router -> title strategy -> translations HTTP request -> auth
-   * interceptor -> this store -> Router).
-   */
   readonly #injector = inject(Injector);
 
   readonly #isSignedIn = signal(false);
@@ -66,7 +53,6 @@ export class IdentityAccessStore {
   readonly currentUserId = this.#currentUserId.asReadonly();
   readonly currentRoleIds = this.#currentRoleIds.asReadonly();
   readonly roles = this.#roles.asReadonly();
-  /** `true` once the roles request has finished, successfully or not. */
   readonly rolesLoaded = this.#rolesLoaded.asReadonly();
   readonly submitting = this.#submitting.asReadonly();
   readonly error = this.#error.asReadonly();
@@ -75,11 +61,6 @@ export class IdentityAccessStore {
     this.isSignedIn() ? sessionStorage.getItem(TOKEN_STORAGE_KEY) : null,
   );
 
-  /**
-   * Roles are platform-defined reference data (see `RoleName`): loaded
-   * once, independently of sign-in, so they are available as soon as a
-   * `UserAccount`'s `roleIds` need to be labeled anywhere in the UI.
-   */
   readonly currentRoles = computed(() =>
     this.#currentRoleIds()
       .map((id) => this.roleById(id))
@@ -89,9 +70,6 @@ export class IdentityAccessStore {
   constructor() {
     this.#restoreSession();
 
-    // HTTP calls go through `identityAccessInterceptor`, which injects this
-    // store: issued inside the constructor they fail with a circular
-    // dependency (NG0200), so they wait until construction has finished.
     queueMicrotask(() => {
       this.#validateRestoredAccount();
       this.loadRoles();
@@ -107,7 +85,6 @@ export class IdentityAccessStore {
   }
 
   #restoreSession(): void {
-    // Sessions saved by earlier versions in `localStorage` would never expire.
     localStorage.removeItem(TOKEN_STORAGE_KEY);
     localStorage.removeItem(SESSION_STORAGE_KEY);
 
@@ -122,7 +99,6 @@ export class IdentityAccessStore {
     this.#currentRoleIds.set(session.roleIds);
   }
 
-  /** The account may have been deleted since the session was saved (e.g. the fake API was reseeded). */
   #validateRestoredAccount(): void {
     const userId = this.#currentUserId();
     if (userId === null) {
@@ -158,12 +134,6 @@ export class IdentityAccessStore {
     return this.#roles().find((role) => role.id === id);
   }
 
-  /**
-   * Sign-up and sign-in are POST/GET requests that create a record or start
-   * a session: unlike `FleetManagementStore.loadMachinery()`, they are never
-   * retried automatically, a transient-failure retry on sign-up could create
-   * a duplicate account.
-   */
   signUp(command: SignUpCommand, router: Router): void {
     this.#submitting.set(true);
     this.#error.set(null);
@@ -193,8 +163,6 @@ export class IdentityAccessStore {
         this.#currentEmail.set(resource.email);
         this.#currentUserId.set(resource.id);
         this.#currentRoleIds.set(resource.roleIds);
-        // Roles fail to load when the API was down as the app started;
-        // without them the role-based menu and actions would stay hidden.
         if (this.#roles().length === 0) {
           this.loadRoles();
         }

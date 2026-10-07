@@ -11,11 +11,6 @@ import { SignInPort } from './sign-in.port';
 
 const signInEndpointUrl = `${environment.apiBaseUrl}/authentication/sign-in`;
 
-/**
- * Real adapter: posts the credentials to the backend's authentication
- * endpoint. Used in production, where the backend can actually verify a
- * password hash and issue a session token.
- */
 export class SignInApiEndpoint extends ErrorHandlingEnabledBaseType implements SignInPort {
   readonly #http = inject(HttpClient);
   readonly #assembler = new SignInAssembler();

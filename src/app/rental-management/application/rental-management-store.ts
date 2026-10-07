@@ -72,25 +72,12 @@ export class RentalManagementStore {
     return this.#rentals().filter((rental) => rental.machineryId === machineryId);
   }
 
-  /**
-   * Mirrors `RentalRepository.existsOverlappingRental()` from the class
-   * diagram, enforcing US-005 (evitar reservas duplicadas): a client-side
-   * check against what's already loaded, same simplification already
-   * used for `nextMachineryId()`/`nextProfileId()` — one json-server
-   * instance, no concurrent-write race to guard against here.
-   */
   hasOverlappingActiveRental(machineryId: number, period: RentalPeriod): boolean {
     return this.rentalsForMachinery(machineryId).some(
       (rental) => BLOCKING_STATUSES.includes(rental.status) && rental.period.overlaps(period),
     );
   }
 
-  /**
-   * Create is never retried automatically, same reasoning as every other
-   * mutating call in this app (`FleetManagementStore`, `IdentityAccessStore`,
-   * `ProfilesManagementStore`): retrying after a transient failure could
-   * duplicate the request.
-   */
   requestRental(rental: Rental, onSuccess: () => void): void {
     this.#saving.set(true);
     this.#saveError.set(null);

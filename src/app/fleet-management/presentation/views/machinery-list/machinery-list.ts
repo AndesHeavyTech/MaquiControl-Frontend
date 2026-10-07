@@ -22,19 +22,14 @@ export class MachineryList {
   readonly #identityAccessStore = inject(IdentityAccessStore);
   readonly #translate = inject(TranslateService);
 
-  /** Only fleet owners publish machinery and only contractors rent it. */
   protected readonly canPublish = computed(() => this.#identityAccessStore.hasRole(RoleName.FleetOwner));
   protected readonly canRent = computed(() => this.#identityAccessStore.hasRole(RoleName.Contractor));
 
-  /** Renting your own published machinery makes no sense: compare
-   *  `Machinery.ownerProfileId` against the signed-in user's own
-   *  `Profile.id`, same relationship `ReservationList` uses. */
   protected isOwner(machinery: Machinery): boolean {
     const profile = this.#profilesManagementStore.currentProfile();
     return !!profile && machinery.ownerProfileId === profile.id;
   }
 
-  /** The category replaces the old fixed machinery type enum. */
   protected categoryName(machinery: Machinery): string {
     return this.store.categoryById(machinery.categoryId)?.name ?? '';
   }

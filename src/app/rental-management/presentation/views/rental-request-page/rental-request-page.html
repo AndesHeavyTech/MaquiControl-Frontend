@@ -14,6 +14,10 @@
         </p>
       </div>
 
+      @if (!machinery.isAvailable()) {
+        <p class="error-message" role="alert">{{ 'rental-request.not-available' | translate }}</p>
+      }
+
       @if (!profileExists) {
         <p class="error-message">
           {{ 'rental-request.profile-required' | translate }}
@@ -78,7 +82,7 @@
           mat-flat-button
           class="submit-action"
           type="submit"
-          [disabled]="store.saving() || !profileExists"
+          [disabled]="store.saving() || !profileExists || !machinery.isAvailable()"
         >
           {{ (store.saving() ? 'common.sending' : 'rental-request.submit') | translate }}
         </button>
