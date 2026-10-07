@@ -113,3 +113,20 @@ textarea:focus-visible {
     grid-template-columns: 1fr;
   }
 }
+
+.role-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1.25rem;
+}
+
+.role-badge {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--mc-border);
+  border-radius: 999px;
+  background: rgb(245 158 11 / 12%);
+  color: var(--mc-accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
