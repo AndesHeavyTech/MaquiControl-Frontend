@@ -194,5 +194,40 @@
       "description": "Administra la plataforma MaquiControl."
     }
   ],
-  "user-accounts": []
+  "user-accounts": [
+    {
+      "email": "hola123@upc.edu.pe",
+      "credential": {
+        "passwordHash": "contraseña",
+        "changedAt": "2026-10-07T04:03:05.004Z"
+      },
+      "status": "ACTIVE",
+      "roleIds": [
+        1
+      ],
+      "createdAt": "2026-10-07T04:03:05.004Z",
+      "lastLoginAt": null,
+      "id": 1
+    }
+  ],
+  "organizations": [],
+  "profiles": [
+    {
+      "id": 1,
+      "userAccountId": 1,
+      "organizationId": null,
+      "firstName": "Carlos Gabriel",
+      "lastName": "Cespedes Lezcano",
+      "documentNumber": "12345678",
+      "contactInformation": {
+        "phoneNumber": "912852275",
+        "secondaryEmail": "u202416147@upc.edu.pe",
+        "address": "Sochin 841, Mangomarca San Juan de Lurigancho",
+        "district": "SJL",
+        "city": "Lima"
+      },
+      "createdAt": "2026-10-07T04:04:13.747Z",
+      "updatedAt": "2026-10-07T04:04:13.747Z"
+    }
+  ]
 }
