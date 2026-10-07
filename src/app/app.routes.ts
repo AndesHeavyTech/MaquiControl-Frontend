@@ -11,6 +11,7 @@ import { ServiceOperationPage } from './operations-management/presentation/views
 import { PageNotFound } from './shared/presentation/views/page-not-found/page-not-found';
 import { TermsOfService } from './shared/presentation/views/terms-of-service/terms-of-service';
 import { identityAccessGuard } from './identity-access-management/infrastructure/identity-access.guard';
+import { Plans } from './shared/presentation/views/plans/plans';
 
 const identityAccessManagementRoutes = () =>
   import('./identity-access-management/presentation/identity-access-management.routes').then(
@@ -91,6 +92,11 @@ export const routes: Routes = [
   {
     path: 'identity',
     loadChildren: identityAccessManagementRoutes,
+  },
+  {
+    path: 'plans',
+    component: Plans,
+    title: 'Planes | MaquiControl',
   },
   {
     path: '**',
