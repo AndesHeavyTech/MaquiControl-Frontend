@@ -82,6 +82,11 @@ textarea:focus-visible {
   font-size: 0.85rem;
 }
 
+.error-message a {
+  color: inherit;
+  text-decoration: underline;
+}
+
 .form-actions {
   display: flex;
   justify-content: flex-end;

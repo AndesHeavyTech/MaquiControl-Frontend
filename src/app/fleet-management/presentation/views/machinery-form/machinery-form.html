@@ -3,6 +3,13 @@
     <span class="eyebrow">Fleet Management</span>
     <h1>{{ editingId ? 'Editar maquinaria' : 'Publicar maquinaria' }}</h1>
 
+    @if (!profileExists) {
+      <p class="error-message">
+        Completa tu perfil antes de publicar maquinaria.
+        <a routerLink="/profile">Ir a mi perfil</a>
+      </p>
+    }
+
     <label for="categoryId">Categoría</label>
     <select id="categoryId" formControlName="categoryId">
       <option [ngValue]="null" disabled>Selecciona una categoría</option>
@@ -134,7 +141,12 @@
 
     <div class="form-actions">
       <a mat-stroked-button routerLink="/fleet/machinery">Cancelar</a>
-      <button mat-flat-button class="submit-action" type="submit" [disabled]="store.saving()">
+      <button
+        mat-flat-button
+        class="submit-action"
+        type="submit"
+        [disabled]="store.saving() || !profileExists"
+      >
         {{ store.saving() ? 'Guardando…' : 'Guardar' }}
       </button>
     </div>
