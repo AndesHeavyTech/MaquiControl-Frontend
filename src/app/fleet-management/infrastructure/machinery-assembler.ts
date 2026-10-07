@@ -2,7 +2,6 @@ import { BaseAssembler } from '../../shared/infrastructure/base-assembler';
 import { Machinery } from '../domain/model/machinery.entity';
 import { MachineryLocation } from '../domain/model/machinery-location.value-object';
 import { MachineryStatus } from '../domain/model/machinery-status';
-import { MachineryType } from '../domain/model/machinery-type';
 import { Currency, Money } from '../domain/model/money.value-object';
 import { MachineryResource, MachineryResponse } from './machinery-response';
 
@@ -22,7 +21,6 @@ export class MachineryAssembler implements BaseAssembler<
       categoryId: resource.categoryId,
       name: resource.name,
       description: resource.description,
-      type: this.toMachineryType(resource.type),
       brand: resource.brand,
       model: resource.model,
       manufactureYear: resource.manufactureYear,
@@ -49,7 +47,6 @@ export class MachineryAssembler implements BaseAssembler<
       categoryId: entity.categoryId,
       name: entity.name,
       description: entity.description,
-      type: entity.type,
       brand: entity.brand,
       model: entity.model,
       manufactureYear: entity.manufactureYear,
@@ -67,14 +64,6 @@ export class MachineryAssembler implements BaseAssembler<
       createdAt: entity.createdAt.toISOString(),
       updatedAt: entity.updatedAt.toISOString(),
     };
-  }
-
-  private toMachineryType(value: string): MachineryType {
-    if (!Object.values(MachineryType).includes(value as MachineryType)) {
-      throw new Error(`Unknown machinery type: ${value}`);
-    }
-
-    return value as MachineryType;
   }
 
   private toMachineryStatus(value: string): MachineryStatus {

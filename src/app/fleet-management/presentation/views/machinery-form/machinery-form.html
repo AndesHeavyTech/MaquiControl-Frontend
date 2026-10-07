@@ -36,13 +36,6 @@
       <span class="error-message">{{ 'machinery-form.error.description-required' | translate }}</span>
     }
 
-    <label for="type">{{ 'machinery-form.type' | translate }}</label>
-    <select id="type" formControlName="type">
-      @for (type of machineryTypes; track type) {
-        <option [ngValue]="type">{{ 'enums.machinery-type.' + type | translate }}</option>
-      }
-    </select>
-
     <div class="field-row">
       <div>
         <label for="brand">{{ 'machinery-form.brand' | translate }}</label>

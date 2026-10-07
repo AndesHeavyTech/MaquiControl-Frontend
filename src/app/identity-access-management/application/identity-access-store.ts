@@ -57,6 +57,7 @@ export class IdentityAccessStore {
   readonly #currentUserId = signal<number | null>(null);
   readonly #currentRoleIds = signal<number[]>([]);
   readonly #roles = signal<Role[]>([]);
+  readonly #rolesLoaded = signal(false);
   readonly #submitting = signal(false);
   readonly #error = signal<string | null>(null);
 
@@ -65,6 +66,8 @@ export class IdentityAccessStore {
   readonly currentUserId = this.#currentUserId.asReadonly();
   readonly currentRoleIds = this.#currentRoleIds.asReadonly();
   readonly roles = this.#roles.asReadonly();
+  /** `true` once the roles request has finished, successfully or not. */
+  readonly rolesLoaded = this.#rolesLoaded.asReadonly();
   readonly submitting = this.#submitting.asReadonly();
   readonly error = this.#error.asReadonly();
 
@@ -97,6 +100,10 @@ export class IdentityAccessStore {
 
   hasRole(roleName: RoleName): boolean {
     return this.currentRoles().some((role) => role.name === roleName);
+  }
+
+  hasAnyRole(roleNames: RoleName[]): boolean {
+    return roleNames.some((roleName) => this.hasRole(roleName));
   }
 
   #restoreSession(): void {
@@ -134,9 +141,16 @@ export class IdentityAccessStore {
   }
 
   loadRoles(): void {
+    this.#rolesLoaded.set(false);
     this.#api.getRoles().subscribe({
-      next: (roles) => this.#roles.set(roles),
-      error: () => this.#roles.set([]),
+      next: (roles) => {
+        this.#roles.set(roles);
+        this.#rolesLoaded.set(true);
+      },
+      error: () => {
+        this.#roles.set([]);
+        this.#rolesLoaded.set(true);
+      },
     });
   }
 
@@ -179,6 +193,11 @@ export class IdentityAccessStore {
         this.#currentEmail.set(resource.email);
         this.#currentUserId.set(resource.id);
         this.#currentRoleIds.set(resource.roleIds);
+        // Roles fail to load when the API was down as the app started;
+        // without them the role-based menu and actions would stay hidden.
+        if (this.#roles().length === 0) {
+          this.loadRoles();
+        }
         this.#submitting.set(false);
         router.navigate(['/home']).then();
       },

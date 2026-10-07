@@ -156,14 +156,6 @@
     "confirm-delete": "¿Eliminar \"{{ name }}\" del catálogo? Esta acción no se puede deshacer."
   },
   "enums": {
-    "machinery-type": {
-      "EXCAVATOR": "Excavadora",
-      "BACKHOE_LOADER": "Retroexcavadora",
-      "LOADER": "Cargador",
-      "CRANE": "Grúa",
-      "BULLDOZER": "Bulldozer",
-      "OTHER": "Otro"
-    },
     "machinery-status": {
       "AVAILABLE": "Disponible",
       "RESERVED": "Reservada",
