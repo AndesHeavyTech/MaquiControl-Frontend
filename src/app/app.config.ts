@@ -31,7 +31,7 @@ export const appConfig: ApplicationConfig = {
     { provide: TitleStrategy, useClass: TranslatedTitleStrategy },
     {
       provide: SIGN_IN_PORT,
-      useClass: environment.production ? SignInApiEndpoint : FakeSignInApiEndpoint,
+      useClass: environment.useFakeSignIn ? FakeSignInApiEndpoint : SignInApiEndpoint,
     },
   ],
 };
