@@ -1,0 +1,108 @@
+<section class="page-screen">
+  <form class="form-card" [formGroup]="form" (ngSubmit)="performSave()">
+    <span class="eyebrow">Profiles Management</span>
+    <h1>Mi perfil</h1>
+    <p class="hint">
+      Mantén actualizados tus datos personales y de contacto. Esta información
+      identifica tus publicaciones y reservas dentro de MaquiControl.
+    </p>
+
+    @if (store.loading()) {
+      <p class="hint">Cargando tu perfil…</p>
+    } @else if (!store.currentProfile()) {
+      <p class="hint">Aún no has completado tu perfil. Completa el formulario para crearlo.</p>
+    }
+
+    <h2>Datos personales</h2>
+
+    <div class="field-row">
+      <div>
+        <label for="firstName">Nombres</label>
+        <input id="firstName" type="text" formControlName="firstName" />
+        @if (form.controls.firstName.touched && form.controls.firstName.invalid) {
+          <span class="error-message">Obligatorio.</span>
+        }
+      </div>
+
+      <div>
+        <label for="lastName">Apellidos</label>
+        <input id="lastName" type="text" formControlName="lastName" />
+        @if (form.controls.lastName.touched && form.controls.lastName.invalid) {
+          <span class="error-message">Obligatorio.</span>
+        }
+      </div>
+    </div>
+
+    <label for="documentNumber">Número de documento</label>
+    <input id="documentNumber" type="text" formControlName="documentNumber" />
+    @if (form.controls.documentNumber.touched && form.controls.documentNumber.invalid) {
+      <span class="error-message">Obligatorio.</span>
+    }
+
+    <h2>Información de contacto</h2>
+
+    <div class="field-row">
+      <div>
+        <label for="phoneNumber">Teléfono</label>
+        <input id="phoneNumber" type="tel" formControlName="phoneNumber" />
+        @if (form.controls.phoneNumber.touched && form.controls.phoneNumber.invalid) {
+          <span class="error-message">Obligatorio.</span>
+        }
+      </div>
+
+      <div>
+        <label for="secondaryEmail">Correo alternativo (opcional)</label>
+        <input id="secondaryEmail" type="email" formControlName="secondaryEmail" />
+        @if (form.controls.secondaryEmail.touched && form.controls.secondaryEmail.invalid) {
+          <span class="error-message">Ingresa un correo electrónico válido.</span>
+        }
+      </div>
+    </div>
+
+    <label for="address">Dirección</label>
+    <input id="address" type="text" formControlName="address" />
+    @if (form.controls.address.touched && form.controls.address.invalid) {
+      <span class="error-message">Obligatorio.</span>
+    }
+
+    <div class="field-row">
+      <div>
+        <label for="district">Distrito</label>
+        <input id="district" type="text" formControlName="district" />
+        @if (form.controls.district.touched && form.controls.district.invalid) {
+          <span class="error-message">Obligatorio.</span>
+        }
+      </div>
+
+      <div>
+        <label for="city">Ciudad</label>
+        <input id="city" type="text" formControlName="city" />
+        @if (form.controls.city.touched && form.controls.city.invalid) {
+          <span class="error-message">Obligatorio.</span>
+        }
+      </div>
+    </div>
+
+    @if (form.invalid && form.touched) {
+      <span class="error-message">Revisa los campos marcados antes de guardar.</span>
+    }
+
+    @if (store.saveError()) {
+      <span class="error-message">{{ store.saveError() }}</span>
+    }
+
+    @if (justSaved()) {
+      <span class="success-message">Perfil guardado correctamente.</span>
+    }
+
+    <div class="form-actions">
+      <button mat-flat-button class="submit-action" type="submit" [disabled]="store.saving()">
+        {{ store.saving() ? 'Guardando…' : 'Guardar perfil' }}
+      </button>
+    </div>
+  </form>
+
+  @if (store.currentProfile()) {
+    <app-organization-form />
+  }
+</section>

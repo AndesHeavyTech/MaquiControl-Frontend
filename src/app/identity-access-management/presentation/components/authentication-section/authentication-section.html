@@ -1,0 +1,7 @@
+@if (store.isSignedIn()) {
+  <span class="greeting">{{ store.currentEmail() }}</span>
+  <button mat-button (click)="performSignOut()">Cerrar sesión</button>
+} @else {
+  <a mat-button routerLink="/identity/sign-in">Iniciar sesión</a>
+  <a mat-button routerLink="/identity/sign-up">Registrarse</a>
+}
