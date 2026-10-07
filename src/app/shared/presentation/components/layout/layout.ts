@@ -41,6 +41,7 @@ export class Layout {
     { link: '/profile', label: 'option.profile' },
     { link: '/rental/reservations', label: 'option.reservations' },
     { link: '/maintenance', label: 'option.maintenance', roles: [RoleName.FleetOwner] },
+    { link: '/plans', label: 'option.plans', roles: [RoleName.FleetOwner] },
   ];
 
   protected readonly options = computed(() =>

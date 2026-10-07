@@ -13,7 +13,8 @@ import { TermsOfService } from './shared/presentation/views/terms-of-service/ter
 import { identityAccessGuard } from './identity-access-management/infrastructure/identity-access.guard';
 import { roleGuard } from './identity-access-management/infrastructure/role.guard';
 import { RoleName } from './identity-access-management/domain/model/role-name';
-import { Plans } from './shared/presentation/views/plans/plans';
+import { Plans } from './subscription-management/presentation/views/plans/plans';
+import { CheckoutResult } from './subscription-management/presentation/views/checkout-result/checkout-result';
 
 const identityAccessManagementRoutes = () =>
   import('./identity-access-management/presentation/identity-access-management.routes').then(
@@ -98,7 +99,14 @@ export const routes: Routes = [
   {
     path: 'plans',
     component: Plans,
-    title: 'Planes | MaquiControl',
+    title: 'titles.plans',
+    canActivate: [identityAccessGuard, roleGuard(RoleName.FleetOwner)],
+  },
+  {
+    path: 'plans/checkout-result',
+    component: CheckoutResult,
+    title: 'titles.checkout-result',
+    canActivate: [identityAccessGuard, roleGuard(RoleName.FleetOwner)],
   },
   {
     path: '**',

@@ -22,14 +22,17 @@
     "page-not-found": "Página no encontrada",
     "sign-in": "Iniciar sesión",
     "sign-up": "Crear cuenta",
-    "terms": "Términos del servicio"
+    "terms": "Términos del servicio",
+    "plans": "Planes de suscripción",
+    "checkout-result": "Resultado del pago"
   },
   "option": {
     "home": "Inicio",
     "machinery": "Maquinaria",
     "profile": "Mi perfil",
     "reservations": "Reservas",
-    "maintenance": "Mantenimiento"
+    "maintenance": "Mantenimiento",
+    "plans": "Planes"
   },
   "layout": {
     "skip-to-content": "Saltar al contenido principal",
@@ -405,5 +408,54 @@
       }
     },
     "back": "Volver al inicio"
+  },
+  "plans": {
+    "eyebrow": "Planes de suscripción",
+    "title": "Elige el plan que se ajusta a tu negocio",
+    "subtitle": "Planes flexibles para negocios de alquiler de maquinaria de distintos tamaños.",
+    "recommended": "Recomendado",
+    "per-month": "/ mes",
+    "machinery-limit": "Hasta {{limit}} máquinas",
+    "subscribe": "Suscribirme",
+    "your-plan": "Tu plan actual",
+    "redirecting": "Redirigiendo a Mercado Pago…",
+    "current": "Tu plan {{name}} está activo hasta el {{date}}.",
+    "loading": "Cargando planes…",
+    "error": "No se pudieron cargar los planes. Inténtalo más tarde.",
+    "checkout-title": "Plan {{name}} de MaquiControl (1 mes)",
+    "sandbox-note": "Los pagos se procesan con Mercado Pago en modo de prueba (sandbox): no se cobra dinero real.",
+    "ESSENTIAL": {
+      "name": "Esencial",
+      "title": "Plan Esencial",
+      "description": "Para pequeños negocios de alquiler de maquinaria que empiezan a digitalizar su operación.",
+      "features": [
+        "Gestión de la flota de maquinaria",
+        "Seguimiento de disponibilidad",
+        "Gestión de reservas de alquiler",
+        "Seguimiento de mantenimiento"
+      ]
+    },
+    "PRO": {
+      "name": "Pro",
+      "title": "Plan Pro",
+      "description": "Para negocios de alquiler en crecimiento que administran una flota más grande.",
+      "features": [
+        "Todo lo incluido en Esencial",
+        "Gestión de flota ampliada",
+        "Indicadores operativos avanzados",
+        "Gestión de alquileres mejorada"
+      ]
+    }
+  },
+  "checkout-result": {
+    "confirming": "Confirmando tu pago con Mercado Pago…",
+    "approved-title": "Suscripción activa",
+    "approved-text": "Mercado Pago aprobó tu pago. Tu plan está activo por un mes.",
+    "pending-title": "Pago pendiente",
+    "pending-text": "Mercado Pago todavía está procesando tu pago. Tu plan se activará cuando se apruebe.",
+    "rejected-title": "Pago no completado",
+    "rejected-text": "El pago fue rechazado o cancelado. No se activó ningún plan; puedes intentarlo de nuevo.",
+    "error-title": "No pudimos confirmar el pago",
+    "back": "Volver a los planes"
   }
 }

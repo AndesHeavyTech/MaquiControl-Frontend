@@ -1,0 +1,15 @@
+<section class="checkout-result">
+  <div class="result-card" role="status" aria-live="polite">
+    @if (store.processing()) {
+      <h1>{{ 'checkout-result.confirming' | translate }}</h1>
+    } @else if (store.processError()) {
+      <h1>{{ 'checkout-result.error-title' | translate }}</h1>
+      <p class="error-message" role="alert">{{ store.processError() }}</p>
+    } @else if (store.checkoutOutcome(); as outcome) {
+      <h1>{{ 'checkout-result.' + outcome + '-title' | translate }}</h1>
+      <p>{{ 'checkout-result.' + outcome + '-text' | translate }}</p>
+    }
+
+    <a mat-flat-button routerLink="/plans">{{ 'checkout-result.back' | translate }}</a>
+  </div>
+</section>

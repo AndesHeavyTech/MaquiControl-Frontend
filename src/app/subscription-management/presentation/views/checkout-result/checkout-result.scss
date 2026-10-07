@@ -1,0 +1,25 @@
+.checkout-result {
+  display: grid;
+  place-items: center;
+  min-height: 60vh;
+  padding: 48px 16px;
+}
+
+.result-card {
+  max-width: 520px;
+  padding: 40px 32px;
+  border: 1px solid #30343b;
+  border-radius: 20px;
+  background: #1b1e24;
+  text-align: center;
+}
+
+.result-card p {
+  color: #b8bec8;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.error-message {
+  color: #ef5350;
+}

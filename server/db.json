@@ -395,5 +395,28 @@
         }
       ]
     }
-  ]
+  ],
+  "plans": [
+    {
+      "id": 1,
+      "code": "ESSENTIAL",
+      "monthlyPrice": {
+        "amount": 49,
+        "currency": "PEN"
+      },
+      "machineryLimit": 5,
+      "recommended": false
+    },
+    {
+      "id": 2,
+      "code": "PRO",
+      "monthlyPrice": {
+        "amount": 99,
+        "currency": "PEN"
+      },
+      "machineryLimit": 20,
+      "recommended": true
+    }
+  ],
+  "subscriptions": []
 }
