@@ -1,5 +1,5 @@
 <section class="not-found">
-  <span class="error-code">404</span>
+  <span class="error-code" aria-hidden="true">404</span>
   <h1>{{ 'page-not-found.title' | translate }}</h1>
   <p [innerHTML]="'page-not-found.content' | translate: { invalid_path: invalidPath }"></p>
   <a mat-flat-button routerLink="/home">{{ 'page-not-found.go-home' | translate }}</a>

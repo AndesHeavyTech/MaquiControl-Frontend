@@ -51,3 +51,19 @@ button:focus-visible {
   outline: 3px solid var(--mc-accent);
   outline-offset: 4px;
 }
+
+footer a {
+  color: var(--mc-accent);
+}
+
+.mat-toolbar {
+  --mat-toolbar-container-text-color: var(--mc-text);
+}
+
+.mat-mdc-button:not(:disabled) {
+  --mat-button-text-label-text-color: var(--mc-accent);
+}
+
+.mat-mdc-outlined-button:not(:disabled) {
+  --mat-button-outlined-label-text-color: var(--mc-text);
+}

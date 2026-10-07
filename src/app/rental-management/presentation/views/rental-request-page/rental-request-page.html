@@ -1,10 +1,10 @@
 <section class="form-screen">
-  <form class="form-card" [formGroup]="form" (ngSubmit)="performRequest()">
+  <form class="form-card" [formGroup]="form" (ngSubmit)="performRequest()" aria-labelledby="rental-request-title">
     <span class="eyebrow">{{ 'rental.eyebrow' | translate }}</span>
-    <h1>{{ 'rental-request.title' | translate }}</h1>
+    <h1 id="rental-request-title">{{ 'rental-request.title' | translate }}</h1>
 
     @if (!machinery) {
-      <p class="hint">{{ 'rental-request.loading' | translate }}</p>
+      <p class="hint" role="status" aria-live="polite">{{ 'rental-request.loading' | translate }}</p>
     } @else {
       <div class="machinery-summary">
         <h2>{{ machinery.name }}</h2>
@@ -19,7 +19,7 @@
       }
 
       @if (!profileExists) {
-        <p class="error-message">
+        <p class="error-message" role="alert">
           {{ 'rental-request.profile-required' | translate }}
           <a routerLink="/profile">{{ 'machinery-form.go-profile' | translate }}</a>
         </p>
@@ -67,13 +67,13 @@
       }
 
       @if (overlapDetected) {
-        <span class="error-message">
+        <span class="error-message" role="alert">
           {{ 'rental-request.overlap' | translate }}
         </span>
       }
 
       @if (store.saveError()) {
-        <span class="error-message">{{ store.saveError() }}</span>
+        <span class="error-message" role="alert">{{ store.saveError() }}</span>
       }
 
       <div class="form-actions">
@@ -82,7 +82,7 @@
           mat-flat-button
           class="submit-action"
           type="submit"
-          [disabled]="store.saving() || !profileExists || !machinery.isAvailable()"
+          [disabled]="store.saving() || !profileExists || !machinery.isAvailable()" [attr.aria-busy]="store.saving()"
         >
           {{ (store.saving() ? 'common.sending' : 'rental-request.submit') | translate }}
         </button>

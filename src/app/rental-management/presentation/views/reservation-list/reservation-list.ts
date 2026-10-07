@@ -1,5 +1,5 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -20,6 +20,14 @@ export class ReservationList {
   readonly #fleetManagementStore = inject(FleetManagementStore);
   readonly #profilesManagementStore = inject(ProfilesManagementStore);
   readonly #translate = inject(TranslateService);
+
+  protected readonly myRentals = computed(() =>
+    this.store.rentals().filter((rental) => this.isRequester(rental) || this.isMachineryOwner(rental)),
+  );
+
+  protected readonly myPendingCount = computed(
+    () => this.myRentals().filter((rental) => rental.isPending()).length,
+  );
 
   protected machineryName(machineryId: number): string {
     return this.#fleetManagementStore.machineryById(machineryId)?.name ?? this.#translate.instant('reservations.machinery-fallback', { id: machineryId });
