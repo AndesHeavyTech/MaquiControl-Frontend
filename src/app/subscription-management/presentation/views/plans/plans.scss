@@ -94,3 +94,36 @@ h1 {
     grid-template-columns: 1fr;
   }
 }
+
+.current-plan,
+.sandbox-note {
+  max-width: 720px;
+  margin: 0 auto 32px;
+  padding: 16px 20px;
+  border-radius: 14px;
+  text-align: center;
+}
+
+.current-plan {
+  border: 1px solid #2e7d32;
+  background: rgba(46, 125, 50, 0.12);
+}
+
+.sandbox-note {
+  margin-top: 32px;
+  border: 1px dashed #30343b;
+  color: #b8bec8;
+}
+
+.state-message,
+.error-message {
+  text-align: center;
+}
+
+.error-message {
+  color: #ef5350;
+}
+
+.plan-card button {
+  width: 100%;
+}

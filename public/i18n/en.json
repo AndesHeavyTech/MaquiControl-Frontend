@@ -22,14 +22,17 @@
     "page-not-found": "Page not found",
     "sign-in": "Sign in",
     "sign-up": "Create account",
-    "terms": "Terms of service"
+    "terms": "Terms of service",
+    "plans": "Subscription plans",
+    "checkout-result": "Payment result"
   },
   "option": {
     "home": "Home",
     "machinery": "Machinery",
     "profile": "My profile",
     "reservations": "Reservations",
-    "maintenance": "Maintenance"
+    "maintenance": "Maintenance",
+    "plans": "Plans"
   },
   "layout": {
     "skip-to-content": "Skip to main content",
@@ -405,5 +408,54 @@
       }
     },
     "back": "Back to home"
+  },
+  "plans": {
+    "eyebrow": "Subscription plans",
+    "title": "Choose the plan that fits your business",
+    "subtitle": "Flexible plans for machinery rental businesses of different sizes.",
+    "recommended": "Recommended",
+    "per-month": "/ month",
+    "machinery-limit": "Up to {{limit}} machines",
+    "subscribe": "Subscribe",
+    "your-plan": "Your current plan",
+    "redirecting": "Redirecting to Mercado Pago…",
+    "current": "Your {{name}} plan is active until {{date}}.",
+    "loading": "Loading plans…",
+    "error": "Plans could not be loaded. Try again later.",
+    "checkout-title": "MaquiControl {{name}} plan (1 month)",
+    "sandbox-note": "Payments are processed by Mercado Pago in test mode (sandbox): no real money is charged.",
+    "ESSENTIAL": {
+      "name": "Essential",
+      "title": "Essential Plan",
+      "description": "For small machinery rental businesses starting to digitize their operation.",
+      "features": [
+        "Machinery fleet management",
+        "Availability tracking",
+        "Rental reservation management",
+        "Maintenance tracking"
+      ]
+    },
+    "PRO": {
+      "name": "Pro",
+      "title": "Pro Plan",
+      "description": "For growing rental businesses that manage a larger machinery fleet.",
+      "features": [
+        "Everything included in Essential",
+        "Expanded fleet management",
+        "Advanced operational insights",
+        "Enhanced rental management"
+      ]
+    }
+  },
+  "checkout-result": {
+    "confirming": "Confirming your payment with Mercado Pago…",
+    "approved-title": "Subscription active",
+    "approved-text": "Mercado Pago approved your payment. Your plan is active for one month.",
+    "pending-title": "Payment pending",
+    "pending-text": "Mercado Pago is still processing your payment. Your plan will be activated once it is approved.",
+    "rejected-title": "Payment not completed",
+    "rejected-text": "The payment was rejected or cancelled. No plan was activated; you can try again.",
+    "error-title": "We could not confirm the payment",
+    "back": "Back to plans"
   }
 }

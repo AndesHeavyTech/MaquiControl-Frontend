@@ -1,0 +1,74 @@
+<section class="plans">
+  <header class="plans-header">
+    <span class="eyebrow">{{ 'plans.eyebrow' | translate }}</span>
+
+    <h1>{{ 'plans.title' | translate }}</h1>
+
+    <p>{{ 'plans.subtitle' | translate }}</p>
+  </header>
+
+  @if (store.currentSubscription(); as subscription) {
+    <p class="current-plan" role="status">
+      {{
+        'plans.current'
+          | translate
+            : {
+                name: ('plans.' + store.currentPlan()?.code + '.name' | translate),
+                date: (subscription.endsAt | date: 'mediumDate'),
+              }
+      }}
+    </p>
+  }
+
+  @if (store.loading()) {
+    <p class="state-message" role="status" aria-live="polite">{{ 'plans.loading' | translate }}</p>
+  } @else if (store.error()) {
+    <p class="error-message" role="alert">{{ 'plans.error' | translate }}</p>
+  } @else {
+    <div class="plans-grid">
+      @for (plan of store.plans(); track plan.id) {
+        <article class="plan-card" [class.featured]="plan.recommended" [attr.aria-labelledby]="'plan-' + plan.id">
+          <span class="plan-label">
+            {{ (plan.recommended ? 'plans.recommended' : 'plans.' + plan.code + '.name') | translate }}
+          </span>
+
+          <h2 [id]="'plan-' + plan.id">{{ 'plans.' + plan.code + '.title' | translate }}</h2>
+
+          <p>{{ 'plans.' + plan.code + '.description' | translate }}</p>
+
+          <strong class="plan-price">
+            S/ {{ plan.monthlyPrice.amount }} <small>{{ 'plans.per-month' | translate }}</small>
+          </strong>
+
+          <ul>
+            <li>{{ 'plans.machinery-limit' | translate: { limit: plan.machineryLimit } }}</li>
+            @for (feature of features(plan); track feature) {
+              <li>{{ feature }}</li>
+            }
+          </ul>
+
+          <button
+            mat-flat-button
+            type="button"
+            [disabled]="store.processing() || isCurrentPlan(plan)"
+            (click)="performSubscribe(plan)"
+          >
+            @if (isCurrentPlan(plan)) {
+              {{ 'plans.your-plan' | translate }}
+            } @else if (store.processing()) {
+              {{ 'plans.redirecting' | translate }}
+            } @else {
+              {{ 'plans.subscribe' | translate }}
+            }
+          </button>
+        </article>
+      }
+    </div>
+  }
+
+  @if (store.processError()) {
+    <p class="error-message" role="alert">{{ store.processError() }}</p>
+  }
+
+  <p class="sandbox-note">{{ 'plans.sandbox-note' | translate }}</p>
+</section>
