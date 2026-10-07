@@ -1,19 +1,19 @@
 <section class="auth-screen">
-  <form class="auth-card" [formGroup]="form" (ngSubmit)="performSignUp()">
+  <form class="auth-card" [formGroup]="form" (ngSubmit)="performSignUp()" aria-labelledby="sign-up-title">
     <span class="eyebrow">{{ 'sign-up.eyebrow' | translate }}</span>
-    <h1>{{ 'sign-up.title' | translate }}</h1>
+    <h1 id="sign-up-title">{{ 'sign-up.title' | translate }}</h1>
     <p class="hint">{{ 'sign-up.hint' | translate }}</p>
 
     <label for="email">{{ 'auth.email' | translate }}</label>
-    <input id="email" type="email" formControlName="email" autocomplete="email" />
+    <input id="email" type="email" formControlName="email" autocomplete="email" [attr.aria-invalid]="form.controls.email.touched && form.controls.email.invalid" aria-describedby="email-error" />
     @if (form.controls.email.touched && form.controls.email.invalid) {
-      <span class="error-message">{{ 'auth.error.email-invalid' | translate }}</span>
+      <span id="email-error" class="error-message" role="alert">{{ 'auth.error.email-invalid' | translate }}</span>
     }
 
     <label for="password">{{ 'auth.password' | translate }}</label>
-    <input id="password" type="password" formControlName="password" autocomplete="new-password" />
+    <input id="password" type="password" formControlName="password" autocomplete="new-password" [attr.aria-invalid]="form.controls.password.touched && form.controls.password.invalid" aria-describedby="password-error" />
     @if (form.controls.password.touched && form.controls.password.invalid) {
-      <span class="error-message">{{ 'auth.error.password-min-length' | translate }}</span>
+      <span id="password-error" class="error-message" role="alert">{{ 'auth.error.password-min-length' | translate }}</span>
     }
 
     <fieldset class="role-picker">
@@ -30,14 +30,14 @@
     </fieldset>
 
     @if (rolesUnavailable()) {
-      <span class="error-message">{{ 'sign-up.error.roles-unavailable' | translate }}</span>
+      <span class="error-message" role="alert">{{ 'sign-up.error.roles-unavailable' | translate }}</span>
     }
 
     @if (store.error()) {
-      <span class="error-message">{{ store.error() }}</span>
+      <span class="error-message" role="alert">{{ store.error() }}</span>
     }
 
-    <button mat-flat-button class="submit-action" type="submit" [disabled]="store.submitting()">
+    <button mat-flat-button class="submit-action" type="submit" [disabled]="store.submitting()" [attr.aria-busy]="store.submitting()">
       {{ (store.submitting() ? 'sign-up.submitting' : 'sign-up.submit') | translate }}
     </button>
 

@@ -25,8 +25,8 @@
       <p>{{ 'maintenance.no-machinery-text' | translate }}</p>
     </div>
   } @else {
-    <form class="form-card" [formGroup]="form" (ngSubmit)="performSchedule()">
-      <h2>{{ 'maintenance.schedule-title' | translate }}</h2>
+    <form class="form-card" [formGroup]="form" (ngSubmit)="performSchedule()" aria-labelledby="schedule-title">
+      <h2 id="schedule-title">{{ 'maintenance.schedule-title' | translate }}</h2>
 
       <label for="machineryId">{{ 'maintenance.machinery' | translate }}</label>
       <select id="machineryId" formControlName="machineryId">
@@ -50,11 +50,11 @@
       <input id="scheduledDate" type="date" formControlName="scheduledDate" />
 
       @if (store.saveError()) {
-        <span class="error-message">{{ store.saveError() }}</span>
+        <span class="error-message" role="alert">{{ store.saveError() }}</span>
       }
 
       <div class="form-actions">
-        <button mat-flat-button class="submit-action" type="submit" [disabled]="store.saving()">
+        <button mat-flat-button class="submit-action" type="submit" [disabled]="store.saving()" [attr.aria-busy]="store.saving()">
           {{ (store.saving() ? 'common.saving' : 'maintenance.schedule') | translate }}
         </button>
       </div>
@@ -74,7 +74,7 @@
     } @else {
       <div class="maintenance-grid">
         @for (maintenance of ownedMaintenance; track maintenance.id) {
-          <article class="maintenance-card">
+          <article class="maintenance-card" [attr.aria-labelledby]="'maintenance-' + maintenance.id">
             <div class="card-heading">
               <span class="status" [class]="maintenanceStatusClass(maintenance.status)">
                 {{ maintenanceStatusLabel(maintenance.status) | translate }}
@@ -82,7 +82,7 @@
             </div>
 
             <div class="card-body">
-              <h2>{{ machineryName(maintenance.machineryId) }}</h2>
+              <h2 [id]="'maintenance-' + maintenance.id">{{ machineryName(maintenance.machineryId) }}</h2>
               <p class="description">{{ maintenance.description }}</p>
 
               <dl class="details">
@@ -120,9 +120,9 @@
 
             <div class="card-management">
               @if (maintenance.status === 'SCHEDULED') {
-                <button mat-stroked-button type="button" (click)="performStart(maintenance)">{{ 'maintenance.start' | translate }}</button>
+                <button mat-stroked-button type="button" (click)="performStart(maintenance)" [attr.aria-describedby]="'maintenance-' + maintenance.id">{{ 'maintenance.start' | translate }}</button>
               } @else if (maintenance.status === 'IN_PROGRESS') {
-                <button mat-stroked-button type="button" (click)="performComplete(maintenance)">{{ 'maintenance.complete' | translate }}</button>
+                <button mat-stroked-button type="button" (click)="performComplete(maintenance)" [attr.aria-describedby]="'maintenance-' + maintenance.id">{{ 'maintenance.complete' | translate }}</button>
               }
             </div>
           </article>

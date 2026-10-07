@@ -1,10 +1,10 @@
 <section class="form-screen">
-  <div class="panel">
+  <div class="panel" role="region" aria-labelledby="operation-title">
     <span class="eyebrow">{{ 'operation.eyebrow' | translate }}</span>
-    <h1>{{ 'operation.title' | translate }}</h1>
+    <h1 id="operation-title">{{ 'operation.title' | translate }}</h1>
 
     @if (!rental) {
-      <p class="hint">{{ 'operation.loading' | translate }}</p>
+      <p class="hint" role="status" aria-live="polite">{{ 'operation.loading' | translate }}</p>
     } @else {
       <p class="hint">
         {{ 'operation.machinery' | translate }} {{ fleetManagementStore.machineryById(rental.machineryId)?.name ?? ('#' + rental.machineryId) }}
@@ -19,7 +19,7 @@
           </button>
         }
       } @else {
-        <div class="status-row">
+        <div class="status-row" role="status" aria-live="polite">
           <span class="status" [class.in-progress]="operation.isInProgress()">
             {{ 'enums.operation-status.' + operation.status | translate }}
           </span>
@@ -31,11 +31,11 @@
         @if (operation.workedHours.length === 0) {
           <p class="hint">{{ 'operation.no-hours' | translate }}</p>
         } @else {
-          <ul class="hours-list">
+          <ul class="hours-list" [attr.aria-label]="'worked-hours.title' | translate">
             @for (record of operation.workedHours; track record.id) {
               <li>
                 <div>
-                  <strong>{{ record.workDate | date: 'dd/MM/yyyy' }}</strong>
+                  <strong [id]="'hours-' + record.id">{{ record.workDate | date: 'dd/MM/yyyy' }}</strong>
                   <span>{{ record.startTime }} – {{ record.endTime }} ({{ record.totalHours }} h)</span>
                   @if (record.observations) {
                     <span class="observations">{{ record.observations }}</span>
@@ -48,8 +48,8 @@
                   </span>
 
                   @if (isMachineryOwner && record.status === 'PENDING') {
-                    <button mat-button type="button" (click)="performValidate(record, true)">{{ 'operation.validate' | translate }}</button>
-                    <button mat-button type="button" (click)="performValidate(record, false)">{{ 'reservations.reject' | translate }}</button>
+                    <button mat-button type="button" (click)="performValidate(record, true)" [attr.aria-describedby]="'hours-' + record.id">{{ 'operation.validate' | translate }}</button>
+                    <button mat-button type="button" (click)="performValidate(record, false)" [attr.aria-describedby]="'hours-' + record.id">{{ 'reservations.reject' | translate }}</button>
                   }
                 </div>
               </li>
@@ -68,7 +68,7 @@
         }
 
         @if (store.saveError()) {
-          <span class="error-message">{{ store.saveError() }}</span>
+          <span class="error-message" role="alert">{{ store.saveError() }}</span>
         }
       }
     }

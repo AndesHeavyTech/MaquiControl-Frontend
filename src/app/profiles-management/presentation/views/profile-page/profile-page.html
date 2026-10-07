@@ -1,7 +1,7 @@
 <section class="page-screen">
-  <form class="form-card" [formGroup]="form" (ngSubmit)="performSave()">
+  <form class="form-card" [formGroup]="form" (ngSubmit)="performSave()" aria-labelledby="profile-title">
     <span class="eyebrow">{{ 'profile.eyebrow' | translate }}</span>
-    <h1>{{ 'profile.title' | translate }}</h1>
+    <h1 id="profile-title">{{ 'profile.title' | translate }}</h1>
     <p class="hint">{{ 'profile.hint' | translate }}</p>
 
     @if (identityAccessStore.currentRoles().length > 0) {
@@ -13,7 +13,7 @@
     }
 
     @if (store.loading()) {
-      <p class="hint">{{ 'profile.loading' | translate }}</p>
+      <p class="hint" role="status" aria-live="polite">{{ 'profile.loading' | translate }}</p>
     } @else if (!store.currentProfile()) {
       <p class="hint">{{ 'profile.empty' | translate }}</p>
     }
@@ -23,25 +23,25 @@
     <div class="field-row">
       <div>
         <label for="firstName">{{ 'profile.first-name' | translate }}</label>
-        <input id="firstName" type="text" formControlName="firstName" />
+        <input id="firstName" type="text" formControlName="firstName" [attr.aria-invalid]="form.controls.firstName.touched && form.controls.firstName.invalid" aria-describedby="firstName-error" />
         @if (form.controls.firstName.touched && form.controls.firstName.invalid) {
-          <span class="error-message">{{ 'common.required' | translate }}</span>
+          <span id="firstName-error" class="error-message" role="alert">{{ 'common.required' | translate }}</span>
         }
       </div>
 
       <div>
         <label for="lastName">{{ 'profile.last-name' | translate }}</label>
-        <input id="lastName" type="text" formControlName="lastName" />
+        <input id="lastName" type="text" formControlName="lastName" [attr.aria-invalid]="form.controls.lastName.touched && form.controls.lastName.invalid" aria-describedby="lastName-error" />
         @if (form.controls.lastName.touched && form.controls.lastName.invalid) {
-          <span class="error-message">{{ 'common.required' | translate }}</span>
+          <span id="lastName-error" class="error-message" role="alert">{{ 'common.required' | translate }}</span>
         }
       </div>
     </div>
 
     <label for="documentNumber">{{ 'profile.document-number' | translate }}</label>
-    <input id="documentNumber" type="text" formControlName="documentNumber" />
+    <input id="documentNumber" type="text" formControlName="documentNumber" [attr.aria-invalid]="form.controls.documentNumber.touched && form.controls.documentNumber.invalid" aria-describedby="documentNumber-error" />
     @if (form.controls.documentNumber.touched && form.controls.documentNumber.invalid) {
-      <span class="error-message">{{ 'common.required' | translate }}</span>
+      <span id="documentNumber-error" class="error-message" role="alert">{{ 'common.required' | translate }}</span>
     }
 
     <h2>{{ 'profile.contact-information' | translate }}</h2>
@@ -49,59 +49,59 @@
     <div class="field-row">
       <div>
         <label for="phoneNumber">{{ 'profile.phone' | translate }}</label>
-        <input id="phoneNumber" type="tel" formControlName="phoneNumber" />
+        <input id="phoneNumber" type="tel" formControlName="phoneNumber" [attr.aria-invalid]="form.controls.phoneNumber.touched && form.controls.phoneNumber.invalid" aria-describedby="phoneNumber-error" />
         @if (form.controls.phoneNumber.touched && form.controls.phoneNumber.invalid) {
-          <span class="error-message">{{ 'common.required' | translate }}</span>
+          <span id="phoneNumber-error" class="error-message" role="alert">{{ 'common.required' | translate }}</span>
         }
       </div>
 
       <div>
         <label for="secondaryEmail">{{ 'profile.secondary-email' | translate }}</label>
-        <input id="secondaryEmail" type="email" formControlName="secondaryEmail" />
+        <input id="secondaryEmail" type="email" formControlName="secondaryEmail" [attr.aria-invalid]="form.controls.secondaryEmail.touched && form.controls.secondaryEmail.invalid" aria-describedby="secondaryEmail-error" />
         @if (form.controls.secondaryEmail.touched && form.controls.secondaryEmail.invalid) {
-          <span class="error-message">{{ 'auth.error.email-invalid' | translate }}</span>
+          <span id="secondaryEmail-error" class="error-message" role="alert">{{ 'auth.error.email-invalid' | translate }}</span>
         }
       </div>
     </div>
 
     <label for="address">{{ 'location.address' | translate }}</label>
-    <input id="address" type="text" formControlName="address" />
+    <input id="address" type="text" formControlName="address" [attr.aria-invalid]="form.controls.address.touched && form.controls.address.invalid" aria-describedby="address-error" />
     @if (form.controls.address.touched && form.controls.address.invalid) {
-      <span class="error-message">{{ 'common.required' | translate }}</span>
+      <span id="address-error" class="error-message" role="alert">{{ 'common.required' | translate }}</span>
     }
 
     <div class="field-row">
       <div>
         <label for="district">{{ 'location.district' | translate }}</label>
-        <input id="district" type="text" formControlName="district" />
+        <input id="district" type="text" formControlName="district" [attr.aria-invalid]="form.controls.district.touched && form.controls.district.invalid" aria-describedby="district-error" />
         @if (form.controls.district.touched && form.controls.district.invalid) {
-          <span class="error-message">{{ 'common.required' | translate }}</span>
+          <span id="district-error" class="error-message" role="alert">{{ 'common.required' | translate }}</span>
         }
       </div>
 
       <div>
         <label for="city">{{ 'location.city' | translate }}</label>
-        <input id="city" type="text" formControlName="city" />
+        <input id="city" type="text" formControlName="city" [attr.aria-invalid]="form.controls.city.touched && form.controls.city.invalid" aria-describedby="city-error" />
         @if (form.controls.city.touched && form.controls.city.invalid) {
-          <span class="error-message">{{ 'common.required' | translate }}</span>
+          <span id="city-error" class="error-message" role="alert">{{ 'common.required' | translate }}</span>
         }
       </div>
     </div>
 
     @if (form.invalid && form.touched) {
-      <span class="error-message">{{ 'common.review-fields' | translate }}</span>
+      <span class="error-message" role="alert">{{ 'common.review-fields' | translate }}</span>
     }
 
     @if (store.saveError()) {
-      <span class="error-message">{{ store.saveError() }}</span>
+      <span class="error-message" role="alert">{{ store.saveError() }}</span>
     }
 
     @if (justSaved()) {
-      <span class="success-message">{{ 'profile.saved' | translate }}</span>
+      <span class="success-message" role="status">{{ 'profile.saved' | translate }}</span>
     }
 
     <div class="form-actions">
-      <button mat-flat-button class="submit-action" type="submit" [disabled]="store.saving()">
+      <button mat-flat-button class="submit-action" type="submit" [disabled]="store.saving()" [attr.aria-busy]="store.saving()">
         {{ (store.saving() ? 'common.saving' : 'profile.save') | translate }}
       </button>
     </div>

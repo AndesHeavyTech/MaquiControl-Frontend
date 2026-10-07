@@ -1,5 +1,5 @@
-<form class="hours-form" [formGroup]="form" (ngSubmit)="performSubmit()">
-  <h3>{{ 'worked-hours.title' | translate }}</h3>
+<form class="hours-form" [formGroup]="form" (ngSubmit)="performSubmit()" aria-labelledby="worked-hours-title">
+  <h3 id="worked-hours-title">{{ 'worked-hours.title' | translate }}</h3>
 
   <div class="field-row">
     <div>

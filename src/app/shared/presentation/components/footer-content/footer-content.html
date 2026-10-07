@@ -5,8 +5,8 @@
   <p><a routerLink="/terms">{{ 'footer.terms' | translate }}</a></p>
   <p>
     {{ 'footer.powered-by' | translate }}
-    <a href="https://material.angular.dev/" target="_blank" rel="noopener noreferrer">Angular Material</a>
+    <a href="https://material.angular.dev/" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'Angular Material ' + ('footer.new-tab' | translate)">Angular Material</a>
     {{ 'footer.and' | translate }}
-    <a href="https://ngx-translate.org/" target="_blank" rel="noopener noreferrer">ngx-translate</a>
+    <a href="https://ngx-translate.org/" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'ngx-translate ' + ('footer.new-tab' | translate)">ngx-translate</a>
   </p>
 </footer>

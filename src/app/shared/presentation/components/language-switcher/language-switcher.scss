@@ -1,4 +1,16 @@
+@use '@angular/material' as mat;
+
 :host {
   display: inline-flex;
   margin-left: 0.5rem;
+
+  @include mat.button-toggle-overrides(
+    (
+      text-color: var(--mc-text),
+      background-color: var(--mc-secondary-surface),
+      selected-state-text-color: var(--mc-background),
+      selected-state-background-color: var(--mc-accent),
+      divider-color: var(--mc-border),
+    )
+  );
 }

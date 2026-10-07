@@ -1,21 +1,21 @@
-<form class="form-card" [formGroup]="form" (ngSubmit)="performSave()">
+<form class="form-card" [formGroup]="form" (ngSubmit)="performSave()" aria-labelledby="organization-title">
   <span class="eyebrow">{{ 'organization.eyebrow' | translate }}</span>
-  <h2>{{ 'organization.title' | translate }}</h2>
+  <h2 id="organization-title">{{ 'organization.title' | translate }}</h2>
   <p class="hint">{{ 'organization.hint' | translate }}</p>
 
   <label for="legalName">{{ 'organization.legal-name' | translate }}</label>
-  <input id="legalName" type="text" formControlName="legalName" />
+  <input id="legalName" type="text" formControlName="legalName" [attr.aria-invalid]="form.controls.legalName.touched && form.controls.legalName.invalid" aria-describedby="legalName-error" />
   @if (form.controls.legalName.touched && form.controls.legalName.invalid) {
-    <span class="error-message">{{ 'common.required' | translate }}</span>
+    <span id="legalName-error" class="error-message" role="alert">{{ 'common.required' | translate }}</span>
   }
 
   <label for="tradeName">{{ 'organization.trade-name' | translate }}</label>
   <input id="tradeName" type="text" formControlName="tradeName" />
 
   <label for="taxId">{{ 'organization.tax-id' | translate }}</label>
-  <input id="taxId" type="text" formControlName="taxId" />
+  <input id="taxId" type="text" formControlName="taxId" [attr.aria-invalid]="form.controls.taxId.touched && form.controls.taxId.invalid" aria-describedby="taxId-error" />
   @if (form.controls.taxId.touched && form.controls.taxId.invalid) {
-    <span class="error-message">{{ 'common.required' | translate }}</span>
+    <span id="taxId-error" class="error-message" role="alert">{{ 'common.required' | translate }}</span>
   }
 
   <label for="type">{{ 'organization.type' | translate }}</label>
@@ -26,25 +26,25 @@
   </select>
 
   <label for="address">{{ 'location.address' | translate }}</label>
-  <input id="address" type="text" formControlName="address" />
+  <input id="address" type="text" formControlName="address" [attr.aria-invalid]="form.controls.address.touched && form.controls.address.invalid" aria-describedby="address-error" />
   @if (form.controls.address.touched && form.controls.address.invalid) {
-    <span class="error-message">{{ 'common.required' | translate }}</span>
+    <span id="address-error" class="error-message" role="alert">{{ 'common.required' | translate }}</span>
   }
 
   @if (form.invalid && form.touched) {
-    <span class="error-message">{{ 'common.review-fields' | translate }}</span>
+    <span class="error-message" role="alert">{{ 'common.review-fields' | translate }}</span>
   }
 
   @if (store.saveError()) {
-    <span class="error-message">{{ store.saveError() }}</span>
+    <span class="error-message" role="alert">{{ store.saveError() }}</span>
   }
 
   @if (justSaved()) {
-    <span class="success-message">{{ 'organization.saved' | translate }}</span>
+    <span class="success-message" role="status">{{ 'organization.saved' | translate }}</span>
   }
 
   <div class="form-actions">
-    <button mat-flat-button class="submit-action" type="submit" [disabled]="store.saving()">
+    <button mat-flat-button class="submit-action" type="submit" [disabled]="store.saving()" [attr.aria-busy]="store.saving()">
       {{ (store.saving() ? 'common.saving' : 'organization.save') | translate }}
     </button>
   </div>
