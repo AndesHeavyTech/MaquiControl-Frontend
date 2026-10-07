@@ -13,6 +13,7 @@ import { TermsOfService } from './shared/presentation/views/terms-of-service/ter
 import { identityAccessGuard } from './identity-access-management/infrastructure/identity-access.guard';
 import { roleGuard } from './identity-access-management/infrastructure/role.guard';
 import { RoleName } from './identity-access-management/domain/model/role-name';
+import { Plans } from './shared/presentation/views/plans/plans';
 
 const identityAccessManagementRoutes = () =>
   import('./identity-access-management/presentation/identity-access-management.routes').then(
@@ -93,6 +94,11 @@ export const routes: Routes = [
   {
     path: 'identity',
     loadChildren: identityAccessManagementRoutes,
+  },
+  {
+    path: 'plans',
+    component: Plans,
+    title: 'Planes | MaquiControl',
   },
   {
     path: '**',
