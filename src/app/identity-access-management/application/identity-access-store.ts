@@ -1,4 +1,4 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, Injector, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { IdentityAccessApi } from '../infrastructure/identity-access-api';
 import { Role } from '../domain/model/role.entity';
@@ -10,9 +10,12 @@ const TOKEN_STORAGE_KEY = 'mc-token';
 const SESSION_STORAGE_KEY = 'mc-session';
 
 /**
- * What survives a page reload next to the token: without it a refresh, a new
- * tab or a shared internal link would find `isSignedIn` back at `false` and
- * send the user to the sign-in page.
+ * What survives a page reload next to the token: without it a refresh would
+ * find `isSignedIn` back at `false` and send the user to the sign-in page.
+ *
+ * Kept in `sessionStorage`, not `localStorage`: it survives a reload (F5)
+ * but is discarded when the tab or browser is closed, so reopening the app
+ * always starts signed out.
  */
 interface StoredSession {
   email: string;
@@ -22,8 +25,8 @@ interface StoredSession {
 
 function readStoredSession(): (StoredSession & { token: string }) | null {
   try {
-    const token = localStorage.getItem(TOKEN_STORAGE_KEY);
-    const rawSession = localStorage.getItem(SESSION_STORAGE_KEY);
+    const token = sessionStorage.getItem(TOKEN_STORAGE_KEY);
+    const rawSession = sessionStorage.getItem(SESSION_STORAGE_KEY);
     if (!token || !rawSession) {
       return null;
     }
@@ -42,6 +45,12 @@ function readStoredSession(): (StoredSession & { token: string }) | null {
 })
 export class IdentityAccessStore {
   readonly #api = inject(IdentityAccessApi);
+  /**
+   * `Router` is read lazily: injecting it here creates a cycle at startup
+   * (Router -> title strategy -> translations HTTP request -> auth
+   * interceptor -> this store -> Router).
+   */
+  readonly #injector = inject(Injector);
 
   readonly #isSignedIn = signal(false);
   readonly #currentEmail = signal<string | null>(null);
@@ -60,7 +69,7 @@ export class IdentityAccessStore {
   readonly error = this.#error.asReadonly();
 
   readonly currentToken = computed(() =>
-    this.isSignedIn() ? localStorage.getItem(TOKEN_STORAGE_KEY) : null,
+    this.isSignedIn() ? sessionStorage.getItem(TOKEN_STORAGE_KEY) : null,
   );
 
   /**
@@ -76,7 +85,14 @@ export class IdentityAccessStore {
 
   constructor() {
     this.#restoreSession();
-    this.loadRoles();
+
+    // HTTP calls go through `identityAccessInterceptor`, which injects this
+    // store: issued inside the constructor they fail with a circular
+    // dependency (NG0200), so they wait until construction has finished.
+    queueMicrotask(() => {
+      this.#validateRestoredAccount();
+      this.loadRoles();
+    });
   }
 
   hasRole(roleName: RoleName): boolean {
@@ -84,6 +100,10 @@ export class IdentityAccessStore {
   }
 
   #restoreSession(): void {
+    // Sessions saved by earlier versions in `localStorage` would never expire.
+    localStorage.removeItem(TOKEN_STORAGE_KEY);
+    localStorage.removeItem(SESSION_STORAGE_KEY);
+
     const session = readStoredSession();
     if (!session) {
       this.#clearStoredSession();
@@ -95,9 +115,22 @@ export class IdentityAccessStore {
     this.#currentRoleIds.set(session.roleIds);
   }
 
+  /** The account may have been deleted since the session was saved (e.g. the fake API was reseeded). */
+  #validateRestoredAccount(): void {
+    const userId = this.#currentUserId();
+    if (userId === null) {
+      return;
+    }
+    this.#api.userAccountExists(userId).subscribe((exists) => {
+      if (!exists) {
+        this.signOut(this.#injector.get(Router));
+      }
+    });
+  }
+
   #clearStoredSession(): void {
-    localStorage.removeItem(TOKEN_STORAGE_KEY);
-    localStorage.removeItem(SESSION_STORAGE_KEY);
+    sessionStorage.removeItem(TOKEN_STORAGE_KEY);
+    sessionStorage.removeItem(SESSION_STORAGE_KEY);
   }
 
   loadRoles(): void {
@@ -139,9 +172,9 @@ export class IdentityAccessStore {
 
     this.#api.signIn(command).subscribe({
       next: (resource) => {
-        localStorage.setItem(TOKEN_STORAGE_KEY, resource.token);
+        sessionStorage.setItem(TOKEN_STORAGE_KEY, resource.token);
         const session: StoredSession = { email: resource.email, userId: resource.id, roleIds: resource.roleIds };
-        localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(session));
+        sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(session));
         this.#isSignedIn.set(true);
         this.#currentEmail.set(resource.email);
         this.#currentUserId.set(resource.id);

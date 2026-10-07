@@ -259,7 +259,10 @@
     "phone": "Phone",
     "secondary-email": "Alternate email (optional)",
     "saved": "Profile saved successfully.",
-    "save": "Save profile"
+    "save": "Save profile",
+    "session-eyebrow": "Session",
+    "session-title": "Sign out of MaquiControl",
+    "session-hint": "You are signed in as {{email}}. Your session also ends when you close the browser."
   },
   "organization": {
     "eyebrow": "Organization (optional)",

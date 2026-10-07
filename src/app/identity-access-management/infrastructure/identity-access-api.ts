@@ -1,5 +1,6 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { BaseApi } from '../../shared/infrastructure/base-api';
 import { Role } from '../domain/model/role.entity';
@@ -32,5 +33,16 @@ export class IdentityAccessApi extends BaseApi {
 
   getRoles(): Observable<Role[]> {
     return this.#roleEndpoint.getAll();
+  }
+
+  /**
+   * Only a 404 means the account is gone: a network error or a server
+   * that is still starting must not sign the user out.
+   */
+  userAccountExists(id: number): Observable<boolean> {
+    return this.http.get(`${environment.apiBaseUrl}/user-accounts/${id}`).pipe(
+      map(() => true),
+      catchError((error: HttpErrorResponse) => of(error.status !== 404)),
+    );
   }
 }

@@ -1,5 +1,6 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IdentityAccessStore } from '../../../../identity-access-management/application/identity-access-store';
@@ -17,6 +18,7 @@ import { OrganizationForm } from '../organization-form/organization-form';
 export class ProfilePage {
   protected readonly store = inject(ProfilesManagementStore);
   protected readonly identityAccessStore = inject(IdentityAccessStore);
+  readonly #router = inject(Router);
 
   /** Guards against the reactive patch effect overwriting what the user is typing. */
   private formPatched = false;
@@ -102,5 +104,9 @@ export class ProfilePage {
     this.justSaved.set(false);
 
     this.store.saveProfile(profile, () => this.justSaved.set(true));
+  }
+
+  protected performSignOut(): void {
+    this.identityAccessStore.signOut(this.#router);
   }
 }
