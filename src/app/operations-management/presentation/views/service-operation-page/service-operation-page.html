@@ -1,35 +1,35 @@
 <section class="form-screen">
   <div class="panel">
-    <span class="eyebrow">Operations Management</span>
-    <h1>Operación de servicio</h1>
+    <span class="eyebrow">{{ 'operation.eyebrow' | translate }}</span>
+    <h1>{{ 'operation.title' | translate }}</h1>
 
     @if (!rental) {
-      <p class="hint">Cargando reserva…</p>
+      <p class="hint">{{ 'operation.loading' | translate }}</p>
     } @else {
       <p class="hint">
-        Maquinaria: {{ fleetManagementStore.machineryById(rental.machineryId)?.name ?? ('#' + rental.machineryId) }}
+        {{ 'operation.machinery' | translate }} {{ fleetManagementStore.machineryById(rental.machineryId)?.name ?? ('#' + rental.machineryId) }}
       </p>
 
       @if (!operation) {
-        <p class="hint">Esta reserva aún no tiene una operación de servicio iniciada.</p>
+        <p class="hint">{{ 'operation.not-started' | translate }}</p>
 
         @if (isContractor) {
           <button mat-flat-button class="submit-action" type="button" (click)="performStart()">
-            Iniciar operación
+            {{ 'operation.start' | translate }}
           </button>
         }
       } @else {
         <div class="status-row">
           <span class="status" [class.in-progress]="operation.isInProgress()">
-            {{ operation.status }}
+            {{ 'enums.operation-status.' + operation.status | translate }}
           </span>
           <span class="total-hours">
-            Total: {{ operation.calculateTotalHours() | number: '1.1-2' }} h
+            {{ 'reservations.total' | translate }}: {{ operation.calculateTotalHours() | number: '1.1-2' }} h
           </span>
         </div>
 
         @if (operation.workedHours.length === 0) {
-          <p class="hint">Aún no se registran horas trabajadas.</p>
+          <p class="hint">{{ 'operation.no-hours' | translate }}</p>
         } @else {
           <ul class="hours-list">
             @for (record of operation.workedHours; track record.id) {
@@ -44,12 +44,12 @@
 
                 <div class="hours-actions">
                   <span class="status" [class]="record.status.toLowerCase()">
-                    {{ workedHoursStatusLabel(record.status) }}
+                    {{ workedHoursStatusLabel(record.status) | translate }}
                   </span>
 
                   @if (isMachineryOwner && record.status === 'PENDING') {
-                    <button mat-button type="button" (click)="performValidate(record, true)">Validar</button>
-                    <button mat-button type="button" (click)="performValidate(record, false)">Rechazar</button>
+                    <button mat-button type="button" (click)="performValidate(record, true)">{{ 'operation.validate' | translate }}</button>
+                    <button mat-button type="button" (click)="performValidate(record, false)">{{ 'reservations.reject' | translate }}</button>
                   }
                 </div>
               </li>
@@ -63,7 +63,7 @@
 
         @if (isMachineryOwner && operation.isInProgress()) {
           <button mat-stroked-button type="button" (click)="performComplete()">
-            Completar operación
+            {{ 'operation.complete' | translate }}
           </button>
         }
 
@@ -74,7 +74,7 @@
     }
 
     <div class="form-actions">
-      <a mat-button routerLink="/rental/reservations">Volver a reservas</a>
+      <a mat-button routerLink="/rental/reservations">{{ 'operation.back' | translate }}</a>
     </div>
   </div>
 </section>

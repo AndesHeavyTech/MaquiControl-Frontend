@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ProfilesManagementStore } from '../../../../profiles-management/application/profiles-management-store';
 import { FleetManagementStore } from '../../../application/fleet-management-store';
 import { Machinery } from '../../../domain/model/machinery.entity';
@@ -18,7 +19,7 @@ const FALLBACK_OWNER_PROFILE_ID = 1;
 
 @Component({
   selector: 'app-machinery-form',
-  imports: [ReactiveFormsModule, RouterLink, MatButtonModule],
+  imports: [ReactiveFormsModule, RouterLink, MatButtonModule, TranslatePipe],
   templateUrl: './machinery-form.html',
   styleUrl: './machinery-form.scss',
 })

@@ -2,6 +2,7 @@ import { DecimalPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ProfilesManagementStore } from '../../../../profiles-management/application/profiles-management-store';
 import { FleetManagementStore } from '../../../application/fleet-management-store';
 import { Machinery } from '../../../domain/model/machinery.entity';
@@ -10,13 +11,14 @@ import { MachineryType } from '../../../domain/model/machinery-type';
 
 @Component({
   selector: 'app-machinery-list',
-  imports: [DecimalPipe, RouterLink, MatButtonModule],
+  imports: [DecimalPipe, RouterLink, MatButtonModule, TranslatePipe],
   templateUrl: './machinery-list.html',
   styleUrl: './machinery-list.scss',
 })
 export class MachineryList {
   protected readonly store = inject(FleetManagementStore);
   readonly #profilesManagementStore = inject(ProfilesManagementStore);
+  readonly #translate = inject(TranslateService);
 
   /** Renting your own published machinery makes no sense: compare
    *  `Machinery.ownerProfileId` against the signed-in user's own
@@ -27,28 +29,11 @@ export class MachineryList {
   }
 
   protected machineryTypeLabel(type: MachineryType): string {
-    const labels: Record<MachineryType, string> = {
-      [MachineryType.Excavator]: 'Excavadora',
-      [MachineryType.BackhoeLoader]: 'Retroexcavadora',
-      [MachineryType.Loader]: 'Cargador',
-      [MachineryType.Crane]: 'Grúa',
-      [MachineryType.Bulldozer]: 'Bulldozer',
-      [MachineryType.Other]: 'Otro',
-    };
-
-    return labels[type];
+    return `enums.machinery-type.${type}`;
   }
 
   protected machineryStatusLabel(status: MachineryStatus): string {
-    const labels: Record<MachineryStatus, string> = {
-      [MachineryStatus.Available]: 'Disponible',
-      [MachineryStatus.Reserved]: 'Reservada',
-      [MachineryStatus.Rented]: 'Alquilada',
-      [MachineryStatus.InMaintenance]: 'En mantenimiento',
-      [MachineryStatus.OutOfService]: 'Fuera de servicio',
-    };
-
-    return labels[status];
+    return `enums.machinery-status.${status}`;
   }
 
   protected machineryStatusClass(status: MachineryStatus): string {
@@ -56,7 +41,7 @@ export class MachineryList {
   }
 
   protected performDelete(id: number, name: string): void {
-    if (confirm(`¿Eliminar "${name}" del catálogo? Esta acción no se puede deshacer.`)) {
+    if (confirm(this.#translate.instant('machinery-list.confirm-delete', { name }))) {
       this.store.deleteMachinery(id);
     }
   }

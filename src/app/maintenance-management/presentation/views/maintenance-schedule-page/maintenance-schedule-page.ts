@@ -2,6 +2,7 @@ import { DatePipe, DecimalPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { FleetManagementStore } from '../../../../fleet-management/application/fleet-management-store';
 import { ProfilesManagementStore } from '../../../../profiles-management/application/profiles-management-store';
 import { MaintenanceManagementStore } from '../../../application/maintenance-management-store';
@@ -12,7 +13,7 @@ import { Money } from '../../../domain/model/money.value-object';
 
 @Component({
   selector: 'app-maintenance-schedule-page',
-  imports: [ReactiveFormsModule, DatePipe, DecimalPipe, MatButtonModule],
+  imports: [ReactiveFormsModule, DatePipe, DecimalPipe, MatButtonModule, TranslatePipe],
   templateUrl: './maintenance-schedule-page.html',
   styleUrl: './maintenance-schedule-page.scss',
 })
@@ -20,6 +21,7 @@ export class MaintenanceSchedulePage {
   protected readonly store = inject(MaintenanceManagementStore);
   protected readonly fleetManagementStore = inject(FleetManagementStore);
   readonly #profilesManagementStore = inject(ProfilesManagementStore);
+  readonly #translate = inject(TranslateService);
 
   protected readonly maintenanceTypes = Object.values(MaintenanceType);
 
@@ -49,18 +51,11 @@ export class MaintenanceSchedulePage {
   }
 
   protected machineryName(machineryId: number): string {
-    return this.fleetManagementStore.machineryById(machineryId)?.name ?? `Maquinaria #${machineryId}`;
+    return this.fleetManagementStore.machineryById(machineryId)?.name ?? this.#translate.instant('reservations.machinery-fallback', { id: machineryId });
   }
 
   protected maintenanceStatusLabel(status: MaintenanceStatus): string {
-    const labels: Record<MaintenanceStatus, string> = {
-      [MaintenanceStatus.Scheduled]: 'Programado',
-      [MaintenanceStatus.InProgress]: 'En progreso',
-      [MaintenanceStatus.Completed]: 'Completado',
-      [MaintenanceStatus.Cancelled]: 'Cancelado',
-    };
-
-    return labels[status];
+    return `enums.maintenance-status.${status}`;
   }
 
   protected maintenanceStatusClass(status: MaintenanceStatus): string {
@@ -87,7 +82,7 @@ export class MaintenanceSchedulePage {
   }
 
   protected performStart(maintenance: Maintenance): void {
-    const technicianName = prompt('Nombre del técnico asignado:');
+    const technicianName = prompt(this.#translate.instant('maintenance.technician-prompt'));
 
     if (!technicianName || technicianName.trim().length === 0) {
       return;
@@ -97,7 +92,7 @@ export class MaintenanceSchedulePage {
   }
 
   protected performComplete(maintenance: Maintenance): void {
-    const costInput = prompt('Costo final del mantenimiento (S/):');
+    const costInput = prompt(this.#translate.instant('maintenance.cost-prompt'));
 
     if (costInput === null) {
       return;

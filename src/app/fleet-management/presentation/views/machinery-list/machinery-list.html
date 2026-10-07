@@ -1,53 +1,47 @@
 <section class="catalog">
   <header class="catalog-header">
     <div>
-      <span class="eyebrow">Fleet Management</span>
-      <h1>Catálogo de maquinaria</h1>
-      <p>
-        Consulta maquinaria disponible, tarifas referenciales y ubicaciones
-        actualizadas.
-      </p>
+      <span class="eyebrow">{{ 'machinery-list.eyebrow' | translate }}</span>
+      <h1>{{ 'machinery-list.title' | translate }}</h1>
+      <p>{{ 'machinery-list.subtitle' | translate }}</p>
     </div>
 
-    <div class="catalog-summary" aria-label="Resumen del catálogo">
+    <div class="catalog-summary" [attr.aria-label]="'machinery-list.summary-label' | translate">
       <div>
         <strong>{{ store.machineryCount() }}</strong>
-        <span>equipos registrados</span>
+        <span>{{ 'machinery-list.registered' | translate }}</span>
       </div>
       <div>
         <strong>{{ store.availableMachineryCount() }}</strong>
-        <span>disponibles</span>
+        <span>{{ 'machinery-list.available' | translate }}</span>
       </div>
     </div>
 
     <a mat-flat-button class="publish-action" routerLink="/fleet/machinery/new">
-      Publicar maquinaria
+      {{ 'machinery-list.publish' | translate }}
     </a>
   </header>
 
   @if (store.loading()) {
     <div class="state-message" role="status" aria-live="polite">
       <span class="spinner" aria-hidden="true"></span>
-      <h2>Cargando maquinaria</h2>
-      <p>Estamos consultando la disponibilidad del catálogo.</p>
+      <h2>{{ 'machinery-list.loading-title' | translate }}</h2>
+      <p>{{ 'machinery-list.loading-text' | translate }}</p>
     </div>
   } @else if (store.error()) {
     <div class="state-message error-message" role="alert">
       <span class="state-icon" aria-hidden="true">!</span>
-      <h2>No pudimos cargar el catálogo</h2>
-      <p>
-        Verifica que la API simulada se encuentre ejecutándose en el puerto
-        3000.
-      </p>
+      <h2>{{ 'machinery-list.error-title' | translate }}</h2>
+      <p>{{ 'machinery-list.error-text' | translate }}</p>
       <button mat-flat-button type="button" (click)="store.loadMachinery()">
-        Intentar nuevamente
+        {{ 'common.retry' | translate }}
       </button>
     </div>
   } @else if (store.machineryCount() === 0) {
     <div class="state-message">
       <span class="state-icon" aria-hidden="true">0</span>
-      <h2>No hay maquinaria registrada</h2>
-      <p>El catálogo todavía no cuenta con equipos para mostrar.</p>
+      <h2>{{ 'machinery-list.empty-title' | translate }}</h2>
+      <p>{{ 'machinery-list.empty-text' | translate }}</p>
     </div>
   } @else {
     <div class="machinery-grid">
@@ -62,13 +56,13 @@
               class="status"
               [class]="machineryStatusClass(machinery.status)"
             >
-              {{ machineryStatusLabel(machinery.status) }}
+              {{ machineryStatusLabel(machinery.status) | translate }}
             </span>
           </div>
 
           <div class="card-body">
             <span class="machinery-type">
-              {{ machineryTypeLabel(machinery.type) }}
+              {{ machineryTypeLabel(machinery.type) | translate }}
             </span>
 
             <h2>{{ machinery.name }}</h2>
@@ -77,17 +71,17 @@
 
             <dl class="details">
               <div>
-                <dt>Marca y modelo</dt>
+                <dt>{{ 'machinery.brand-model' | translate }}</dt>
                 <dd>{{ machinery.brand }} {{ machinery.model }}</dd>
               </div>
 
               <div>
-                <dt>Año</dt>
+                <dt>{{ 'machinery.year' | translate }}</dt>
                 <dd>{{ machinery.manufactureYear }}</dd>
               </div>
 
               <div>
-                <dt>Ubicación</dt>
+                <dt>{{ 'machinery.location' | translate }}</dt>
                 <dd>
                   {{ machinery.location.district }},
                   {{ machinery.location.department }}
@@ -98,11 +92,11 @@
 
           <footer class="card-footer">
             <div>
-              <span>Tarifa desde</span>
+              <span>{{ 'machinery-list.rate-from' | translate }}</span>
               <strong>
                 S/
                 {{ machinery.hourlyRate.amount | number: '1.0-0' }}
-                <small>/ hora</small>
+                <small>{{ 'machinery-list.per-hour' | translate }}</small>
               </strong>
             </div>
 
@@ -113,16 +107,16 @@
 
           <div class="card-management">
             @if (isOwner(machinery)) {
-              <span class="relation-tag">Tu maquinaria</span>
+              <span class="relation-tag">{{ 'machinery-list.yours' | translate }}</span>
               <a mat-stroked-button [routerLink]="['/fleet/machinery', machinery.id, 'edit']">
-                Editar
+                {{ 'common.edit' | translate }}
               </a>
               <button mat-button type="button" (click)="performDelete(machinery.id, machinery.name)">
-                Eliminar
+                {{ 'common.delete' | translate }}
               </button>
             } @else if (machinery.isAvailable()) {
               <a mat-flat-button class="rent-action" [routerLink]="['/rental/request', machinery.id]">
-                Alquilar
+                {{ 'machinery-list.rent' | translate }}
               </a>
             }
           </div>

@@ -2,13 +2,14 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 import { FleetManagementStore } from '../../../../fleet-management/application/fleet-management-store';
 import { MaintenanceManagementStore } from '../../../application/maintenance-management-store';
 import { BreakdownSeverity } from '../../../domain/model/breakdown-severity';
 
 @Component({
   selector: 'app-breakdown-report-form',
-  imports: [ReactiveFormsModule, RouterLink, MatButtonModule],
+  imports: [ReactiveFormsModule, RouterLink, MatButtonModule, TranslatePipe],
   templateUrl: './breakdown-report-form.html',
   styleUrl: './breakdown-report-form.scss',
 })

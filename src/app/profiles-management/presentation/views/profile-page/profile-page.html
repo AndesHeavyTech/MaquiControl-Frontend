@@ -1,98 +1,95 @@
 <section class="page-screen">
   <form class="form-card" [formGroup]="form" (ngSubmit)="performSave()">
-    <span class="eyebrow">Profiles Management</span>
-    <h1>Mi perfil</h1>
-    <p class="hint">
-      Mantén actualizados tus datos personales y de contacto. Esta información
-      identifica tus publicaciones y reservas dentro de MaquiControl.
-    </p>
+    <span class="eyebrow">{{ 'profile.eyebrow' | translate }}</span>
+    <h1>{{ 'profile.title' | translate }}</h1>
+    <p class="hint">{{ 'profile.hint' | translate }}</p>
 
     @if (identityAccessStore.currentRoles().length > 0) {
       <div class="role-badges">
         @for (role of identityAccessStore.currentRoles(); track role.id) {
-          <span class="role-badge">{{ role.description }}</span>
+          <span class="role-badge">{{ 'roles.' + role.name + '.name' | translate }}</span>
         }
       </div>
     }
 
     @if (store.loading()) {
-      <p class="hint">Cargando tu perfil…</p>
+      <p class="hint">{{ 'profile.loading' | translate }}</p>
     } @else if (!store.currentProfile()) {
-      <p class="hint">Aún no has completado tu perfil. Completa el formulario para crearlo.</p>
+      <p class="hint">{{ 'profile.empty' | translate }}</p>
     }
 
-    <h2>Datos personales</h2>
+    <h2>{{ 'profile.personal-data' | translate }}</h2>
 
     <div class="field-row">
       <div>
-        <label for="firstName">Nombres</label>
+        <label for="firstName">{{ 'profile.first-name' | translate }}</label>
         <input id="firstName" type="text" formControlName="firstName" />
         @if (form.controls.firstName.touched && form.controls.firstName.invalid) {
-          <span class="error-message">Obligatorio.</span>
+          <span class="error-message">{{ 'common.required' | translate }}</span>
         }
       </div>
 
       <div>
-        <label for="lastName">Apellidos</label>
+        <label for="lastName">{{ 'profile.last-name' | translate }}</label>
         <input id="lastName" type="text" formControlName="lastName" />
         @if (form.controls.lastName.touched && form.controls.lastName.invalid) {
-          <span class="error-message">Obligatorio.</span>
+          <span class="error-message">{{ 'common.required' | translate }}</span>
         }
       </div>
     </div>
 
-    <label for="documentNumber">Número de documento</label>
+    <label for="documentNumber">{{ 'profile.document-number' | translate }}</label>
     <input id="documentNumber" type="text" formControlName="documentNumber" />
     @if (form.controls.documentNumber.touched && form.controls.documentNumber.invalid) {
-      <span class="error-message">Obligatorio.</span>
+      <span class="error-message">{{ 'common.required' | translate }}</span>
     }
 
-    <h2>Información de contacto</h2>
+    <h2>{{ 'profile.contact-information' | translate }}</h2>
 
     <div class="field-row">
       <div>
-        <label for="phoneNumber">Teléfono</label>
+        <label for="phoneNumber">{{ 'profile.phone' | translate }}</label>
         <input id="phoneNumber" type="tel" formControlName="phoneNumber" />
         @if (form.controls.phoneNumber.touched && form.controls.phoneNumber.invalid) {
-          <span class="error-message">Obligatorio.</span>
+          <span class="error-message">{{ 'common.required' | translate }}</span>
         }
       </div>
 
       <div>
-        <label for="secondaryEmail">Correo alternativo (opcional)</label>
+        <label for="secondaryEmail">{{ 'profile.secondary-email' | translate }}</label>
         <input id="secondaryEmail" type="email" formControlName="secondaryEmail" />
         @if (form.controls.secondaryEmail.touched && form.controls.secondaryEmail.invalid) {
-          <span class="error-message">Ingresa un correo electrónico válido.</span>
+          <span class="error-message">{{ 'auth.error.email-invalid' | translate }}</span>
         }
       </div>
     </div>
 
-    <label for="address">Dirección</label>
+    <label for="address">{{ 'location.address' | translate }}</label>
     <input id="address" type="text" formControlName="address" />
     @if (form.controls.address.touched && form.controls.address.invalid) {
-      <span class="error-message">Obligatorio.</span>
+      <span class="error-message">{{ 'common.required' | translate }}</span>
     }
 
     <div class="field-row">
       <div>
-        <label for="district">Distrito</label>
+        <label for="district">{{ 'location.district' | translate }}</label>
         <input id="district" type="text" formControlName="district" />
         @if (form.controls.district.touched && form.controls.district.invalid) {
-          <span class="error-message">Obligatorio.</span>
+          <span class="error-message">{{ 'common.required' | translate }}</span>
         }
       </div>
 
       <div>
-        <label for="city">Ciudad</label>
+        <label for="city">{{ 'location.city' | translate }}</label>
         <input id="city" type="text" formControlName="city" />
         @if (form.controls.city.touched && form.controls.city.invalid) {
-          <span class="error-message">Obligatorio.</span>
+          <span class="error-message">{{ 'common.required' | translate }}</span>
         }
       </div>
     </div>
 
     @if (form.invalid && form.touched) {
-      <span class="error-message">Revisa los campos marcados antes de guardar.</span>
+      <span class="error-message">{{ 'common.review-fields' | translate }}</span>
     }
 
     @if (store.saveError()) {
@@ -100,12 +97,12 @@
     }
 
     @if (justSaved()) {
-      <span class="success-message">Perfil guardado correctamente.</span>
+      <span class="success-message">{{ 'profile.saved' | translate }}</span>
     }
 
     <div class="form-actions">
       <button mat-flat-button class="submit-action" type="submit" [disabled]="store.saving()">
-        {{ store.saving() ? 'Guardando…' : 'Guardar perfil' }}
+        {{ (store.saving() ? 'common.saving' : 'profile.save') | translate }}
       </button>
     </div>
   </form>
