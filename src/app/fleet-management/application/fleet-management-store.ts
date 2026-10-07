@@ -72,11 +72,7 @@ export class FleetManagementStore {
     return this.#categories().find((category) => category.id === id);
   }
 
-  /**
-   * Create, update and delete are never retried automatically: retrying a
-   * mutating request after a transient failure could duplicate or
-   * mis-apply the change (same reasoning as IdentityAccessStore).
-   */
+
   createMachinery(machinery: Machinery, onSuccess: () => void): void {
     this.#saving.set(true);
     this.#saveError.set(null);

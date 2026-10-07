@@ -1,13 +1,10 @@
 <section class="hero">
   <div class="hero-content">
-    <span class="eyebrow">Gestión inteligente de maquinaria</span>
+    <span class="eyebrow">{{ 'home.eyebrow' | translate }}</span>
 
-    <h1>Encuentra y administra maquinaria sin complicaciones</h1>
+    <h1>{{ 'home.title' | translate }}</h1>
 
-    <p>
-      MaquiControl centraliza la disponibilidad, reserva y seguimiento de
-      maquinaria para contratistas y empresas de alquiler.
-    </p>
+    <p>{{ 'home.content' | translate }}</p>
 
     <div class="hero-actions">
       <a
@@ -15,7 +12,7 @@
         class="primary-action"
         routerLink="/fleet/machinery"
       >
-        Explorar maquinaria
+        {{ 'home.explore-machinery' | translate }}
       </a>
 
       <a
@@ -25,19 +22,19 @@
         target="_blank"
         rel="noopener noreferrer"
       >
-        Conocer el proyecto
+        {{ 'home.about-project' | translate }}
       </a>
     </div>
   </div>
 
-  <aside class="summary-card" aria-label="Beneficios principales">
-    <span class="card-label">Todo en un solo lugar</span>
-    <h2>Control operativo confiable</h2>
+  <aside class="summary-card" [attr.aria-label]="'home.benefits-label' | translate">
+    <span class="card-label">{{ 'home.card-label' | translate }}</span>
+    <h2>{{ 'home.card-title' | translate }}</h2>
 
     <ul>
-      <li>Disponibilidad actualizada</li>
-      <li>Tarifas transparentes</li>
-      <li>Seguimiento de maquinaria</li>
+      <li>{{ 'home.benefit-availability' | translate }}</li>
+      <li>{{ 'home.benefit-rates' | translate }}</li>
+      <li>{{ 'home.benefit-tracking' | translate }}</li>
     </ul>
   </aside>
 </section>

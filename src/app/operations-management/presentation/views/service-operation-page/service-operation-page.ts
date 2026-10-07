@@ -2,6 +2,7 @@ import { DatePipe, DecimalPipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ProfilesManagementStore } from '../../../../profiles-management/application/profiles-management-store';
 import { RentalManagementStore } from '../../../../rental-management/application/rental-management-store';
 import { FleetManagementStore } from '../../../../fleet-management/application/fleet-management-store';
@@ -12,7 +13,7 @@ import { WorkedHoursForm, WorkedHoursSubmission } from '../worked-hours-form/wor
 
 @Component({
   selector: 'app-service-operation-page',
-  imports: [DatePipe, DecimalPipe, RouterLink, MatButtonModule, WorkedHoursForm],
+  imports: [DatePipe, DecimalPipe, RouterLink, MatButtonModule, WorkedHoursForm, TranslatePipe],
   templateUrl: './service-operation-page.html',
   styleUrl: './service-operation-page.scss',
 })
@@ -59,13 +60,7 @@ export class ServiceOperationPage implements OnInit {
   }
 
   protected workedHoursStatusLabel(status: WorkedHoursStatus): string {
-    const labels: Record<WorkedHoursStatus, string> = {
-      [WorkedHoursStatus.Pending]: 'Pendiente',
-      [WorkedHoursStatus.Validated]: 'Validada',
-      [WorkedHoursStatus.Rejected]: 'Rechazada',
-    };
-
-    return labels[status];
+    return `enums.worked-hours-status.${status}`;
   }
 
   protected performStart(): void {

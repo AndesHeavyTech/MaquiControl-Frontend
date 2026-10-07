@@ -1,27 +1,27 @@
 <section class="form-screen">
   <form class="form-card" [formGroup]="form" (ngSubmit)="performReport()">
-    <span class="eyebrow">Maintenance Management</span>
-    <h1>Reportar avería</h1>
+    <span class="eyebrow">{{ 'maintenance.eyebrow' | translate }}</span>
+    <h1>{{ 'breakdown.title' | translate }}</h1>
 
     @if (!machinery) {
-      <p class="hint">Cargando maquinaria…</p>
+      <p class="hint">{{ 'rental-request.loading' | translate }}</p>
     } @else {
       <div class="machinery-summary">
         <h2>{{ machinery.name }}</h2>
         <p>{{ machinery.brand }} {{ machinery.model }}</p>
       </div>
 
-      <label for="severity">Gravedad</label>
+      <label for="severity">{{ 'breakdown.severity' | translate }}</label>
       <select id="severity" formControlName="severity">
         @for (severity of severities; track severity) {
-          <option [value]="severity">{{ severity }}</option>
+          <option [value]="severity">{{ 'enums.breakdown-severity.' + severity | translate }}</option>
         }
       </select>
 
-      <label for="description">Descripción de la falla</label>
+      <label for="description">{{ 'breakdown.description' | translate }}</label>
       <textarea id="description" rows="4" formControlName="description"></textarea>
       @if (form.controls.description.touched && form.controls.description.invalid) {
-        <span class="error-message">Obligatorio.</span>
+        <span class="error-message">{{ 'common.required' | translate }}</span>
       }
 
       @if (store.saveError()) {
@@ -29,9 +29,9 @@
       }
 
       <div class="form-actions">
-        <a mat-stroked-button routerLink="/fleet/machinery">Cancelar</a>
+        <a mat-stroked-button routerLink="/fleet/machinery">{{ 'common.cancel' | translate }}</a>
         <button mat-flat-button class="submit-action" type="submit" [disabled]="store.saving()">
-          {{ store.saving() ? 'Enviando…' : 'Reportar avería' }}
+          {{ (store.saving() ? 'common.sending' : 'breakdown.submit') | translate }}
         </button>
       </div>
     }

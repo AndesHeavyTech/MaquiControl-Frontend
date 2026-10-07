@@ -1,5 +1,11 @@
 <footer>
-  <p>&copy; {{ currentYear }} MaquiControl. Todos los derechos reservados.</p>
-  <p>Developed by AndesHeavyTech</p>
-  <p>Gestión confiable para el alquiler de maquinaria.</p>
+  <p>&copy; {{ currentYear }} MaquiControl. {{ 'footer.rights' | translate }}</p>
+  <p>{{ 'footer.developed-by' | translate }} AndesHeavyTech</p>
+  <p>{{ 'footer.tagline' | translate }}</p>
+  <p>
+    {{ 'footer.powered-by' | translate }}
+    <a href="https://material.angular.dev/" target="_blank" rel="noopener noreferrer">Angular Material</a>
+    {{ 'footer.and' | translate }}
+    <a href="https://ngx-translate.org/" target="_blank" rel="noopener noreferrer">ngx-translate</a>
+  </p>
 </footer>

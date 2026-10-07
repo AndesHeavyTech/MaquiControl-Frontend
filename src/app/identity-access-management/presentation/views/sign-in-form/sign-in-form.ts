@@ -2,12 +2,13 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 import { IdentityAccessStore } from '../../../application/identity-access-store';
 import { SignInCommand } from '../../../domain/model/sign-in.command';
 
 @Component({
   selector: 'app-sign-in-form',
-  imports: [ReactiveFormsModule, RouterLink, MatButtonModule],
+  imports: [ReactiveFormsModule, RouterLink, MatButtonModule, TranslatePipe],
   templateUrl: './sign-in-form.html',
   styleUrl: './sign-in-form.scss',
 })

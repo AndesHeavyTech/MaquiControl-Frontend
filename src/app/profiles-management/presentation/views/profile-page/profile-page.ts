@@ -1,6 +1,7 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 import { IdentityAccessStore } from '../../../../identity-access-management/application/identity-access-store';
 import { ProfilesManagementStore } from '../../../application/profiles-management-store';
 import { ContactInformation } from '../../../domain/model/contact-information.value-object';
@@ -9,7 +10,7 @@ import { OrganizationForm } from '../organization-form/organization-form';
 
 @Component({
   selector: 'app-profile-page',
-  imports: [ReactiveFormsModule, MatButtonModule, OrganizationForm],
+  imports: [ReactiveFormsModule, MatButtonModule, OrganizationForm, TranslatePipe],
   templateUrl: './profile-page.html',
   styleUrl: './profile-page.scss',
 })

@@ -1,0 +1,361 @@
+{
+  "language": {
+    "label": "Idioma preferido",
+    "en": "Inglés",
+    "es-419": "Español latinoamericano",
+    "short": {
+      "en": "EN",
+      "es-419": "ES"
+    }
+  },
+  "titles": {
+    "home": "Inicio",
+    "machinery-catalog": "Catálogo de maquinaria",
+    "publish-machinery": "Publicar maquinaria",
+    "edit-machinery": "Editar maquinaria",
+    "profile": "Mi perfil",
+    "rental-request": "Solicitar alquiler",
+    "reservations": "Reservas",
+    "maintenance": "Mantenimiento",
+    "breakdown-report": "Reportar avería",
+    "service-operation": "Operación de servicio",
+    "page-not-found": "Página no encontrada",
+    "sign-in": "Iniciar sesión",
+    "sign-up": "Crear cuenta"
+  },
+  "option": {
+    "home": "Inicio",
+    "machinery": "Maquinaria",
+    "profile": "Mi perfil",
+    "reservations": "Reservas",
+    "maintenance": "Mantenimiento"
+  },
+  "layout": {
+    "skip-to-content": "Saltar al contenido principal",
+    "go-home": "Ir al inicio de MaquiControl",
+    "main-navigation": "Navegación principal"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "developed-by": "Desarrollado por",
+    "tagline": "Gestión confiable para el alquiler de maquinaria.",
+    "powered-by": "Desarrollado con",
+    "and": "y"
+  },
+  "home": {
+    "eyebrow": "Gestión inteligente de maquinaria",
+    "title": "Encuentra y administra maquinaria sin complicaciones",
+    "content": "MaquiControl centraliza la disponibilidad, reserva y seguimiento de maquinaria para contratistas y empresas de alquiler.",
+    "explore-machinery": "Explorar maquinaria",
+    "about-project": "Conocer el proyecto",
+    "benefits-label": "Beneficios principales",
+    "card-label": "Todo en un solo lugar",
+    "card-title": "Control operativo confiable",
+    "benefit-availability": "Disponibilidad actualizada",
+    "benefit-rates": "Tarifas transparentes",
+    "benefit-tracking": "Seguimiento de maquinaria"
+  },
+  "page-not-found": {
+    "title": "Página no encontrada",
+    "content": "La ruta <strong>/{{ invalid_path }}</strong> no existe o fue trasladada a otra sección de MaquiControl.",
+    "go-home": "Regresar al inicio"
+  },
+  "auth": {
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "error": {
+      "email-invalid": "Ingresa un correo electrónico válido.",
+      "password-required": "La contraseña es obligatoria.",
+      "password-min-length": "La contraseña debe tener al menos 8 caracteres."
+    },
+    "sign-in": "Iniciar sesión",
+    "sign-up": "Registrarse",
+    "sign-out": "Cerrar sesión"
+  },
+  "sign-in": {
+    "eyebrow": "Bienvenido de vuelta",
+    "title": "Inicia sesión",
+    "hint": "Ingresa con tu correo y contraseña para administrar tu flota.",
+    "submit": "Iniciar sesión",
+    "submitting": "Ingresando…",
+    "no-account": "¿No tienes cuenta?",
+    "go-sign-up": "Regístrate"
+  },
+  "sign-up": {
+    "eyebrow": "Crea tu cuenta",
+    "title": "Regístrate en MaquiControl",
+    "hint": "Elige si vas a alquilar maquinaria o publicar la tuya.",
+    "role-label": "Quiero registrarme como",
+    "error": {
+      "roles-unavailable": "No se pudieron cargar los roles. Inténtalo de nuevo en un momento."
+    },
+    "submit": "Crear cuenta",
+    "submitting": "Creando cuenta…",
+    "has-account": "¿Ya tienes cuenta?",
+    "go-sign-in": "Inicia sesión"
+  },
+  "roles": {
+    "CONTRACTOR": {
+      "name": "Contratista",
+      "description": "Alquila maquinaria publicada por otros usuarios."
+    },
+    "FLEET_OWNER": {
+      "name": "Dueño de flota",
+      "description": "Publica y administra su propia maquinaria."
+    },
+    "FLEET_ADMINISTRATOR": {
+      "name": "Administrador de flota",
+      "description": "Administra la flota y el personal de una organización."
+    },
+    "OPERATOR": {
+      "name": "Operador",
+      "description": "Opera maquinaria en nombre de una organización."
+    },
+    "SYSTEM_ADMINISTRATOR": {
+      "name": "Administrador del sistema",
+      "description": "Administra la plataforma MaquiControl."
+    }
+  },
+  "common": {
+    "retry": "Intentar nuevamente",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "required": "Obligatorio.",
+    "review-fields": "Revisa los campos marcados antes de guardar.",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "saving": "Guardando…",
+    "sending": "Enviando…",
+    "api-unreachable": "Verifica que la API esté disponible e inténtalo de nuevo."
+  },
+  "machinery": {
+    "brand-model": "Marca y modelo",
+    "year": "Año",
+    "location": "Ubicación"
+  },
+  "machinery-list": {
+    "eyebrow": "Gestión de flota",
+    "title": "Catálogo de maquinaria",
+    "subtitle": "Consulta maquinaria disponible, tarifas referenciales y ubicaciones actualizadas.",
+    "summary-label": "Resumen del catálogo",
+    "registered": "equipos registrados",
+    "available": "disponibles",
+    "publish": "Publicar maquinaria",
+    "loading-title": "Cargando maquinaria",
+    "loading-text": "Estamos consultando la disponibilidad del catálogo.",
+    "error-title": "No pudimos cargar el catálogo",
+    "error-text": "Verifica que la API esté disponible e inténtalo de nuevo.",
+    "empty-title": "No hay maquinaria registrada",
+    "empty-text": "El catálogo todavía no cuenta con equipos para mostrar.",
+    "rate-from": "Tarifa desde",
+    "per-hour": "/ hora",
+    "yours": "Tu maquinaria",
+    "rent": "Alquilar",
+    "confirm-delete": "¿Eliminar \"{{ name }}\" del catálogo? Esta acción no se puede deshacer."
+  },
+  "enums": {
+    "machinery-type": {
+      "EXCAVATOR": "Excavadora",
+      "BACKHOE_LOADER": "Retroexcavadora",
+      "LOADER": "Cargador",
+      "CRANE": "Grúa",
+      "BULLDOZER": "Bulldozer",
+      "OTHER": "Otro"
+    },
+    "machinery-status": {
+      "AVAILABLE": "Disponible",
+      "RESERVED": "Reservada",
+      "RENTED": "Alquilada",
+      "IN_MAINTENANCE": "En mantenimiento",
+      "OUT_OF_SERVICE": "Fuera de servicio"
+    },
+    "organization-type": {
+      "INDEPENDENT_CONTRACTOR": "Contratista independiente",
+      "RENTAL_COMPANY": "Empresa de alquiler",
+      "CONSTRUCTION_COMPANY": "Empresa de construcción",
+      "OTHER": "Otro"
+    },
+    "rental-status": {
+      "REQUESTED": "Solicitada",
+      "CONFIRMED": "Confirmada",
+      "IN_PROGRESS": "En curso",
+      "COMPLETED": "Finalizada",
+      "CANCELLED": "Cancelada"
+    },
+    "maintenance-type": {
+      "PREVENTIVE": "Preventivo",
+      "CORRECTIVE": "Correctivo",
+      "INSPECTION": "Inspección"
+    },
+    "maintenance-status": {
+      "SCHEDULED": "Programado",
+      "IN_PROGRESS": "En progreso",
+      "COMPLETED": "Completado",
+      "CANCELLED": "Cancelado"
+    },
+    "breakdown-severity": {
+      "LOW": "Baja",
+      "MEDIUM": "Media",
+      "HIGH": "Alta",
+      "CRITICAL": "Crítica"
+    },
+    "operation-status": {
+      "SCHEDULED": "Programada",
+      "IN_PROGRESS": "En curso",
+      "COMPLETED": "Completada",
+      "CANCELLED": "Cancelada"
+    },
+    "worked-hours-status": {
+      "PENDING": "Pendiente",
+      "VALIDATED": "Validada",
+      "REJECTED": "Rechazada"
+    }
+  },
+  "location": {
+    "department": "Departamento",
+    "province": "Provincia",
+    "district": "Distrito",
+    "address": "Dirección",
+    "city": "Ciudad"
+  },
+  "machinery-form": {
+    "new-title": "Publicar maquinaria",
+    "edit-title": "Editar maquinaria",
+    "profile-required": "Completa tu perfil antes de publicar maquinaria.",
+    "go-profile": "Ir a mi perfil",
+    "category": "Categoría",
+    "category-placeholder": "Selecciona una categoría",
+    "error": {
+      "category-required": "Selecciona una categoría.",
+      "categories-unavailable": "No se pudieron cargar las categorías. Verifica que la API esté disponible.",
+      "name-required": "El nombre es obligatorio.",
+      "description-required": "La descripción es obligatoria.",
+      "year-invalid": "Ingresa un año válido (desde 1900).",
+      "rate-invalid": "Ingresa una tarifa válida."
+    },
+    "name": "Nombre",
+    "description": "Descripción",
+    "type": "Tipo",
+    "brand": "Marca",
+    "model": "Modelo",
+    "manufacture-year": "Año de fabricación",
+    "hourly-rate": "Tarifa por hora",
+    "currency": "Moneda",
+    "status": "Estado"
+  },
+  "profile": {
+    "eyebrow": "Gestión de perfiles",
+    "title": "Mi perfil",
+    "hint": "Mantén actualizados tus datos personales y de contacto. Esta información identifica tus publicaciones y reservas dentro de MaquiControl.",
+    "loading": "Cargando tu perfil…",
+    "empty": "Aún no has completado tu perfil. Completa el formulario para crearlo.",
+    "personal-data": "Datos personales",
+    "first-name": "Nombres",
+    "last-name": "Apellidos",
+    "document-number": "Número de documento",
+    "contact-information": "Información de contacto",
+    "phone": "Teléfono",
+    "secondary-email": "Correo alternativo (opcional)",
+    "saved": "Perfil guardado correctamente.",
+    "save": "Guardar perfil"
+  },
+  "organization": {
+    "eyebrow": "Organización (opcional)",
+    "title": "Datos de tu organización",
+    "hint": "Completa esto solo si operas a nombre de una empresa u organización, en lugar de hacerlo como contratista independiente.",
+    "legal-name": "Razón social",
+    "trade-name": "Nombre comercial (opcional)",
+    "tax-id": "RUC / identificador tributario",
+    "type": "Tipo de organización",
+    "saved": "Organización guardada correctamente.",
+    "save": "Guardar organización"
+  },
+  "rental": {
+    "eyebrow": "Gestión de alquileres"
+  },
+  "rental-request": {
+    "title": "Solicitar alquiler",
+    "loading": "Cargando maquinaria…",
+    "profile-required": "Completa tu perfil antes de solicitar un alquiler.",
+    "start-date": "Fecha de inicio",
+    "end-date": "Fecha de fin",
+    "estimated-total": "Total estimado:",
+    "estimate-basis": "(jornada de 8 horas por cada día del periodo, ambas fechas incluidas).",
+    "overlap": "Esta maquinaria ya tiene una reserva activa que se superpone con el periodo elegido.",
+    "submit": "Solicitar alquiler"
+  },
+  "reservations": {
+    "title": "Reservas",
+    "subtitle": "Solicitudes de alquiler, su estado y el periodo reservado de cada una.",
+    "summary-label": "Resumen de reservas",
+    "registered": "reservas registradas",
+    "pending": "pendientes",
+    "loading": "Cargando reservas",
+    "error-title": "No pudimos cargar las reservas",
+    "empty-title": "No hay reservas registradas",
+    "empty-text": "Solicita el alquiler de una maquinaria desde el catálogo.",
+    "view-catalog": "Ver catálogo",
+    "period": "Periodo",
+    "total": "Total",
+    "cancellation-reason": "Motivo de cancelación",
+    "yours": "Tu solicitud",
+    "confirm": "Confirmar",
+    "reject": "Rechazar",
+    "cancel-request": "Cancelar solicitud",
+    "report-breakdown": "Reportar avería",
+    "view-operation": "Ver operación",
+    "machinery-fallback": "Maquinaria #{{ id }}",
+    "cancel-prompt": "Motivo de la cancelación:"
+  },
+  "maintenance": {
+    "eyebrow": "Gestión de mantenimiento",
+    "title": "Mantenimiento",
+    "subtitle": "Programa, inicia y completa el mantenimiento preventivo y correctivo de tu maquinaria.",
+    "summary-label": "Resumen de mantenimiento",
+    "records": "registros",
+    "no-machinery-title": "Aún no tienes maquinaria registrada",
+    "no-machinery-text": "Registra una maquinaria en tu catálogo para poder programarle mantenimiento.",
+    "schedule-title": "Programar mantenimiento",
+    "machinery": "Maquinaria",
+    "machinery-placeholder": "Selecciona una maquinaria",
+    "scheduled-date": "Fecha programada",
+    "schedule": "Programar",
+    "loading": "Cargando mantenimiento",
+    "empty-title": "No hay mantenimiento registrado",
+    "empty-text": "Programa el primer mantenimiento para tu maquinaria con el formulario de arriba.",
+    "scheduled": "Programado",
+    "technician": "Técnico",
+    "cost": "Costo",
+    "reported-breakdowns": "Averías reportadas",
+    "start": "Iniciar",
+    "complete": "Completar",
+    "technician-prompt": "Nombre del técnico asignado:",
+    "cost-prompt": "Costo final del mantenimiento (S/):"
+  },
+  "breakdown": {
+    "title": "Reportar avería",
+    "severity": "Gravedad",
+    "description": "Descripción de la falla",
+    "submit": "Reportar avería"
+  },
+  "operation": {
+    "eyebrow": "Gestión de operaciones",
+    "title": "Operación de servicio",
+    "loading": "Cargando reserva…",
+    "machinery": "Maquinaria:",
+    "not-started": "Esta reserva aún no tiene una operación de servicio iniciada.",
+    "start": "Iniciar operación",
+    "no-hours": "Aún no se registran horas trabajadas.",
+    "validate": "Validar",
+    "complete": "Completar operación",
+    "back": "Volver a reservas"
+  },
+  "worked-hours": {
+    "title": "Registrar horas trabajadas",
+    "date": "Fecha",
+    "start": "Inicio",
+    "end": "Fin",
+    "observations": "Observaciones (opcional)",
+    "submit": "Registrar"
+  }
+}

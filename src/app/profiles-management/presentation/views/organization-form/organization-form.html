@@ -1,41 +1,38 @@
 <form class="form-card" [formGroup]="form" (ngSubmit)="performSave()">
-  <span class="eyebrow">Organización (opcional)</span>
-  <h2>Datos de tu organización</h2>
-  <p class="hint">
-    Completa esto solo si operas a nombre de una empresa u organización,
-    en lugar de hacerlo como contratista independiente.
-  </p>
+  <span class="eyebrow">{{ 'organization.eyebrow' | translate }}</span>
+  <h2>{{ 'organization.title' | translate }}</h2>
+  <p class="hint">{{ 'organization.hint' | translate }}</p>
 
-  <label for="legalName">Razón social</label>
+  <label for="legalName">{{ 'organization.legal-name' | translate }}</label>
   <input id="legalName" type="text" formControlName="legalName" />
   @if (form.controls.legalName.touched && form.controls.legalName.invalid) {
-    <span class="error-message">Obligatorio.</span>
+    <span class="error-message">{{ 'common.required' | translate }}</span>
   }
 
-  <label for="tradeName">Nombre comercial (opcional)</label>
+  <label for="tradeName">{{ 'organization.trade-name' | translate }}</label>
   <input id="tradeName" type="text" formControlName="tradeName" />
 
-  <label for="taxId">RUC / identificador tributario</label>
+  <label for="taxId">{{ 'organization.tax-id' | translate }}</label>
   <input id="taxId" type="text" formControlName="taxId" />
   @if (form.controls.taxId.touched && form.controls.taxId.invalid) {
-    <span class="error-message">Obligatorio.</span>
+    <span class="error-message">{{ 'common.required' | translate }}</span>
   }
 
-  <label for="type">Tipo de organización</label>
+  <label for="type">{{ 'organization.type' | translate }}</label>
   <select id="type" formControlName="type">
     @for (type of organizationTypes; track type) {
-      <option [ngValue]="type">{{ organizationTypeLabel(type) }}</option>
+      <option [ngValue]="type">{{ organizationTypeLabel(type) | translate }}</option>
     }
   </select>
 
-  <label for="address">Dirección</label>
+  <label for="address">{{ 'location.address' | translate }}</label>
   <input id="address" type="text" formControlName="address" />
   @if (form.controls.address.touched && form.controls.address.invalid) {
-    <span class="error-message">Obligatorio.</span>
+    <span class="error-message">{{ 'common.required' | translate }}</span>
   }
 
   @if (form.invalid && form.touched) {
-    <span class="error-message">Revisa los campos marcados antes de guardar.</span>
+    <span class="error-message">{{ 'common.review-fields' | translate }}</span>
   }
 
   @if (store.saveError()) {
@@ -43,12 +40,12 @@
   }
 
   @if (justSaved()) {
-    <span class="success-message">Organización guardada correctamente.</span>
+    <span class="success-message">{{ 'organization.saved' | translate }}</span>
   }
 
   <div class="form-actions">
     <button mat-flat-button class="submit-action" type="submit" [disabled]="store.saving()">
-      {{ store.saving() ? 'Guardando…' : 'Guardar organización' }}
+      {{ (store.saving() ? 'common.saving' : 'organization.save') | translate }}
     </button>
   </div>
 </form>

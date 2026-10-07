@@ -1,25 +1,25 @@
 <form class="hours-form" [formGroup]="form" (ngSubmit)="performSubmit()">
-  <h3>Registrar horas trabajadas</h3>
+  <h3>{{ 'worked-hours.title' | translate }}</h3>
 
   <div class="field-row">
     <div>
-      <label for="workDate">Fecha</label>
+      <label for="workDate">{{ 'worked-hours.date' | translate }}</label>
       <input id="workDate" type="date" formControlName="workDate" />
     </div>
     <div>
-      <label for="startTime">Inicio</label>
+      <label for="startTime">{{ 'worked-hours.start' | translate }}</label>
       <input id="startTime" type="time" formControlName="startTime" />
     </div>
     <div>
-      <label for="endTime">Fin</label>
+      <label for="endTime">{{ 'worked-hours.end' | translate }}</label>
       <input id="endTime" type="time" formControlName="endTime" />
     </div>
   </div>
 
-  <label for="observations">Observaciones (opcional)</label>
+  <label for="observations">{{ 'worked-hours.observations' | translate }}</label>
   <input id="observations" type="text" formControlName="observations" />
 
   <div class="form-actions">
-    <button mat-flat-button class="submit-action" type="submit">Registrar</button>
+    <button mat-flat-button class="submit-action" type="submit">{{ 'worked-hours.submit' | translate }}</button>
   </div>
 </form>

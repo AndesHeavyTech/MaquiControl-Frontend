@@ -1,13 +1,14 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ProfilesManagementStore } from '../../../application/profiles-management-store';
 import { Organization } from '../../../domain/model/organization.entity';
 import { OrganizationType } from '../../../domain/model/organization-type';
 
 @Component({
   selector: 'app-organization-form',
-  imports: [ReactiveFormsModule, MatButtonModule],
+  imports: [ReactiveFormsModule, MatButtonModule, TranslatePipe],
   templateUrl: './organization-form.html',
   styleUrl: './organization-form.scss',
 })
@@ -48,14 +49,7 @@ export class OrganizationForm {
   }
 
   protected organizationTypeLabel(type: OrganizationType): string {
-    const labels: Record<OrganizationType, string> = {
-      [OrganizationType.IndependentContractor]: 'Contratista independiente',
-      [OrganizationType.RentalCompany]: 'Empresa de alquiler',
-      [OrganizationType.ConstructionCompany]: 'Empresa de construcción',
-      [OrganizationType.Other]: 'Otro',
-    };
-
-    return labels[type];
+    return `enums.organization-type.${type}`;
   }
 
   /** Same reasoning as `ProfilePage.nextProfileId()`. */

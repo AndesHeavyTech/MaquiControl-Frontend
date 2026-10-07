@@ -3,6 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 import { FleetManagementStore } from '../../../../fleet-management/application/fleet-management-store';
 import { ProfilesManagementStore } from '../../../../profiles-management/application/profiles-management-store';
 import { RentalManagementStore } from '../../../application/rental-management-store';
@@ -13,7 +14,7 @@ import { RentalStatus } from '../../../domain/model/rental-status';
 
 @Component({
   selector: 'app-rental-request-page',
-  imports: [ReactiveFormsModule, RouterLink, MatButtonModule, DecimalPipe],
+  imports: [ReactiveFormsModule, RouterLink, MatButtonModule, DecimalPipe, TranslatePipe],
   templateUrl: './rental-request-page.html',
   styleUrl: './rental-request-page.scss',
 })

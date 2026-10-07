@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 
 export interface WorkedHoursSubmission {
   workDate: Date;
@@ -14,7 +15,7 @@ export interface WorkedHoursSubmission {
  *  diagram: a dumb presentational component, the parent page owns the store. */
 @Component({
   selector: 'app-worked-hours-form',
-  imports: [ReactiveFormsModule, MatButtonModule],
+  imports: [ReactiveFormsModule, MatButtonModule, TranslatePipe],
   templateUrl: './worked-hours-form.html',
   styleUrl: './worked-hours-form.scss',
 })
