@@ -1,0 +1,54 @@
+<form class="form-card" [formGroup]="form" (ngSubmit)="performSave()">
+  <span class="eyebrow">Organización (opcional)</span>
+  <h2>Datos de tu organización</h2>
+  <p class="hint">
+    Completa esto solo si operas a nombre de una empresa u organización,
+    en lugar de hacerlo como contratista independiente.
+  </p>
+
+  <label for="legalName">Razón social</label>
+  <input id="legalName" type="text" formControlName="legalName" />
+  @if (form.controls.legalName.touched && form.controls.legalName.invalid) {
+    <span class="error-message">Obligatorio.</span>
+  }
+
+  <label for="tradeName">Nombre comercial (opcional)</label>
+  <input id="tradeName" type="text" formControlName="tradeName" />
+
+  <label for="taxId">RUC / identificador tributario</label>
+  <input id="taxId" type="text" formControlName="taxId" />
+  @if (form.controls.taxId.touched && form.controls.taxId.invalid) {
+    <span class="error-message">Obligatorio.</span>
+  }
+
+  <label for="type">Tipo de organización</label>
+  <select id="type" formControlName="type">
+    @for (type of organizationTypes; track type) {
+      <option [ngValue]="type">{{ organizationTypeLabel(type) }}</option>
+    }
+  </select>
+
+  <label for="address">Dirección</label>
+  <input id="address" type="text" formControlName="address" />
+  @if (form.controls.address.touched && form.controls.address.invalid) {
+    <span class="error-message">Obligatorio.</span>
+  }
+
+  @if (form.invalid && form.touched) {
+    <span class="error-message">Revisa los campos marcados antes de guardar.</span>
+  }
+
+  @if (store.saveError()) {
+    <span class="error-message">{{ store.saveError() }}</span>
+  }
+
+  @if (justSaved()) {
+    <span class="success-message">Organización guardada correctamente.</span>
+  }
+
+  <div class="form-actions">
+    <button mat-flat-button class="submit-action" type="submit" [disabled]="store.saving()">
+      {{ store.saving() ? 'Guardando…' : 'Guardar organización' }}
+    </button>
+  </div>
+</form>
