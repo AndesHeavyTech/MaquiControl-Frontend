@@ -141,6 +141,7 @@ export class IdentityAccessStore {
   }
 
   loadRoles(): void {
+    this.#rolesLoaded.set(false);
     this.#api.getRoles().subscribe({
       next: (roles) => {
         this.#roles.set(roles);
@@ -192,6 +193,11 @@ export class IdentityAccessStore {
         this.#currentEmail.set(resource.email);
         this.#currentUserId.set(resource.id);
         this.#currentRoleIds.set(resource.roleIds);
+        // Roles fail to load when the API was down as the app started;
+        // without them the role-based menu and actions would stay hidden.
+        if (this.#roles().length === 0) {
+          this.loadRoles();
+        }
         this.#submitting.set(false);
         router.navigate(['/home']).then();
       },
