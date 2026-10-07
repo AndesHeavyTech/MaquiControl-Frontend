@@ -110,4 +110,17 @@
   @if (store.currentProfile()) {
     <app-organization-form />
   }
+
+  <section class="form-card" aria-labelledby="session-title">
+    <span class="eyebrow">{{ 'profile.session-eyebrow' | translate }}</span>
+    <h2 id="session-title">{{ 'profile.session-title' | translate }}</h2>
+    <p class="hint">
+      {{ 'profile.session-hint' | translate: { email: identityAccessStore.currentEmail() } }}
+    </p>
+    <div class="form-actions">
+      <button mat-stroked-button type="button" (click)="performSignOut()">
+        {{ 'auth.sign-out' | translate }}
+      </button>
+    </div>
+  </section>
 </section>

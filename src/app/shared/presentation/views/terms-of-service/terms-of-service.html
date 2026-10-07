@@ -1,0 +1,15 @@
+<article class="terms" aria-labelledby="terms-title">
+  <span class="eyebrow">{{ 'terms.eyebrow' | translate }}</span>
+  <h1 id="terms-title">{{ 'terms.title' | translate }}</h1>
+  <p class="updated">{{ 'terms.updated' | translate }}</p>
+  <p class="intro">{{ 'terms.intro' | translate }}</p>
+
+  @for (section of sections; track section) {
+    <section [attr.aria-labelledby]="'terms-' + section">
+      <h2 [id]="'terms-' + section">{{ 'terms.sections.' + section + '.title' | translate }}</h2>
+      <p>{{ 'terms.sections.' + section + '.body' | translate }}</p>
+    </section>
+  }
+
+  <a mat-stroked-button routerLink="/home">{{ 'terms.back' | translate }}</a>
+</article>

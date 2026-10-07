@@ -1,6 +1,6 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, effect, inject } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -12,33 +12,49 @@ import { Rental } from '../../../domain/model/rental.entity';
 import { RentalPeriod } from '../../../domain/model/rental-period.value-object';
 import { RentalStatus } from '../../../domain/model/rental-status';
 
+/** ISO dates compare correctly as strings, so no Date parsing is needed here. */
+function notBeforeToday(control: AbstractControl<string>): ValidationErrors | null {
+  return control.value && control.value < RentalPeriod.todayIsoDate() ? { pastDate: true } : null;
+}
+
+function endNotBeforeStart(group: AbstractControl): ValidationErrors | null {
+  const { startDate, endDate } = group.value as { startDate: string; endDate: string };
+  return startDate && endDate && endDate < startDate ? { endBeforeStart: true } : null;
+}
+
 @Component({
   selector: 'app-rental-request-page',
   imports: [ReactiveFormsModule, RouterLink, MatButtonModule, DecimalPipe, TranslatePipe],
   templateUrl: './rental-request-page.html',
   styleUrl: './rental-request-page.scss',
 })
-export class RentalRequestPage implements OnInit {
+export class RentalRequestPage {
   protected readonly store = inject(RentalManagementStore);
   protected readonly fleetManagementStore = inject(FleetManagementStore);
   readonly #profilesManagementStore = inject(ProfilesManagementStore);
   readonly #route = inject(ActivatedRoute);
   readonly #router = inject(Router);
 
-  protected machineryId = 0;
+  protected readonly machineryId = Number(this.#route.snapshot.paramMap.get('machineryId'));
+  protected readonly today = RentalPeriod.todayIsoDate();
   protected overlapDetected = false;
 
-  protected readonly form = new FormGroup({
-    startDate: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    endDate: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-  });
+  protected readonly form = new FormGroup(
+    {
+      startDate: new FormControl('', { nonNullable: true, validators: [Validators.required, notBeforeToday] }),
+      endDate: new FormControl('', { nonNullable: true, validators: [Validators.required, notBeforeToday] }),
+    },
+    { validators: endNotBeforeStart },
+  );
 
-  ngOnInit(): void {
-    this.machineryId = Number(this.#route.snapshot.paramMap.get('machineryId'));
-
-    if (!this.fleetManagementStore.machineryById(this.machineryId)) {
-      this.#router.navigate(['/fleet/machinery']).then();
-    }
+  constructor() {
+    // Opening the URL directly (or reloading) arrives before the fleet is loaded,
+    // so only redirect once loading has finished and the machinery really is missing.
+    effect(() => {
+      if (!this.fleetManagementStore.loading() && !this.fleetManagementStore.machineryById(this.machineryId)) {
+        this.#router.navigate(['/fleet/machinery']).then();
+      }
+    });
   }
 
   protected get machinery() {
@@ -72,12 +88,12 @@ export class RentalRequestPage implements OnInit {
   private buildPeriod(): RentalPeriod | null {
     const { startDate, endDate } = this.form.getRawValue();
 
-    if (!startDate || !endDate) {
+    if (!startDate || !endDate || this.form.invalid) {
       return null;
     }
 
     try {
-      return new RentalPeriod({ startDate: new Date(startDate), endDate: new Date(endDate) });
+      return RentalPeriod.fromIsoDates(startDate, endDate);
     } catch {
       return null;
     }

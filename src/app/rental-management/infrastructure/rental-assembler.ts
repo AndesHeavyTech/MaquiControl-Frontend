@@ -15,10 +15,7 @@ export class RentalAssembler implements BaseAssembler<Rental, RentalResource, Re
       id: resource.id,
       machineryId: resource.machineryId,
       contractorProfileId: resource.contractorProfileId,
-      period: new RentalPeriod({
-        startDate: new Date(resource.period.startDate),
-        endDate: new Date(resource.period.endDate),
-      }),
+      period: RentalPeriod.fromIsoDates(resource.period.startDate, resource.period.endDate),
       status: this.toRentalStatus(resource.status),
       totalAmount: new Money({
         amount: resource.totalAmount.amount,
@@ -37,8 +34,8 @@ export class RentalAssembler implements BaseAssembler<Rental, RentalResource, Re
       machineryId: entity.machineryId,
       contractorProfileId: entity.contractorProfileId,
       period: {
-        startDate: entity.period.startDate.toISOString().slice(0, 10),
-        endDate: entity.period.endDate.toISOString().slice(0, 10),
+        startDate: RentalPeriod.toIsoDate(entity.period.startDate),
+        endDate: RentalPeriod.toIsoDate(entity.period.endDate),
       },
       status: entity.status,
       totalAmount: {

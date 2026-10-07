@@ -21,7 +21,8 @@
     "service-operation": "Operación de servicio",
     "page-not-found": "Página no encontrada",
     "sign-in": "Iniciar sesión",
-    "sign-up": "Crear cuenta"
+    "sign-up": "Crear cuenta",
+    "terms": "Términos del servicio"
   },
   "option": {
     "home": "Inicio",
@@ -40,7 +41,8 @@
     "developed-by": "Desarrollado por",
     "tagline": "Gestión confiable para el alquiler de maquinaria.",
     "powered-by": "Desarrollado con",
-    "and": "y"
+    "and": "y",
+    "terms": "Términos del servicio"
   },
   "home": {
     "eyebrow": "Gestión inteligente de maquinaria",
@@ -257,7 +259,10 @@
     "phone": "Teléfono",
     "secondary-email": "Correo alternativo (opcional)",
     "saved": "Perfil guardado correctamente.",
-    "save": "Guardar perfil"
+    "save": "Guardar perfil",
+    "session-eyebrow": "Sesión",
+    "session-title": "Cerrar sesión en MaquiControl",
+    "session-hint": "Iniciaste sesión como {{email}}. Tu sesión también se cierra al cerrar el navegador."
   },
   "organization": {
     "eyebrow": "Organización (opcional)",
@@ -282,7 +287,9 @@
     "estimated-total": "Total estimado:",
     "estimate-basis": "(jornada de 8 horas por cada día del periodo, ambas fechas incluidas).",
     "overlap": "Esta maquinaria ya tiene una reserva activa que se superpone con el periodo elegido.",
-    "submit": "Solicitar alquiler"
+    "submit": "Solicitar alquiler",
+    "past-date": "La fecha no puede estar en el pasado.",
+    "end-before-start": "La fecha de fin no puede ser anterior a la de inicio."
   },
   "reservations": {
     "title": "Reservas",
@@ -357,5 +364,54 @@
     "end": "Fin",
     "observations": "Observaciones (opcional)",
     "submit": "Registrar"
+  },
+  "terms": {
+    "eyebrow": "Legal",
+    "title": "Términos del servicio",
+    "updated": "Última actualización: octubre de 2026",
+    "intro": "Estos términos regulan el uso de MaquiControl, la plataforma de AndesHeavyTech que conecta a dueños de flotas de maquinaria pesada con contratistas que necesitan alquilarla. Al crear una cuenta, los aceptas.",
+    "sections": {
+      "service": {
+        "title": "1. El servicio",
+        "body": "MaquiControl permite a los dueños de flota publicar maquinaria y gestionar reservas, mantenimientos y operaciones de servicio, y a los contratistas solicitar alquileres. MaquiControl es un intermediario: el acuerdo de alquiler es entre el dueño y el contratista."
+      },
+      "accounts": {
+        "title": "2. Cuentas y roles",
+        "body": "Debes brindar información veraz y mantener tu contraseña en privado. Cada cuenta tiene un rol (dueño de flota o contratista) que define lo que puede hacer. Eres responsable de la actividad realizada con tu cuenta."
+      },
+      "owners": {
+        "title": "3. Responsabilidades del dueño de flota",
+        "body": "Los dueños deben publicar maquinaria real con tarifas exactas, mantenerla en condiciones seguras de operación, registrar con honestidad los mantenimientos y averías, y respetar las reservas que confirman."
+      },
+      "contractors": {
+        "title": "4. Responsabilidades del contratista",
+        "body": "Los contratistas deben usar la maquinaria solo para el trabajo y el periodo acordados, con operadores calificados, reportar las averías apenas ocurran y devolver la maquinaria en el estado en que la recibieron."
+      },
+      "payments": {
+        "title": "5. Tarifas y pagos",
+        "body": "Los totales estimados se calculan con la tarifa por hora y una jornada de 8 horas por cada día del periodo, ambas fechas incluidas. El monto final se basa en las horas trabajadas validadas por ambas partes."
+      },
+      "privacy": {
+        "title": "6. Datos personales",
+        "body": "Solo recopilamos los datos necesarios para brindar el servicio y los tratamos según la Ley N.° 29733, Ley de Protección de Datos Personales del Perú. No vendemos tus datos. Puedes pedir acceder a ellos, corregirlos o eliminarlos en cualquier momento."
+      },
+      "ethics": {
+        "title": "7. Compromiso profesional y ético",
+        "body": "MaquiControl se desarrolla siguiendo el Código de Ética de Ingeniería de Software de ACM/IEEE y el Código de Ética del Colegio de Ingenieros del Perú (CIP): actuamos en favor del interés público, somos transparentes sobre cómo funciona el producto y sus limitaciones, y ponemos primero la seguridad de las personas que operan la maquinaria."
+      },
+      "liability": {
+        "title": "8. Limitación de responsabilidad",
+        "body": "MaquiControl no es dueño de la maquinaria y no responde por daños causados por mal uso, falta de mantenimiento o incumplimiento del acuerdo entre dueño y contratista. Trabajamos para mantener la plataforma disponible, pero no podemos garantizar un servicio sin interrupciones."
+      },
+      "changes": {
+        "title": "9. Cambios en estos términos",
+        "body": "Podemos actualizar estos términos. Anunciaremos los cambios relevantes dentro de la aplicación antes de que entren en vigor."
+      },
+      "contact": {
+        "title": "10. Contacto",
+        "body": "Para consultas sobre estos términos, contacta al equipo de AndesHeavyTech a través del landing page de MaquiControl."
+      }
+    },
+    "back": "Volver al inicio"
   }
 }
