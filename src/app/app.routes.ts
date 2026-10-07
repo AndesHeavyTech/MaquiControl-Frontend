@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { Home } from './shared/presentation/views/home/home';
 import { MachineryList } from './fleet-management/presentation/views/machinery-list/machinery-list';
 import { MachineryForm } from './fleet-management/presentation/views/machinery-form/machinery-form';
+import { CategoryManagement } from './fleet-management/presentation/views/category-management/category-management';
 import { ProfilePage } from './profiles-management/presentation/views/profile-page/profile-page';
 import { RentalRequestPage } from './rental-management/presentation/views/rental-request-page/rental-request-page';
 import { ReservationList } from './rental-management/presentation/views/reservation-list/reservation-list';
@@ -43,6 +44,12 @@ export const routes: Routes = [
     path: 'fleet/machinery/new',
     component: MachineryForm,
     title: 'titles.publish-machinery',
+    canActivate: [identityAccessGuard, roleGuard(RoleName.FleetOwner)],
+  },
+  {
+    path: 'fleet/categories',
+    component: CategoryManagement,
+    title: 'titles.categories',
     canActivate: [identityAccessGuard, roleGuard(RoleName.FleetOwner)],
   },
   {

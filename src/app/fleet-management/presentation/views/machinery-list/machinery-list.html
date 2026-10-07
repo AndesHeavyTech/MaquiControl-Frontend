@@ -18,9 +18,14 @@
     </div>
 
     @if (canPublish()) {
-      <a mat-flat-button class="publish-action" routerLink="/fleet/machinery/new">
-        {{ 'machinery-list.publish' | translate }}
-      </a>
+      <div class="catalog-actions">
+        <a mat-flat-button class="publish-action" routerLink="/fleet/machinery/new">
+          {{ 'machinery-list.publish' | translate }}
+        </a>
+        <a mat-stroked-button routerLink="/fleet/categories">
+          {{ 'machinery-list.manage-categories' | translate }}
+        </a>
+      </div>
     }
   </header>
 

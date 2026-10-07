@@ -72,6 +72,75 @@ export class FleetManagementStore {
     return this.#categories().find((category) => category.id === id);
   }
 
+  /** Machinery published under a category; a category in use cannot be deleted. */
+  machineryCountByCategory(categoryId: number): number {
+    return this.#machinery().filter((machinery) => machinery.categoryId === categoryId).length;
+  }
+
+  /** Two categories cannot share a name; `exceptId` lets a category keep its own name. */
+  isCategoryNameTaken(name: string, exceptId: number | null = null): boolean {
+    return this.#categories().some((category) => category.id !== exceptId && category.hasName(name));
+  }
+
+  /** Same reasoning as `MachineryForm.nextMachineryId()`: json-server keeps the id it receives. */
+  #nextCategoryId(): number {
+    const existingIds = this.#categories().map((category) => category.id);
+    return existingIds.length > 0 ? Math.max(...existingIds) + 1 : 1;
+  }
+
+  createCategory(name: string, onSuccess: () => void): void {
+    if (this.isCategoryNameTaken(name)) {
+      return;
+    }
+
+    this.#saving.set(true);
+    this.#saveError.set(null);
+
+    this.#api
+      .createCategory(new Category({ id: this.#nextCategoryId(), name }))
+      .pipe(finalize(() => this.#saving.set(false)))
+      .subscribe({
+        next: (created) => {
+          this.#categories.set([...this.#categories(), created]);
+          onSuccess();
+        },
+        error: (error: Error) => this.#saveError.set(error.message),
+      });
+  }
+
+  renameCategory(category: Category, name: string, onSuccess: () => void): void {
+    if (this.isCategoryNameTaken(name, category.id)) {
+      return;
+    }
+
+    this.#saving.set(true);
+    this.#saveError.set(null);
+
+    this.#api
+      .updateCategory(category.rename(name))
+      .pipe(finalize(() => this.#saving.set(false)))
+      .subscribe({
+        next: (updated) => {
+          this.#categories.set(this.#categories().map((item) => (item.id === updated.id ? updated : item)));
+          onSuccess();
+        },
+        error: (error: Error) => this.#saveError.set(error.message),
+      });
+  }
+
+  deleteCategory(id: number): void {
+    if (this.machineryCountByCategory(id) > 0) {
+      return;
+    }
+
+    this.#saveError.set(null);
+
+    this.#api.deleteCategory(id).subscribe({
+      next: () => this.#categories.set(this.#categories().filter((item) => item.id !== id)),
+      error: (error: Error) => this.#saveError.set(error.message),
+    });
+  }
+
 
   createMachinery(machinery: Machinery, onSuccess: () => void): void {
     this.#saving.set(true);

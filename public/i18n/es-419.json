@@ -24,7 +24,8 @@
     "sign-up": "Crear cuenta",
     "terms": "Términos del servicio",
     "plans": "Planes de suscripción",
-    "checkout-result": "Resultado del pago"
+    "checkout-result": "Resultado del pago",
+    "categories": "Categorías de maquinaria"
   },
   "option": {
     "home": "Inicio",
@@ -156,7 +157,8 @@
     "per-hour": "/ hora",
     "yours": "Tu maquinaria",
     "rent": "Alquilar",
-    "confirm-delete": "¿Eliminar \"{{ name }}\" del catálogo? Esta acción no se puede deshacer."
+    "confirm-delete": "¿Eliminar \"{{ name }}\" del catálogo? Esta acción no se puede deshacer.",
+    "manage-categories": "Gestionar categorías"
   },
   "enums": {
     "machinery-status": {
@@ -457,5 +459,25 @@
     "rejected-text": "El pago fue rechazado o cancelado. No se activó ningún plan; puedes intentarlo de nuevo.",
     "error-title": "No pudimos confirmar el pago",
     "back": "Volver a los planes"
+  },
+  "categories": {
+    "title": "Categorías de maquinaria",
+    "subtitle": "Las categorías ordenan el catálogo. Una categoría que todavía tiene maquinaria no se puede eliminar.",
+    "create-label": "Crear una categoría",
+    "new": "Nueva categoría",
+    "add": "Agregar",
+    "list-label": "Categorías",
+    "empty": "Todavía no hay categorías.",
+    "machinery-count": "Máquinas: {{count}}",
+    "rename-label": "Renombrar la categoría {{name}}",
+    "delete-label": "Eliminar la categoría {{name}}",
+    "in-use": "Tiene maquinaria: mueve o elimina esa maquinaria primero.",
+    "confirm-delete": "¿Eliminar la categoría \"{{ name }}\"?",
+    "back": "Volver al catálogo",
+    "error": {
+      "required": "Escribe un nombre.",
+      "duplicated": "Ya existe una categoría con ese nombre.",
+      "max-length": "Usa como máximo 40 caracteres."
+    }
   }
 }

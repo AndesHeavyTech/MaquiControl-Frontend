@@ -24,7 +24,8 @@
     "sign-up": "Create account",
     "terms": "Terms of service",
     "plans": "Subscription plans",
-    "checkout-result": "Payment result"
+    "checkout-result": "Payment result",
+    "categories": "Machinery categories"
   },
   "option": {
     "home": "Home",
@@ -156,7 +157,8 @@
     "per-hour": "/ hour",
     "yours": "Your machinery",
     "rent": "Rent",
-    "confirm-delete": "Delete \"{{ name }}\" from the catalog? This action cannot be undone."
+    "confirm-delete": "Delete \"{{ name }}\" from the catalog? This action cannot be undone.",
+    "manage-categories": "Manage categories"
   },
   "enums": {
     "machinery-status": {
@@ -457,5 +459,25 @@
     "rejected-text": "The payment was rejected or cancelled. No plan was activated; you can try again.",
     "error-title": "We could not confirm the payment",
     "back": "Back to plans"
+  },
+  "categories": {
+    "title": "Machinery categories",
+    "subtitle": "Categories group the catalog. A category that still has machinery cannot be deleted.",
+    "create-label": "Create a category",
+    "new": "New category",
+    "add": "Add",
+    "list-label": "Categories",
+    "empty": "There are no categories yet.",
+    "machinery-count": "Machines: {{count}}",
+    "rename-label": "Rename the category {{name}}",
+    "delete-label": "Delete the category {{name}}",
+    "in-use": "It has machinery: move or delete that machinery first.",
+    "confirm-delete": "Delete the category \"{{ name }}\"?",
+    "back": "Back to the catalog",
+    "error": {
+      "required": "Enter a name.",
+      "duplicated": "A category with that name already exists.",
+      "max-length": "Use at most 40 characters."
+    }
   }
 }
