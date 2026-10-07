@@ -1,0 +1,66 @@
+<section class="form-screen">
+  <form class="form-card" [formGroup]="form" (ngSubmit)="performRequest()">
+    <span class="eyebrow">Rental Management</span>
+    <h1>Solicitar alquiler</h1>
+
+    @if (!machinery) {
+      <p class="hint">Cargando maquinaria…</p>
+    } @else {
+      <div class="machinery-summary">
+        <h2>{{ machinery.name }}</h2>
+        <p>
+          {{ machinery.brand }} {{ machinery.model }} · S/
+          {{ machinery.hourlyRate.amount | number: '1.0-0' }} / hora
+        </p>
+      </div>
+
+      @if (!profileExists) {
+        <p class="error-message">
+          Completa tu perfil antes de solicitar un alquiler.
+          <a routerLink="/profile">Ir a mi perfil</a>
+        </p>
+      }
+
+      <label for="startDate">Fecha de inicio</label>
+      <input id="startDate" type="date" formControlName="startDate" />
+      @if (form.controls.startDate.touched && form.controls.startDate.invalid) {
+        <span class="error-message">Obligatorio.</span>
+      }
+
+      <label for="endDate">Fecha de fin</label>
+      <input id="endDate" type="date" formControlName="endDate" />
+      @if (form.controls.endDate.touched && form.controls.endDate.invalid) {
+        <span class="error-message">Obligatorio.</span>
+      }
+
+      @if (estimatedTotal(); as total) {
+        <p class="hint">
+          Total estimado: S/ {{ total.amount | number: '1.2-2' }} {{ total.currency }}
+          (jornada de 8 horas por día del periodo).
+        </p>
+      }
+
+      @if (overlapDetected) {
+        <span class="error-message">
+          Esta maquinaria ya tiene una reserva activa que se superpone con el periodo elegido.
+        </span>
+      }
+
+      @if (store.saveError()) {
+        <span class="error-message">{{ store.saveError() }}</span>
+      }
+
+      <div class="form-actions">
+        <a mat-stroked-button routerLink="/fleet/machinery">Cancelar</a>
+        <button
+          mat-flat-button
+          class="submit-action"
+          type="submit"
+          [disabled]="store.saving() || !profileExists"
+        >
+          {{ store.saving() ? 'Enviando…' : 'Solicitar alquiler' }}
+        </button>
+      </div>
+    }
+  </form>
+</section>
