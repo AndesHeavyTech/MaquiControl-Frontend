@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.greeting {
+  margin-right: 0.25rem;
+  color: var(--mc-secondary-text);
+  font-size: 0.9rem;
+}

@@ -1,0 +1,44 @@
+:host {
+  display: block;
+  padding: clamp(2rem, 6vw, 4rem) 1rem;
+}
+
+.terms {
+  width: min(48rem, 100%);
+  margin: 0 auto;
+}
+
+.eyebrow {
+  color: var(--mc-accent);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0.75rem 0 0.5rem;
+  color: var(--mc-text);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+h2 {
+  margin: 2rem 0 0.5rem;
+  color: var(--mc-text);
+  font-size: 1.25rem;
+}
+
+p {
+  margin: 0;
+  color: var(--mc-secondary-text);
+  line-height: 1.7;
+}
+
+.updated {
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+
+a {
+  margin-top: 2.5rem;
+}

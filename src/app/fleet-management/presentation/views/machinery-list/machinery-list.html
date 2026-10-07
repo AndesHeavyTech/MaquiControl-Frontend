@@ -1,0 +1,134 @@
+<section class="catalog">
+  <header class="catalog-header">
+    <div>
+      <span class="eyebrow">{{ 'machinery-list.eyebrow' | translate }}</span>
+      <h1>{{ 'machinery-list.title' | translate }}</h1>
+      <p>{{ 'machinery-list.subtitle' | translate }}</p>
+    </div>
+
+    <div class="catalog-summary" [attr.aria-label]="'machinery-list.summary-label' | translate">
+      <div>
+        <strong>{{ store.machineryCount() }}</strong>
+        <span>{{ 'machinery-list.registered' | translate }}</span>
+      </div>
+      <div>
+        <strong>{{ store.availableMachineryCount() }}</strong>
+        <span>{{ 'machinery-list.available' | translate }}</span>
+      </div>
+    </div>
+
+    @if (canPublish()) {
+      <div class="catalog-actions">
+        <a mat-flat-button class="publish-action" routerLink="/fleet/machinery/new">
+          {{ 'machinery-list.publish' | translate }}
+        </a>
+        <a mat-stroked-button routerLink="/fleet/categories">
+          {{ 'machinery-list.manage-categories' | translate }}
+        </a>
+      </div>
+    }
+  </header>
+
+  @if (store.loading()) {
+    <div class="state-message" role="status" aria-live="polite">
+      <span class="spinner" aria-hidden="true"></span>
+      <h2>{{ 'machinery-list.loading-title' | translate }}</h2>
+      <p>{{ 'machinery-list.loading-text' | translate }}</p>
+    </div>
+  } @else if (store.error()) {
+    <div class="state-message error-message" role="alert">
+      <span class="state-icon" aria-hidden="true">!</span>
+      <h2>{{ 'machinery-list.error-title' | translate }}</h2>
+      <p>{{ 'machinery-list.error-text' | translate }}</p>
+      <button mat-flat-button type="button" (click)="store.loadMachinery()">
+        {{ 'common.retry' | translate }}
+      </button>
+    </div>
+  } @else if (store.machineryCount() === 0) {
+    <div class="state-message">
+      <span class="state-icon" aria-hidden="true">0</span>
+      <h2>{{ 'machinery-list.empty-title' | translate }}</h2>
+      <p>{{ 'machinery-list.empty-text' | translate }}</p>
+    </div>
+  } @else {
+    <div class="machinery-grid">
+      @for (machinery of store.machinery(); track machinery.id) {
+        <article class="machinery-card">
+          <div class="card-heading">
+            <span class="machinery-icon material-symbols-outlined" aria-hidden="true">
+              construction
+            </span>
+
+            <span
+              class="status"
+              [class]="machineryStatusClass(machinery.status)"
+            >
+              {{ machineryStatusLabel(machinery.status) | translate }}
+            </span>
+          </div>
+
+          <div class="card-body">
+            <span class="machinery-type">
+              {{ categoryName(machinery) }}
+            </span>
+
+            <h2>{{ machinery.name }}</h2>
+
+            <p class="description">{{ machinery.description }}</p>
+
+            <dl class="details">
+              <div>
+                <dt>{{ 'machinery.brand-model' | translate }}</dt>
+                <dd>{{ machinery.brand }} {{ machinery.model }}</dd>
+              </div>
+
+              <div>
+                <dt>{{ 'machinery.year' | translate }}</dt>
+                <dd>{{ machinery.manufactureYear }}</dd>
+              </div>
+
+              <div>
+                <dt>{{ 'machinery.location' | translate }}</dt>
+                <dd>
+                  {{ machinery.location.district }},
+                  {{ machinery.location.department }}
+                </dd>
+              </div>
+            </dl>
+          </div>
+
+          <footer class="card-footer">
+            <div>
+              <span>{{ 'machinery-list.rate-from' | translate }}</span>
+              <strong>
+                S/
+                {{ machinery.hourlyRate.amount | number: '1.0-0' }}
+                <small>{{ 'machinery-list.per-hour' | translate }}</small>
+              </strong>
+            </div>
+
+            <span class="currency">
+              {{ machinery.hourlyRate.currency }}
+            </span>
+          </footer>
+
+          <div class="card-management">
+            @if (isOwner(machinery)) {
+              <span class="relation-tag">{{ 'machinery-list.yours' | translate }}</span>
+              <a mat-stroked-button [routerLink]="['/fleet/machinery', machinery.id, 'edit']">
+                {{ 'common.edit' | translate }}
+              </a>
+              <button mat-button type="button" (click)="performDelete(machinery.id, machinery.name)">
+                {{ 'common.delete' | translate }}
+              </button>
+            } @else if (canRent() && machinery.isAvailable()) {
+              <a mat-flat-button class="rent-action" [routerLink]="['/rental/request', machinery.id]">
+                {{ 'machinery-list.rent' | translate }}
+              </a>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  }
+</section>

@@ -1,0 +1,485 @@
+{
+  "language": {
+    "label": "Preferred language",
+    "en": "English",
+    "es-419": "Latin American Spanish",
+    "short": {
+      "en": "EN",
+      "es-419": "ES"
+    }
+  },
+  "titles": {
+    "home": "Home",
+    "machinery-catalog": "Machinery catalog",
+    "publish-machinery": "Publish machinery",
+    "edit-machinery": "Edit machinery",
+    "profile": "My profile",
+    "rental-request": "Request rental",
+    "reservations": "Reservations",
+    "maintenance": "Maintenance",
+    "breakdown-report": "Report breakdown",
+    "service-operation": "Service operation",
+    "page-not-found": "Page not found",
+    "sign-in": "Sign in",
+    "sign-up": "Create account",
+    "terms": "Terms of service",
+    "plans": "Subscription plans",
+    "checkout-result": "Payment result",
+    "categories": "Machinery categories"
+  },
+  "option": {
+    "home": "Home",
+    "machinery": "Machinery",
+    "profile": "My profile",
+    "reservations": "Reservations",
+    "maintenance": "Maintenance",
+    "plans": "Plans"
+  },
+  "layout": {
+    "skip-to-content": "Skip to main content",
+    "go-home": "Go to MaquiControl home",
+    "main-navigation": "Main navigation"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "developed-by": "Developed by",
+    "tagline": "Reliable management for machinery rental.",
+    "powered-by": "Powered by",
+    "and": "and",
+    "terms": "Terms of service",
+    "new-tab": "(opens in a new tab)"
+  },
+  "home": {
+    "eyebrow": "Smart machinery management",
+    "title": "Find and manage machinery without hassle",
+    "content": "MaquiControl brings together machinery availability, booking and tracking for contractors and rental companies.",
+    "explore-machinery": "Explore machinery",
+    "about-project": "About the project",
+    "benefits-label": "Main benefits",
+    "card-label": "All in one place",
+    "card-title": "Reliable operational control",
+    "benefit-availability": "Up-to-date availability",
+    "benefit-rates": "Transparent rates",
+    "benefit-tracking": "Machinery tracking"
+  },
+  "page-not-found": {
+    "title": "Page not found",
+    "content": "The path <strong>/{{ invalid_path }}</strong> does not exist or was moved to another section of MaquiControl.",
+    "go-home": "Back to home"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "error": {
+      "email-invalid": "Enter a valid email address.",
+      "password-required": "Password is required.",
+      "password-min-length": "Password must be at least 8 characters long."
+    },
+    "sign-in": "Sign in",
+    "sign-up": "Sign up",
+    "sign-out": "Sign out"
+  },
+  "sign-in": {
+    "eyebrow": "Welcome back",
+    "title": "Sign in",
+    "hint": "Use your email and password to manage your fleet.",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "no-account": "Don't have an account?",
+    "go-sign-up": "Sign up"
+  },
+  "sign-up": {
+    "eyebrow": "Create your account",
+    "title": "Sign up for MaquiControl",
+    "hint": "Choose whether you will rent machinery or publish your own.",
+    "role-label": "I want to sign up as",
+    "error": {
+      "roles-unavailable": "Roles could not be loaded. Please try again in a moment."
+    },
+    "submit": "Create account",
+    "submitting": "Creating account…",
+    "has-account": "Already have an account?",
+    "go-sign-in": "Sign in"
+  },
+  "roles": {
+    "CONTRACTOR": {
+      "name": "Contractor",
+      "description": "Rents machinery published by other users."
+    },
+    "FLEET_OWNER": {
+      "name": "Fleet owner",
+      "description": "Publishes and manages their own machinery."
+    },
+    "FLEET_ADMINISTRATOR": {
+      "name": "Fleet administrator",
+      "description": "Manages an organization's fleet and staff."
+    },
+    "OPERATOR": {
+      "name": "Operator",
+      "description": "Operates machinery on behalf of an organization."
+    },
+    "SYSTEM_ADMINISTRATOR": {
+      "name": "System administrator",
+      "description": "Manages the MaquiControl platform."
+    }
+  },
+  "common": {
+    "retry": "Try again",
+    "edit": "Edit",
+    "delete": "Delete",
+    "required": "Required.",
+    "review-fields": "Check the highlighted fields before saving.",
+    "cancel": "Cancel",
+    "save": "Save",
+    "saving": "Saving…",
+    "sending": "Sending…",
+    "api-unreachable": "Check that the API is reachable and try again."
+  },
+  "machinery": {
+    "brand-model": "Brand and model",
+    "year": "Year",
+    "location": "Location"
+  },
+  "machinery-list": {
+    "eyebrow": "Fleet Management",
+    "title": "Machinery catalog",
+    "subtitle": "Browse available machinery, reference rates and up-to-date locations.",
+    "summary-label": "Catalog summary",
+    "registered": "registered units",
+    "available": "available",
+    "publish": "Publish machinery",
+    "loading-title": "Loading machinery",
+    "loading-text": "We are checking catalog availability.",
+    "error-title": "We could not load the catalog",
+    "error-text": "Check that the API is reachable and try again.",
+    "empty-title": "No machinery registered",
+    "empty-text": "The catalog has no units to show yet.",
+    "rate-from": "Rate from",
+    "per-hour": "/ hour",
+    "yours": "Your machinery",
+    "rent": "Rent",
+    "confirm-delete": "Delete \"{{ name }}\" from the catalog? This action cannot be undone.",
+    "manage-categories": "Manage categories"
+  },
+  "enums": {
+    "machinery-status": {
+      "AVAILABLE": "Available",
+      "RESERVED": "Reserved",
+      "RENTED": "Rented",
+      "IN_MAINTENANCE": "In maintenance",
+      "OUT_OF_SERVICE": "Out of service"
+    },
+    "organization-type": {
+      "INDEPENDENT_CONTRACTOR": "Independent contractor",
+      "RENTAL_COMPANY": "Rental company",
+      "CONSTRUCTION_COMPANY": "Construction company",
+      "OTHER": "Other"
+    },
+    "rental-status": {
+      "REQUESTED": "Requested",
+      "CONFIRMED": "Confirmed",
+      "IN_PROGRESS": "In progress",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    },
+    "maintenance-type": {
+      "PREVENTIVE": "Preventive",
+      "CORRECTIVE": "Corrective",
+      "INSPECTION": "Inspection"
+    },
+    "maintenance-status": {
+      "SCHEDULED": "Scheduled",
+      "IN_PROGRESS": "In progress",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    },
+    "breakdown-severity": {
+      "LOW": "Low",
+      "MEDIUM": "Medium",
+      "HIGH": "High",
+      "CRITICAL": "Critical"
+    },
+    "operation-status": {
+      "SCHEDULED": "Scheduled",
+      "IN_PROGRESS": "In progress",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    },
+    "worked-hours-status": {
+      "PENDING": "Pending",
+      "VALIDATED": "Validated",
+      "REJECTED": "Rejected"
+    }
+  },
+  "location": {
+    "department": "Department",
+    "province": "Province",
+    "district": "District",
+    "address": "Address",
+    "city": "City"
+  },
+  "machinery-form": {
+    "new-title": "Publish machinery",
+    "edit-title": "Edit machinery",
+    "profile-required": "Complete your profile before publishing machinery.",
+    "go-profile": "Go to my profile",
+    "category": "Category",
+    "category-placeholder": "Select a category",
+    "error": {
+      "category-required": "Select a category.",
+      "categories-unavailable": "Categories could not be loaded. Check that the API is reachable.",
+      "name-required": "Name is required.",
+      "description-required": "Description is required.",
+      "year-invalid": "Enter a valid year (1900 or later).",
+      "rate-invalid": "Enter a valid rate."
+    },
+    "name": "Name",
+    "description": "Description",
+    "type": "Type",
+    "brand": "Brand",
+    "model": "Model",
+    "manufacture-year": "Manufacture year",
+    "hourly-rate": "Hourly rate",
+    "currency": "Currency",
+    "status": "Status"
+  },
+  "profile": {
+    "eyebrow": "Profiles Management",
+    "title": "My profile",
+    "hint": "Keep your personal and contact details up to date. This information identifies your listings and reservations in MaquiControl.",
+    "loading": "Loading your profile…",
+    "empty": "You have not completed your profile yet. Fill in the form to create it.",
+    "personal-data": "Personal details",
+    "first-name": "First names",
+    "last-name": "Last names",
+    "document-number": "ID document number",
+    "contact-information": "Contact information",
+    "phone": "Phone",
+    "secondary-email": "Alternate email (optional)",
+    "saved": "Profile saved successfully.",
+    "save": "Save profile",
+    "session-eyebrow": "Session",
+    "session-title": "Sign out of MaquiControl",
+    "session-hint": "You are signed in as {{email}}. Your session also ends when you close the browser."
+  },
+  "organization": {
+    "eyebrow": "Organization (optional)",
+    "title": "Your organization's details",
+    "hint": "Fill this in only if you operate on behalf of a company or organization rather than as an independent contractor.",
+    "legal-name": "Legal name",
+    "trade-name": "Trade name (optional)",
+    "tax-id": "RUC / tax ID",
+    "type": "Organization type",
+    "saved": "Organization saved successfully.",
+    "save": "Save organization"
+  },
+  "rental": {
+    "eyebrow": "Rental Management"
+  },
+  "rental-request": {
+    "title": "Request rental",
+    "loading": "Loading machinery…",
+    "profile-required": "Complete your profile before requesting a rental.",
+    "start-date": "Start date",
+    "end-date": "End date",
+    "estimated-total": "Estimated total:",
+    "estimate-basis": "(8-hour workday for each day of the period, both dates included).",
+    "overlap": "This machinery already has an active reservation that overlaps the selected period.",
+    "submit": "Request rental",
+    "past-date": "The date cannot be in the past.",
+    "end-before-start": "The end date cannot be before the start date.",
+    "not-available": "This machine is not available for rent right now (it may be in maintenance or already rented)."
+  },
+  "reservations": {
+    "title": "Reservations",
+    "subtitle": "Rental requests, their status and the period booked for each one.",
+    "summary-label": "Reservations summary",
+    "registered": "registered reservations",
+    "pending": "pending",
+    "loading": "Loading reservations",
+    "error-title": "We could not load the reservations",
+    "empty-title": "No reservations registered",
+    "empty-text": "Request a machinery rental from the catalog.",
+    "view-catalog": "View catalog",
+    "period": "Period",
+    "total": "Total",
+    "cancellation-reason": "Cancellation reason",
+    "yours": "Your request",
+    "confirm": "Confirm",
+    "reject": "Reject",
+    "cancel-request": "Cancel request",
+    "report-breakdown": "Report breakdown",
+    "view-operation": "View operation",
+    "machinery-fallback": "Machinery #{{ id }}",
+    "cancel-prompt": "Cancellation reason:"
+  },
+  "maintenance": {
+    "eyebrow": "Maintenance Management",
+    "title": "Maintenance",
+    "subtitle": "Schedule, start and complete preventive and corrective maintenance for your machinery.",
+    "summary-label": "Maintenance summary",
+    "records": "records",
+    "no-machinery-title": "You have no registered machinery yet",
+    "no-machinery-text": "Register machinery in your catalog to schedule maintenance for it.",
+    "schedule-title": "Schedule maintenance",
+    "machinery": "Machinery",
+    "machinery-placeholder": "Select machinery",
+    "scheduled-date": "Scheduled date",
+    "schedule": "Schedule",
+    "loading": "Loading maintenance",
+    "empty-title": "No maintenance registered",
+    "empty-text": "Schedule the first maintenance for your machinery with the form above.",
+    "scheduled": "Scheduled",
+    "technician": "Technician",
+    "cost": "Cost",
+    "reported-breakdowns": "Reported breakdowns",
+    "start": "Start",
+    "complete": "Complete",
+    "technician-prompt": "Assigned technician's name:",
+    "cost-prompt": "Final maintenance cost (S/):"
+  },
+  "breakdown": {
+    "title": "Report breakdown",
+    "severity": "Severity",
+    "description": "Fault description",
+    "submit": "Report breakdown"
+  },
+  "operation": {
+    "eyebrow": "Operations Management",
+    "title": "Service operation",
+    "loading": "Loading reservation…",
+    "machinery": "Machinery:",
+    "not-started": "This reservation has no service operation started yet.",
+    "start": "Start operation",
+    "no-hours": "No worked hours recorded yet.",
+    "validate": "Validate",
+    "complete": "Complete operation",
+    "back": "Back to reservations"
+  },
+  "worked-hours": {
+    "title": "Record worked hours",
+    "date": "Date",
+    "start": "Start",
+    "end": "End",
+    "observations": "Observations (optional)",
+    "submit": "Record"
+  },
+  "terms": {
+    "eyebrow": "Legal",
+    "title": "Terms of service",
+    "updated": "Last updated: October 2026",
+    "intro": "These terms govern the use of MaquiControl, the platform by AndesHeavyTech that connects heavy machinery fleet owners with contractors who need to rent it. By creating an account you accept them.",
+    "sections": {
+      "service": {
+        "title": "1. The service",
+        "body": "MaquiControl lets fleet owners publish machinery, manage reservations, maintenance and service operations, and lets contractors request rentals. MaquiControl is an intermediary: the rental agreement is between the owner and the contractor."
+      },
+      "accounts": {
+        "title": "2. Accounts and roles",
+        "body": "You must give truthful information and keep your password private. Each account has a role (fleet owner or contractor) that defines what it can do. You are responsible for the activity carried out with your account."
+      },
+      "owners": {
+        "title": "3. Fleet owner responsibilities",
+        "body": "Owners must publish real machinery with accurate rates, keep it in safe working condition, register maintenance and breakdowns honestly, and respect the reservations they confirm."
+      },
+      "contractors": {
+        "title": "4. Contractor responsibilities",
+        "body": "Contractors must use the machinery only for the agreed work and period, with qualified operators, report breakdowns as soon as they happen and return the machinery in the condition it was delivered."
+      },
+      "payments": {
+        "title": "5. Rates and payments",
+        "body": "Estimated totals are calculated from the hourly rate and an 8-hour workday for each day of the period, both dates included. The final amount is based on the worked hours validated by both parties."
+      },
+      "privacy": {
+        "title": "6. Personal data",
+        "body": "We only collect the data needed to provide the service and treat it according to Peruvian Law No. 29733 on Personal Data Protection. We do not sell your data. You can ask to access, correct or delete it at any time."
+      },
+      "ethics": {
+        "title": "7. Professional and ethical commitment",
+        "body": "MaquiControl is developed following the ACM/IEEE Software Engineering Code of Ethics and the Code of Ethics of the Colegio de Ingenieros del Perú (CIP): we act in the public interest, are transparent about how the product works and its limitations, and put the safety of people who operate the machinery first."
+      },
+      "liability": {
+        "title": "8. Limitation of liability",
+        "body": "MaquiControl does not own the machinery and is not liable for damage caused by misuse, lack of maintenance or breach of the agreement between owner and contractor. We work to keep the platform available but cannot guarantee uninterrupted service."
+      },
+      "changes": {
+        "title": "9. Changes to these terms",
+        "body": "We may update these terms. We will announce relevant changes inside the application before they take effect."
+      },
+      "contact": {
+        "title": "10. Contact",
+        "body": "For questions about these terms, contact the AndesHeavyTech team through the MaquiControl landing page."
+      }
+    },
+    "back": "Back to home"
+  },
+  "plans": {
+    "eyebrow": "Subscription plans",
+    "title": "Choose the plan that fits your business",
+    "subtitle": "Flexible plans for machinery rental businesses of different sizes.",
+    "recommended": "Recommended",
+    "per-month": "/ month",
+    "machinery-limit": "Up to {{limit}} machines",
+    "subscribe": "Subscribe",
+    "your-plan": "Your current plan",
+    "redirecting": "Redirecting to Mercado Pago…",
+    "current": "Your {{name}} plan is active until {{date}}.",
+    "loading": "Loading plans…",
+    "error": "Plans could not be loaded. Try again later.",
+    "checkout-title": "MaquiControl {{name}} plan (1 month)",
+    "sandbox-note": "Payments are processed by Mercado Pago in test mode (sandbox): no real money is charged.",
+    "ESSENTIAL": {
+      "name": "Essential",
+      "title": "Essential Plan",
+      "description": "For small machinery rental businesses starting to digitize their operation.",
+      "features": [
+        "Machinery fleet management",
+        "Availability tracking",
+        "Rental reservation management",
+        "Maintenance tracking"
+      ]
+    },
+    "PRO": {
+      "name": "Pro",
+      "title": "Pro Plan",
+      "description": "For growing rental businesses that manage a larger machinery fleet.",
+      "features": [
+        "Everything included in Essential",
+        "Expanded fleet management",
+        "Advanced operational insights",
+        "Enhanced rental management"
+      ]
+    }
+  },
+  "checkout-result": {
+    "confirming": "Confirming your payment with Mercado Pago…",
+    "approved-title": "Subscription active",
+    "approved-text": "Mercado Pago approved your payment. Your plan is active for one month.",
+    "pending-title": "Payment pending",
+    "pending-text": "Mercado Pago is still processing your payment. Your plan will be activated once it is approved.",
+    "rejected-title": "Payment not completed",
+    "rejected-text": "The payment was rejected or cancelled. No plan was activated; you can try again.",
+    "error-title": "We could not confirm the payment",
+    "back": "Back to plans"
+  },
+  "categories": {
+    "title": "Machinery categories",
+    "subtitle": "Categories group the catalog. A category that still has machinery cannot be deleted.",
+    "create-label": "Create a category",
+    "new": "New category",
+    "add": "Add",
+    "list-label": "Categories",
+    "empty": "There are no categories yet.",
+    "machinery-count": "Machines: {{count}}",
+    "rename-label": "Rename the category {{name}}",
+    "delete-label": "Delete the category {{name}}",
+    "in-use": "It has machinery: move or delete that machinery first.",
+    "confirm-delete": "Delete the category \"{{ name }}\"?",
+    "back": "Back to the catalog",
+    "error": {
+      "required": "Enter a name.",
+      "duplicated": "A category with that name already exists.",
+      "max-length": "Use at most 40 characters."
+    }
+  }
+}

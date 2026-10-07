@@ -1,0 +1,31 @@
+<section class="auth-screen">
+  <form class="auth-card" [formGroup]="form" (ngSubmit)="performSignIn()" aria-labelledby="sign-in-title">
+    <span class="eyebrow">{{ 'sign-in.eyebrow' | translate }}</span>
+    <h1 id="sign-in-title">{{ 'sign-in.title' | translate }}</h1>
+    <p class="hint">{{ 'sign-in.hint' | translate }}</p>
+
+    <label for="email">{{ 'auth.email' | translate }}</label>
+    <input id="email" type="email" formControlName="email" autocomplete="email" [attr.aria-invalid]="form.controls.email.touched && form.controls.email.invalid" aria-describedby="email-error" />
+    @if (form.controls.email.touched && form.controls.email.invalid) {
+      <span id="email-error" class="error-message" role="alert">{{ 'auth.error.email-invalid' | translate }}</span>
+    }
+
+    <label for="password">{{ 'auth.password' | translate }}</label>
+    <input id="password" type="password" formControlName="password" autocomplete="current-password" [attr.aria-invalid]="form.controls.password.touched && form.controls.password.invalid" aria-describedby="password-error" />
+    @if (form.controls.password.touched && form.controls.password.invalid) {
+      <span id="password-error" class="error-message" role="alert">{{ 'auth.error.password-required' | translate }}</span>
+    }
+
+    @if (store.error()) {
+      <span class="error-message" role="alert">{{ store.error() }}</span>
+    }
+
+    <button mat-flat-button class="submit-action" type="submit" [disabled]="store.submitting()" [attr.aria-busy]="store.submitting()">
+      {{ (store.submitting() ? 'sign-in.submitting' : 'sign-in.submit') | translate }}
+    </button>
+
+    <p class="switch-link">
+      {{ 'sign-in.no-account' | translate }} <a routerLink="/identity/sign-up">{{ 'sign-in.go-sign-up' | translate }}</a>
+    </p>
+  </form>
+</section>

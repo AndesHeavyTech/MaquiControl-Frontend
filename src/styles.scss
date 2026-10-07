@@ -1,1 +1,69 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+:root {
+  --mc-background: #0f1115;
+  --mc-surface: #171a20;
+  --mc-secondary-surface: #1f232b;
+  --mc-text: #f5f5f5;
+  --mc-secondary-text: #a8adb8;
+  --mc-accent: #f59e0b;
+  --mc-accent-hover: #d97706;
+  --mc-border: #2a2f38;
+}
+
+html {
+  height: 100%;
+
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 20rem;
+  min-height: 100%;
+  margin: 0;
+  background: var(--mc-background);
+  color: var(--mc-text);
+  font-family: Inter, Roboto, Arial, Helvetica, sans-serif;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--mc-accent);
+  outline-offset: 4px;
+}
+
+footer a {
+  color: var(--mc-accent);
+}
+
+.mat-toolbar {
+  --mat-toolbar-container-text-color: var(--mc-text);
+}
+
+.mat-mdc-button:not(:disabled) {
+  --mat-button-text-label-text-color: var(--mc-accent);
+}
+
+.mat-mdc-outlined-button:not(:disabled) {
+  --mat-button-outlined-label-text-color: var(--mc-text);
+}

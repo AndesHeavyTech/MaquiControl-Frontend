@@ -1,0 +1,262 @@
+:host {
+  display: block;
+}
+
+.catalog {
+  width: min(78rem, calc(100% - 2rem));
+  margin-inline: auto;
+  padding-block: clamp(3rem, 7vw, 5rem);
+}
+
+.catalog-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.eyebrow {
+  color: var(--mc-accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0.75rem 0 1rem;
+  color: var(--mc-text);
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  letter-spacing: -0.04em;
+}
+
+.catalog-header p {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--mc-secondary-text);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.catalog-summary {
+  display: flex;
+  flex-shrink: 0;
+  gap: 0.75rem;
+}
+
+.catalog-summary div {
+  min-width: 9rem;
+  padding: 1rem;
+  border: 1px solid var(--mc-border);
+  border-radius: 0.75rem;
+  background: var(--mc-surface);
+}
+
+.catalog-summary strong,
+.catalog-summary span {
+  display: block;
+}
+
+.catalog-summary strong {
+  color: var(--mc-accent);
+  font-size: 1.6rem;
+}
+
+.catalog-summary span {
+  margin-top: 0.25rem;
+  color: var(--mc-secondary-text);
+  font-size: 0.8rem;
+}
+
+.rental-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: 1.25rem;
+}
+
+.rental-card {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--mc-border);
+  border-radius: 1rem;
+  background: var(--mc-surface);
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.rental-card:hover {
+  border-color: color-mix(in srgb, var(--mc-accent) 65%, var(--mc-border));
+  transform: translateY(-0.25rem);
+}
+
+.card-heading {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  min-height: 3.5rem;
+  padding: 1.25rem;
+  background:
+    linear-gradient(135deg, rgb(245 158 11 / 12%), transparent),
+    var(--mc-secondary-surface);
+}
+
+.status {
+  padding: 0.35rem 0.65rem;
+  border: 1px solid var(--mc-border);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.requested {
+  border-color: #92400e;
+  background: rgb(245 158 11 / 12%);
+  color: #fcd34d;
+}
+
+.confirmed,
+.in-progress {
+  border-color: #1e40af;
+  background: rgb(59 130 246 / 12%);
+  color: #93c5fd;
+}
+
+.completed {
+  border-color: #166534;
+  background: rgb(34 197 94 / 12%);
+  color: #86efac;
+}
+
+.cancelled {
+  border-color: #991b1b;
+  background: rgb(239 68 68 / 12%);
+  color: #fca5a5;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-body h2 {
+  margin: 0 0 0.75rem;
+  color: var(--mc-text);
+  font-size: 1.3rem;
+}
+
+.details {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.details div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.details dt {
+  color: var(--mc-secondary-text);
+}
+
+.details dd {
+  margin: 0;
+  color: var(--mc-text);
+  text-align: right;
+}
+
+.state-message {
+  display: grid;
+  min-height: 20rem;
+  place-items: center;
+  align-content: center;
+  padding: 2rem;
+  border: 1px solid var(--mc-border);
+  border-radius: 1rem;
+  background: var(--mc-surface);
+  text-align: center;
+}
+
+.state-message h2 {
+  margin: 1rem 0 0.5rem;
+}
+
+.state-message p {
+  max-width: 30rem;
+  margin: 0;
+  color: var(--mc-secondary-text);
+}
+
+.state-message button {
+  margin-top: 1.5rem;
+  background: var(--mc-accent) !important;
+  color: var(--mc-background) !important;
+}
+
+.state-icon {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--mc-secondary-surface);
+  color: var(--mc-accent);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 0.25rem solid var(--mc-border);
+  border-top-color: var(--mc-accent);
+  border-radius: 50%;
+  animation: spin 800ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.card-management {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1.5rem 1.25rem;
+}
+
+.relation-tag {
+  margin-right: auto;
+  color: var(--mc-secondary-text);
+  font-size: 0.75rem;
+  font-style: italic;
+}
+
+.card-management button {
+  color: #fca5a5 !important;
+}
+
+.card-management button[mat-stroked-button] {
+  border-color: var(--mc-border) !important;
+  color: var(--mc-text) !important;
+}
+
+@media (max-width: 800px) {
+  .catalog-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .catalog-summary {
+    width: 100%;
+  }
+
+  .catalog-summary div {
+    flex: 1;
+    min-width: 0;
+  }
+}

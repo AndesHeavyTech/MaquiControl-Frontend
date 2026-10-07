@@ -1,0 +1,106 @@
+<section class="catalog">
+  <header class="catalog-header">
+    <div>
+      <span class="eyebrow">{{ 'rental.eyebrow' | translate }}</span>
+      <h1>{{ 'reservations.title' | translate }}</h1>
+      <p>{{ 'reservations.subtitle' | translate }}</p>
+    </div>
+
+    <div class="catalog-summary" [attr.aria-label]="'reservations.summary-label' | translate">
+      <div>
+        <strong>{{ myRentals().length }}</strong>
+        <span>{{ 'reservations.registered' | translate }}</span>
+      </div>
+      <div>
+        <strong>{{ myPendingCount() }}</strong>
+        <span>{{ 'reservations.pending' | translate }}</span>
+      </div>
+    </div>
+  </header>
+
+  @if (store.loading()) {
+    <div class="state-message" role="status" aria-live="polite">
+      <span class="spinner" aria-hidden="true"></span>
+      <h2>{{ 'reservations.loading' | translate }}</h2>
+    </div>
+  } @else if (store.error()) {
+    <div class="state-message error-message" role="alert">
+      <span class="state-icon" aria-hidden="true">!</span>
+      <h2>{{ 'reservations.error-title' | translate }}</h2>
+      <p>{{ 'common.api-unreachable' | translate }}</p>
+      <button mat-flat-button type="button" (click)="store.loadRentals()">{{ 'common.retry' | translate }}</button>
+    </div>
+  } @else if (myRentals().length === 0) {
+    <div class="state-message">
+      <span class="state-icon" aria-hidden="true">0</span>
+      <h2>{{ 'reservations.empty-title' | translate }}</h2>
+      <p>{{ 'reservations.empty-text' | translate }}</p>
+      <a mat-flat-button routerLink="/fleet/machinery">{{ 'reservations.view-catalog' | translate }}</a>
+    </div>
+  } @else {
+    <div class="rental-grid">
+      @for (rental of myRentals(); track rental.id) {
+        <article class="rental-card" [attr.aria-labelledby]="'rental-' + rental.id">
+          <div class="card-heading">
+            <span class="status" [class]="rentalStatusClass(rental.status)">
+              {{ rentalStatusLabel(rental.status) | translate }}
+            </span>
+          </div>
+
+          <div class="card-body">
+            <h2 [id]="'rental-' + rental.id">{{ machineryName(rental.machineryId) }}</h2>
+
+            <dl class="details">
+              <div>
+                <dt>{{ 'reservations.period' | translate }}</dt>
+                <dd>
+                  {{ rental.period.startDate | date: 'dd/MM/yyyy' }} –
+                  {{ rental.period.endDate | date: 'dd/MM/yyyy' }}
+                </dd>
+              </div>
+
+              <div>
+                <dt>{{ 'reservations.total' | translate }}</dt>
+                <dd>S/ {{ rental.totalAmount.amount | number: '1.2-2' }} {{ rental.totalAmount.currency }}</dd>
+              </div>
+
+              @if (rental.cancellationReason) {
+                <div>
+                  <dt>{{ 'reservations.cancellation-reason' | translate }}</dt>
+                  <dd>{{ rental.cancellationReason }}</dd>
+                </div>
+              }
+            </dl>
+          </div>
+
+          <div class="card-management">
+            @if (isMachineryOwner(rental)) {
+              <span class="relation-tag">{{ 'machinery-list.yours' | translate }}</span>
+            } @else if (isRequester(rental)) {
+              <span class="relation-tag">{{ 'reservations.yours' | translate }}</span>
+            }
+
+            @if (rental.isPending()) {
+              @if (isMachineryOwner(rental)) {
+                <button mat-stroked-button type="button" (click)="performConfirm(rental)" [attr.aria-describedby]="'rental-' + rental.id">
+                  {{ 'reservations.confirm' | translate }}
+                </button>
+                <button mat-button type="button" (click)="performCancel(rental)" [attr.aria-describedby]="'rental-' + rental.id">{{ 'reservations.reject' | translate }}</button>
+              } @else if (isRequester(rental)) {
+                <button mat-button type="button" (click)="performCancel(rental)" [attr.aria-describedby]="'rental-' + rental.id">
+                  {{ 'reservations.cancel-request' | translate }}
+                </button>
+              }
+            } @else if (rental.isActive() && (isMachineryOwner(rental) || isRequester(rental))) {
+              <button mat-button type="button" (click)="performCancel(rental)" [attr.aria-describedby]="'rental-' + rental.id">{{ 'common.cancel' | translate }}</button>
+              @if (isRequester(rental)) {
+                <a mat-button [routerLink]="['/maintenance/report', rental.machineryId]">{{ 'reservations.report-breakdown' | translate }}</a>
+              }
+              <a mat-button [routerLink]="['/operations', rental.id]">{{ 'reservations.view-operation' | translate }}</a>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  }
+</section>

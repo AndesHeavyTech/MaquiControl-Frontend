@@ -1,0 +1,48 @@
+<section class="auth-screen">
+  <form class="auth-card" [formGroup]="form" (ngSubmit)="performSignUp()" aria-labelledby="sign-up-title">
+    <span class="eyebrow">{{ 'sign-up.eyebrow' | translate }}</span>
+    <h1 id="sign-up-title">{{ 'sign-up.title' | translate }}</h1>
+    <p class="hint">{{ 'sign-up.hint' | translate }}</p>
+
+    <label for="email">{{ 'auth.email' | translate }}</label>
+    <input id="email" type="email" formControlName="email" autocomplete="email" [attr.aria-invalid]="form.controls.email.touched && form.controls.email.invalid" aria-describedby="email-error" />
+    @if (form.controls.email.touched && form.controls.email.invalid) {
+      <span id="email-error" class="error-message" role="alert">{{ 'auth.error.email-invalid' | translate }}</span>
+    }
+
+    <label for="password">{{ 'auth.password' | translate }}</label>
+    <input id="password" type="password" formControlName="password" autocomplete="new-password" [attr.aria-invalid]="form.controls.password.touched && form.controls.password.invalid" aria-describedby="password-error" />
+    @if (form.controls.password.touched && form.controls.password.invalid) {
+      <span id="password-error" class="error-message" role="alert">{{ 'auth.error.password-min-length' | translate }}</span>
+    }
+
+    <fieldset class="role-picker">
+      <legend>{{ 'sign-up.role-label' | translate }}</legend>
+      @for (roleName of roleOptions; track roleName) {
+        <label class="role-option">
+          <input type="radio" formControlName="roleName" [value]="roleName" />
+          <span>
+            <strong>{{ 'roles.' + roleName + '.name' | translate }}</strong>
+            <small>{{ 'roles.' + roleName + '.description' | translate }}</small>
+          </span>
+        </label>
+      }
+    </fieldset>
+
+    @if (rolesUnavailable()) {
+      <span class="error-message" role="alert">{{ 'sign-up.error.roles-unavailable' | translate }}</span>
+    }
+
+    @if (store.error()) {
+      <span class="error-message" role="alert">{{ store.error() }}</span>
+    }
+
+    <button mat-flat-button class="submit-action" type="submit" [disabled]="store.submitting()" [attr.aria-busy]="store.submitting()">
+      {{ (store.submitting() ? 'sign-up.submitting' : 'sign-up.submit') | translate }}
+    </button>
+
+    <p class="switch-link">
+      {{ 'sign-up.has-account' | translate }} <a routerLink="/identity/sign-in">{{ 'sign-up.go-sign-in' | translate }}</a>
+    </p>
+  </form>
+</section>

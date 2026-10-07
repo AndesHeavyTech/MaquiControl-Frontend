@@ -1,0 +1,21 @@
+footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem clamp(1rem, 5vw, 5rem);
+  border-top: 1px solid var(--mc-border);
+  background: var(--mc-surface);
+  color: var(--mc-secondary-text);
+  font-size: 0.875rem;
+}
+
+footer p {
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  footer {
+    flex-direction: column;
+    text-align: center;
+  }
+}

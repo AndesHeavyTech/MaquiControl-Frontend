@@ -1,0 +1,92 @@
+<section class="form-screen">
+  <form class="form-card" [formGroup]="form" (ngSubmit)="performRequest()" aria-labelledby="rental-request-title">
+    <span class="eyebrow">{{ 'rental.eyebrow' | translate }}</span>
+    <h1 id="rental-request-title">{{ 'rental-request.title' | translate }}</h1>
+
+    @if (!machinery) {
+      <p class="hint" role="status" aria-live="polite">{{ 'rental-request.loading' | translate }}</p>
+    } @else {
+      <div class="machinery-summary">
+        <h2>{{ machinery.name }}</h2>
+        <p>
+          {{ machinery.brand }} {{ machinery.model }} · S/
+          {{ machinery.hourlyRate.amount | number: '1.0-0' }} {{ 'machinery-list.per-hour' | translate }}
+        </p>
+      </div>
+
+      @if (!machinery.isAvailable()) {
+        <p class="error-message" role="alert">{{ 'rental-request.not-available' | translate }}</p>
+      }
+
+      @if (!profileExists) {
+        <p class="error-message" role="alert">
+          {{ 'rental-request.profile-required' | translate }}
+          <a routerLink="/profile">{{ 'machinery-form.go-profile' | translate }}</a>
+        </p>
+      }
+
+      <label for="startDate">{{ 'rental-request.start-date' | translate }}</label>
+      <input
+        id="startDate"
+        type="date"
+        formControlName="startDate"
+        [min]="today"
+        [attr.aria-invalid]="form.controls.startDate.touched && form.controls.startDate.invalid"
+        aria-describedby="startDate-error"
+      />
+      @if (form.controls.startDate.touched && form.controls.startDate.invalid) {
+        <span id="startDate-error" class="error-message" role="alert">
+          {{ (form.controls.startDate.hasError('pastDate') ? 'rental-request.past-date' : 'common.required') | translate }}
+        </span>
+      }
+
+      <label for="endDate">{{ 'rental-request.end-date' | translate }}</label>
+      <input
+        id="endDate"
+        type="date"
+        formControlName="endDate"
+        [min]="form.controls.startDate.value || today"
+        [attr.aria-invalid]="form.controls.endDate.touched && (form.controls.endDate.invalid || form.hasError('endBeforeStart'))"
+        aria-describedby="endDate-error"
+      />
+      @if (form.controls.endDate.touched && form.controls.endDate.invalid) {
+        <span id="endDate-error" class="error-message" role="alert">
+          {{ (form.controls.endDate.hasError('pastDate') ? 'rental-request.past-date' : 'common.required') | translate }}
+        </span>
+      } @else if (form.controls.endDate.touched && form.hasError('endBeforeStart')) {
+        <span id="endDate-error" class="error-message" role="alert">
+          {{ 'rental-request.end-before-start' | translate }}
+        </span>
+      }
+
+      @if (estimatedTotal(); as total) {
+        <p class="hint">
+          {{ 'rental-request.estimated-total' | translate }} S/ {{ total.amount | number: '1.2-2' }} {{ total.currency }}
+          {{ 'rental-request.estimate-basis' | translate }}
+        </p>
+      }
+
+      @if (overlapDetected) {
+        <span class="error-message" role="alert">
+          {{ 'rental-request.overlap' | translate }}
+        </span>
+      }
+
+      @if (store.saveError()) {
+        <span class="error-message" role="alert">{{ store.saveError() }}</span>
+      }
+
+      <div class="form-actions">
+        <a mat-stroked-button routerLink="/fleet/machinery">{{ 'common.cancel' | translate }}</a>
+        <button
+          mat-flat-button
+          class="submit-action"
+          type="submit"
+          [disabled]="store.saving() || !profileExists || !machinery.isAvailable()" [attr.aria-busy]="store.saving()"
+        >
+          {{ (store.saving() ? 'common.sending' : 'rental-request.submit') | translate }}
+        </button>
+      </div>
+    }
+  </form>
+</section>

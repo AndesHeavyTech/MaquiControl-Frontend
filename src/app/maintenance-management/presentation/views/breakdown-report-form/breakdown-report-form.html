@@ -1,0 +1,39 @@
+<section class="form-screen">
+  <form class="form-card" [formGroup]="form" (ngSubmit)="performReport()" aria-labelledby="breakdown-title">
+    <span class="eyebrow">{{ 'maintenance.eyebrow' | translate }}</span>
+    <h1 id="breakdown-title">{{ 'breakdown.title' | translate }}</h1>
+
+    @if (!machinery) {
+      <p class="hint" role="status" aria-live="polite">{{ 'rental-request.loading' | translate }}</p>
+    } @else {
+      <div class="machinery-summary">
+        <h2>{{ machinery.name }}</h2>
+        <p>{{ machinery.brand }} {{ machinery.model }}</p>
+      </div>
+
+      <label for="severity">{{ 'breakdown.severity' | translate }}</label>
+      <select id="severity" formControlName="severity">
+        @for (severity of severities; track severity) {
+          <option [value]="severity">{{ 'enums.breakdown-severity.' + severity | translate }}</option>
+        }
+      </select>
+
+      <label for="description">{{ 'breakdown.description' | translate }}</label>
+      <textarea id="description" rows="4" formControlName="description" [attr.aria-invalid]="form.controls.description.touched && form.controls.description.invalid" aria-describedby="description-error"></textarea>
+      @if (form.controls.description.touched && form.controls.description.invalid) {
+        <span id="description-error" class="error-message" role="alert">{{ 'common.required' | translate }}</span>
+      }
+
+      @if (store.saveError()) {
+        <span class="error-message" role="alert">{{ store.saveError() }}</span>
+      }
+
+      <div class="form-actions">
+        <a mat-stroked-button routerLink="/fleet/machinery">{{ 'common.cancel' | translate }}</a>
+        <button mat-flat-button class="submit-action" type="submit" [disabled]="store.saving()" [attr.aria-busy]="store.saving()">
+          {{ (store.saving() ? 'common.sending' : 'breakdown.submit') | translate }}
+        </button>
+      </div>
+    }
+  </form>
+</section>

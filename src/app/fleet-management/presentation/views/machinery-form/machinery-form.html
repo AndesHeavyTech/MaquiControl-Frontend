@@ -1,0 +1,147 @@
+<section class="form-screen">
+  <form class="form-card" [formGroup]="form" (ngSubmit)="performSave()" aria-labelledby="machinery-form-title">
+    <span class="eyebrow">{{ 'machinery-list.eyebrow' | translate }}</span>
+    <h1 id="machinery-form-title">{{ (editingId ? 'machinery-form.edit-title' : 'machinery-form.new-title') | translate }}</h1>
+
+    @if (!profileExists) {
+      <p class="error-message" role="alert">
+        {{ 'machinery-form.profile-required' | translate }}
+        <a routerLink="/profile">{{ 'machinery-form.go-profile' | translate }}</a>
+      </p>
+    }
+
+    <label for="categoryId">{{ 'machinery-form.category' | translate }}</label>
+    <select id="categoryId" formControlName="categoryId" [attr.aria-invalid]="form.controls.categoryId.touched && form.controls.categoryId.invalid" aria-describedby="categoryId-error">
+      <option [ngValue]="null" disabled>{{ 'machinery-form.category-placeholder' | translate }}</option>
+      @for (category of store.categories(); track category.id) {
+        <option [ngValue]="category.id">{{ category.name }}</option>
+      }
+    </select>
+    @if (form.controls.categoryId.touched && form.controls.categoryId.invalid) {
+      <span id="categoryId-error" class="error-message" role="alert">{{ 'machinery-form.error.category-required' | translate }}</span>
+    }
+    @if (store.categories().length === 0) {
+      <span class="error-message" role="alert">{{ 'machinery-form.error.categories-unavailable' | translate }}</span>
+    }
+
+    <label for="name">{{ 'machinery-form.name' | translate }}</label>
+    <input id="name" type="text" formControlName="name" [attr.aria-invalid]="form.controls.name.touched && form.controls.name.invalid" aria-describedby="name-error" />
+    @if (form.controls.name.touched && form.controls.name.invalid) {
+      <span id="name-error" class="error-message" role="alert">{{ 'machinery-form.error.name-required' | translate }}</span>
+    }
+
+    <label for="description">{{ 'machinery-form.description' | translate }}</label>
+    <textarea id="description" rows="3" formControlName="description" [attr.aria-invalid]="form.controls.description.touched && form.controls.description.invalid" aria-describedby="description-error"></textarea>
+    @if (form.controls.description.touched && form.controls.description.invalid) {
+      <span id="description-error" class="error-message" role="alert">{{ 'machinery-form.error.description-required' | translate }}</span>
+    }
+
+    <div class="field-row">
+      <div>
+        <label for="brand">{{ 'machinery-form.brand' | translate }}</label>
+        <input id="brand" type="text" formControlName="brand" [attr.aria-invalid]="form.controls.brand.touched && form.controls.brand.invalid" aria-describedby="brand-error" />
+        @if (form.controls.brand.touched && form.controls.brand.invalid) {
+          <span id="brand-error" class="error-message" role="alert">{{ 'common.required' | translate }}</span>
+        }
+      </div>
+
+      <div>
+        <label for="model">{{ 'machinery-form.model' | translate }}</label>
+        <input id="model" type="text" formControlName="model" [attr.aria-invalid]="form.controls.model.touched && form.controls.model.invalid" aria-describedby="model-error" />
+        @if (form.controls.model.touched && form.controls.model.invalid) {
+          <span id="model-error" class="error-message" role="alert">{{ 'common.required' | translate }}</span>
+        }
+      </div>
+    </div>
+
+    <label for="manufactureYear">{{ 'machinery-form.manufacture-year' | translate }}</label>
+    <input id="manufactureYear" type="number" formControlName="manufactureYear" [attr.aria-invalid]="form.controls.manufactureYear.touched && form.controls.manufactureYear.invalid" aria-describedby="manufactureYear-error" />
+    @if (form.controls.manufactureYear.touched && form.controls.manufactureYear.invalid) {
+      <span id="manufactureYear-error" class="error-message" role="alert">{{ 'machinery-form.error.year-invalid' | translate }}</span>
+    }
+
+    <div class="field-row">
+      <div>
+        <label for="amount">{{ 'machinery-form.hourly-rate' | translate }}</label>
+        <input id="amount" type="number" min="0" formControlName="amount" [attr.aria-invalid]="form.controls.amount.touched && form.controls.amount.invalid" aria-describedby="amount-error" />
+        @if (form.controls.amount.touched && form.controls.amount.invalid) {
+          <span id="amount-error" class="error-message" role="alert">{{ 'machinery-form.error.rate-invalid' | translate }}</span>
+        }
+      </div>
+
+      <div>
+        <label for="currency">{{ 'machinery-form.currency' | translate }}</label>
+        <select id="currency" formControlName="currency">
+          @for (currency of currencies; track currency) {
+            <option [ngValue]="currency">{{ currency }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <label for="status">{{ 'machinery-form.status' | translate }}</label>
+    <select id="status" formControlName="status">
+      @for (status of machineryStatuses; track status) {
+        <option [ngValue]="status">{{ 'enums.machinery-status.' + status | translate }}</option>
+      }
+    </select>
+
+    <h2>{{ 'machinery.location' | translate }}</h2>
+
+    <div class="field-row">
+      <div>
+        <label for="department">{{ 'location.department' | translate }}</label>
+        <input id="department" type="text" formControlName="department" [attr.aria-invalid]="form.controls.department.touched && form.controls.department.invalid" aria-describedby="department-error" />
+        @if (form.controls.department.touched && form.controls.department.invalid) {
+          <span id="department-error" class="error-message" role="alert">{{ 'common.required' | translate }}</span>
+        }
+      </div>
+
+      <div>
+        <label for="province">{{ 'location.province' | translate }}</label>
+        <input id="province" type="text" formControlName="province" [attr.aria-invalid]="form.controls.province.touched && form.controls.province.invalid" aria-describedby="province-error" />
+        @if (form.controls.province.touched && form.controls.province.invalid) {
+          <span id="province-error" class="error-message" role="alert">{{ 'common.required' | translate }}</span>
+        }
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div>
+        <label for="district">{{ 'location.district' | translate }}</label>
+        <input id="district" type="text" formControlName="district" [attr.aria-invalid]="form.controls.district.touched && form.controls.district.invalid" aria-describedby="district-error" />
+        @if (form.controls.district.touched && form.controls.district.invalid) {
+          <span id="district-error" class="error-message" role="alert">{{ 'common.required' | translate }}</span>
+        }
+      </div>
+
+      <div>
+        <label for="address">{{ 'location.address' | translate }}</label>
+        <input id="address" type="text" formControlName="address" [attr.aria-invalid]="form.controls.address.touched && form.controls.address.invalid" aria-describedby="address-error" />
+        @if (form.controls.address.touched && form.controls.address.invalid) {
+          <span id="address-error" class="error-message" role="alert">{{ 'common.required' | translate }}</span>
+        }
+      </div>
+    </div>
+
+    @if (form.invalid && form.touched) {
+      <span class="error-message" role="alert">{{ 'common.review-fields' | translate }}</span>
+    }
+
+    @if (store.saveError()) {
+      <span class="error-message" role="alert">{{ store.saveError() }}</span>
+    }
+
+    <div class="form-actions">
+      <a mat-stroked-button routerLink="/fleet/machinery">{{ 'common.cancel' | translate }}</a>
+      <button
+        mat-flat-button
+        class="submit-action"
+        type="submit"
+        [disabled]="store.saving() || !profileExists" [attr.aria-busy]="store.saving()"
+      >
+        {{ (store.saving() ? 'common.saving' : 'common.save') | translate }}
+      </button>
+    </div>
+  </form>
+</section>

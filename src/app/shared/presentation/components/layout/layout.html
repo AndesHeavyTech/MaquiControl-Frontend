@@ -1,0 +1,31 @@
+<a class="skip-link" href="#main-content">{{ 'layout.skip-to-content' | translate }}</a>
+
+<mat-toolbar class="main-toolbar">
+  <a class="brand" routerLink="/home" [attr.aria-label]="'layout.go-home' | translate">
+    <span class="brand-mark" aria-hidden="true">MC</span>
+    <span>MaquiControl</span>
+  </a>
+
+  <span class="toolbar-spacer"></span>
+
+  <nav [attr.aria-label]="'layout.main-navigation' | translate">
+    @for (option of options(); track option.link) {
+      <a
+        mat-button
+        [routerLink]="option.link"
+        routerLinkActive="active-link"
+      >
+        {{ option.label | translate }}
+      </a>
+    }
+  </nav>
+
+  <app-authentication-section />
+  <app-language-switcher />
+</mat-toolbar>
+
+<main id="main-content" tabindex="-1">
+  <router-outlet />
+</main>
+
+<app-footer-content />

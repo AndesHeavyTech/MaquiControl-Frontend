@@ -1,0 +1,134 @@
+:host {
+  display: grid;
+  min-height: calc(100dvh - 9rem);
+  place-items: center;
+}
+
+.auth-screen {
+  width: 100%;
+  padding: clamp(2rem, 6vw, 4rem) 1rem;
+}
+
+.auth-card {
+  display: flex;
+  flex-direction: column;
+  width: min(28rem, 100%);
+  margin: 0 auto;
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  border: 1px solid var(--mc-border);
+  border-radius: 1.25rem;
+  background: linear-gradient(145deg, var(--mc-secondary-surface), var(--mc-surface));
+  box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 25%);
+}
+
+.eyebrow {
+  color: var(--mc-accent);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0.75rem 0 0.5rem;
+  color: var(--mc-text);
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+}
+
+.hint {
+  margin: 0 0 1.5rem;
+  color: var(--mc-secondary-text);
+  line-height: 1.6;
+}
+
+label {
+  margin-bottom: 0.4rem;
+  color: var(--mc-secondary-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+input {
+  padding: 0.75rem 0.9rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid var(--mc-border);
+  border-radius: 0.6rem;
+  background: var(--mc-background);
+  color: var(--mc-text);
+  font: inherit;
+}
+
+input:focus-visible {
+  outline: 2px solid var(--mc-accent);
+  outline-offset: 1px;
+}
+
+.role-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+  padding: 0;
+  border: 0;
+}
+
+.role-picker legend {
+  margin-bottom: 0.4rem;
+  color: var(--mc-secondary-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.role-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--mc-border);
+  border-radius: 0.6rem;
+  cursor: pointer;
+}
+
+.role-option input {
+  margin: 0.2rem 0 0;
+  padding: 0;
+}
+
+.role-option span {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.role-option strong {
+  color: var(--mc-text);
+}
+
+.role-option small {
+  color: var(--mc-secondary-text);
+  font-weight: 400;
+}
+
+.error-message {
+  margin: -0.4rem 0 0.75rem;
+  color: #f87171;
+  font-size: 0.8rem;
+}
+
+.submit-action {
+  margin-top: 0.5rem;
+  background: var(--mc-accent) !important;
+  color: var(--mc-background) !important;
+}
+
+.switch-link {
+  margin: 1.5rem 0 0;
+  color: var(--mc-secondary-text);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.switch-link a {
+  color: var(--mc-accent);
+}

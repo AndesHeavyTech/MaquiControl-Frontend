@@ -1,0 +1,96 @@
+<section class="categories">
+  <header>
+    <span class="eyebrow">{{ 'machinery-list.eyebrow' | translate }}</span>
+    <h1>{{ 'categories.title' | translate }}</h1>
+    <p>{{ 'categories.subtitle' | translate }}</p>
+  </header>
+
+  <form class="create-form" [formGroup]="createForm" (ngSubmit)="performCreate()" [attr.aria-label]="'categories.create-label' | translate">
+    <label for="new-category">{{ 'categories.new' | translate }}</label>
+    <div class="field-with-action">
+      <input
+        id="new-category"
+        type="text"
+        [formControl]="newName"
+        [attr.aria-invalid]="newName.touched && newName.invalid"
+        aria-describedby="new-category-error"
+      />
+      <button mat-flat-button class="submit-action" type="submit" [disabled]="store.saving()" [attr.aria-busy]="store.saving()">
+        {{ 'categories.add' | translate }}
+      </button>
+    </div>
+    <span id="new-category-error" class="error-message" aria-live="polite">
+      @if (newName.touched && newName.hasError('required')) {
+        {{ 'categories.error.required' | translate }}
+      } @else if (newName.hasError('duplicated')) {
+        {{ 'categories.error.duplicated' | translate }}
+      } @else if (newName.hasError('maxlength')) {
+        {{ 'categories.error.max-length' | translate }}
+      }
+    </span>
+  </form>
+
+  @if (store.saveError()) {
+    <p class="error-message" role="alert">{{ store.saveError() }}</p>
+  }
+
+  @if (store.categories().length === 0) {
+    <p class="state-message" role="status">{{ 'categories.empty' | translate }}</p>
+  } @else {
+    <ul class="category-list" [attr.aria-label]="'categories.list-label' | translate">
+      @for (category of store.categories(); track category.id) {
+        <li class="category-row">
+          @if (editingId() === category.id) {
+            <form class="field-with-action" [formGroup]="editForm" (ngSubmit)="performRename(category)">
+              <label class="visually-hidden" [for]="'category-' + category.id">
+                {{ 'categories.rename-label' | translate: { name: category.name } }}
+              </label>
+              <input
+                [id]="'category-' + category.id"
+                type="text"
+                [formControl]="editedName"
+                [attr.aria-invalid]="editedName.invalid"
+              />
+              <button mat-flat-button class="submit-action" type="submit" [disabled]="store.saving()" [attr.aria-busy]="store.saving()">
+                {{ 'common.save' | translate }}
+              </button>
+              <button mat-button type="button" (click)="cancelEditing()">{{ 'common.cancel' | translate }}</button>
+            </form>
+            @if (editedName.hasError('duplicated')) {
+              <span class="error-message" role="alert">{{ 'categories.error.duplicated' | translate }}</span>
+            } @else if (editedName.touched && editedName.hasError('required')) {
+              <span class="error-message" role="alert">{{ 'categories.error.required' | translate }}</span>
+            }
+          } @else {
+            <div class="category-info">
+              <strong>{{ category.name }}</strong>
+              <small>{{ 'categories.machinery-count' | translate: { count: store.machineryCountByCategory(category.id) } }}</small>
+            </div>
+            <div class="category-actions">
+              <button
+                mat-stroked-button
+                type="button"
+                [attr.aria-label]="'categories.rename-label' | translate: { name: category.name }"
+                (click)="startEditing(category)"
+              >
+                {{ 'common.edit' | translate }}
+              </button>
+              <button
+                mat-button
+                type="button"
+                [disabled]="store.machineryCountByCategory(category.id) > 0"
+                [attr.aria-label]="'categories.delete-label' | translate: { name: category.name }"
+                [title]="store.machineryCountByCategory(category.id) > 0 ? ('categories.in-use' | translate) : ''"
+                (click)="performDelete(category)"
+              >
+                {{ 'common.delete' | translate }}
+              </button>
+            </div>
+          }
+        </li>
+      }
+    </ul>
+  }
+
+  <a mat-stroked-button routerLink="/fleet/machinery">{{ 'categories.back' | translate }}</a>
+</section>
