@@ -4,15 +4,9 @@ import { SignUpRequest } from './sign-up.request';
 import { SignUpResource, SignUpResponse } from './sign-up-response';
 
 /**
- * The Contractor role's id in the `roles` collection.
- *
- * README 4.6.1 documents the registration policy: a newly registered
- * account is assigned the Contractor role by default. There is no policy
- * engine on the frontend, so this constant is where that rule lives until
- * the real backend enforces it server-side.
+ * The person signing up picks one of the two self-service roles, Contractor
+ * or Fleet Owner (see `SignUpForm`); the command carries that role's id.
  */
-const DEFAULT_ROLE_ID_ON_REGISTRATION = 1;
-
 export class SignUpAssembler {
   toRequestFromCommand(command: SignUpCommand): SignUpRequest {
     const now = new Date().toISOString();
@@ -24,7 +18,7 @@ export class SignUpAssembler {
         changedAt: now,
       },
       status: AccountStatus.Active,
-      roleIds: [DEFAULT_ROLE_ID_ON_REGISTRATION],
+      roleIds: [command.roleId],
       createdAt: now,
       lastLoginAt: null,
     };

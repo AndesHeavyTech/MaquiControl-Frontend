@@ -63,6 +63,53 @@ input:focus-visible {
   outline-offset: 1px;
 }
 
+.role-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+  padding: 0;
+  border: 0;
+}
+
+.role-picker legend {
+  margin-bottom: 0.4rem;
+  color: var(--mc-secondary-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.role-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--mc-border);
+  border-radius: 0.6rem;
+  cursor: pointer;
+}
+
+.role-option input {
+  margin: 0.2rem 0 0;
+  padding: 0;
+}
+
+.role-option span {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.role-option strong {
+  color: var(--mc-text);
+}
+
+.role-option small {
+  color: var(--mc-secondary-text);
+  font-weight: 400;
+}
+
 .error-message {
   margin: -0.4rem 0 0.75rem;
   color: #f87171;

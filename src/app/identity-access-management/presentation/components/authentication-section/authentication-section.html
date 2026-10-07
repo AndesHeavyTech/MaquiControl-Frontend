@@ -1,7 +1,7 @@
 @if (store.isSignedIn()) {
   <span class="greeting">{{ store.currentEmail() }}</span>
-  <button mat-button (click)="performSignOut()">Cerrar sesión</button>
+  <button mat-button (click)="performSignOut()">{{ 'auth.sign-out' | translate }}</button>
 } @else {
-  <a mat-button routerLink="/identity/sign-in">Iniciar sesión</a>
-  <a mat-button routerLink="/identity/sign-up">Registrarse</a>
+  <a mat-button routerLink="/identity/sign-in">{{ 'auth.sign-in' | translate }}</a>
+  <a mat-button routerLink="/identity/sign-up">{{ 'auth.sign-up' | translate }}</a>
 }

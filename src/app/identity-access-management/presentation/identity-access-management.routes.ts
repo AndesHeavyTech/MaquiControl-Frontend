@@ -4,6 +4,6 @@ const signInForm = () => import('./views/sign-in-form/sign-in-form').then((m) =>
 const signUpForm = () => import('./views/sign-up-form/sign-up-form').then((m) => m.SignUpForm);
 
 export const identityAccessManagementRoutes: Routes = [
-  { path: 'sign-in', loadComponent: signInForm, title: 'Iniciar sesión | MaquiControl' },
-  { path: 'sign-up', loadComponent: signUpForm, title: 'Crear cuenta | MaquiControl' },
+  { path: 'sign-in', loadComponent: signInForm, title: 'titles.sign-in' },
+  { path: 'sign-up', loadComponent: signUpForm, title: 'titles.sign-up' },
 ];
