@@ -9,6 +9,7 @@ import { MaintenanceSchedulePage } from './maintenance-management/presentation/v
 import { BreakdownReportForm } from './maintenance-management/presentation/views/breakdown-report-form/breakdown-report-form';
 import { ServiceOperationPage } from './operations-management/presentation/views/service-operation-page/service-operation-page';
 import { PageNotFound } from './shared/presentation/views/page-not-found/page-not-found';
+import { TermsOfService } from './shared/presentation/views/terms-of-service/terms-of-service';
 import { identityAccessGuard } from './identity-access-management/infrastructure/identity-access.guard';
 
 const identityAccessManagementRoutes = () =>
@@ -81,6 +82,11 @@ export const routes: Routes = [
     component: ServiceOperationPage,
     title: 'titles.service-operation',
     canActivate: [identityAccessGuard],
+  },
+  {
+    path: 'terms',
+    component: TermsOfService,
+    title: 'titles.terms',
   },
   {
     path: 'identity',
