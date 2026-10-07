@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { IdentityAccessStore } from '../../../../identity-access-management/application/identity-access-store';
+import { ProfilesManagementStore } from '../../../../profiles-management/application/profiles-management-store';
 import { FleetManagementStore } from '../../../application/fleet-management-store';
 import { Machinery } from '../../../domain/model/machinery.entity';
 import { MachineryLocation } from '../../../domain/model/machinery-location.value-object';
@@ -10,8 +10,10 @@ import { MachineryStatus } from '../../../domain/model/machinery-status';
 import { MachineryType } from '../../../domain/model/machinery-type';
 import { Currency, Money } from '../../../domain/model/money.value-object';
 
-/** Fallback owner reference while there is no Profiles bounded context yet
- *  to resolve a real Profile id from the signed-in account. */
+/** Fallback owner reference for the seed machinery created before the
+ *  Profiles Management bounded context existed (ids 101-106 in
+ *  `server/db.json`); it never matches a real profile, so none of
+ *  those legacy records will ever show owner-only actions. */
 const FALLBACK_OWNER_PROFILE_ID = 1;
 
 @Component({
@@ -22,11 +24,15 @@ const FALLBACK_OWNER_PROFILE_ID = 1;
 })
 export class MachineryForm implements OnInit {
   protected readonly store = inject(FleetManagementStore);
-  readonly #identityAccessStore = inject(IdentityAccessStore);
+  readonly #profilesManagementStore = inject(ProfilesManagementStore);
   readonly #route = inject(ActivatedRoute);
   readonly #router = inject(Router);
 
   protected editingId: number | null = null;
+
+  protected get profileExists(): boolean {
+    return !!this.#profilesManagementStore.currentProfile();
+  }
 
   protected readonly machineryTypes = Object.values(MachineryType);
   protected readonly machineryStatuses = Object.values(MachineryStatus);
@@ -108,7 +114,10 @@ export class MachineryForm implements OnInit {
 
     const machinery = new Machinery({
       id: this.editingId ?? this.nextMachineryId(),
-      ownerProfileId: this.#identityAccessStore.currentUserId() ?? FALLBACK_OWNER_PROFILE_ID,
+      // `ownerProfileId` references Profiles Management's `Profile`, not
+      // the signed-in `UserAccount` directly (per the Fleet Management
+      // database diagram), so it must come from `ProfilesManagementStore`.
+      ownerProfileId: this.#profilesManagementStore.currentProfile()?.id ?? FALLBACK_OWNER_PROFILE_ID,
       categoryId: value.categoryId!,
       name: value.name,
       description: value.description,

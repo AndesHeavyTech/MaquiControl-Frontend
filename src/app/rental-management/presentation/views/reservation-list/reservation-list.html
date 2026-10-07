@@ -1,0 +1,102 @@
+<section class="catalog">
+  <header class="catalog-header">
+    <div>
+      <span class="eyebrow">Rental Management</span>
+      <h1>Reservas</h1>
+      <p>Solicitudes de alquiler, su estado y el periodo reservado de cada una.</p>
+    </div>
+
+    <div class="catalog-summary" aria-label="Resumen de reservas">
+      <div>
+        <strong>{{ store.rentals().length }}</strong>
+        <span>reservas registradas</span>
+      </div>
+      <div>
+        <strong>{{ store.pendingRequestsCount() }}</strong>
+        <span>pendientes</span>
+      </div>
+    </div>
+  </header>
+
+  @if (store.loading()) {
+    <div class="state-message" role="status" aria-live="polite">
+      <span class="spinner" aria-hidden="true"></span>
+      <h2>Cargando reservas</h2>
+    </div>
+  } @else if (store.error()) {
+    <div class="state-message error-message" role="alert">
+      <span class="state-icon" aria-hidden="true">!</span>
+      <h2>No pudimos cargar las reservas</h2>
+      <p>Verifica que la API simulada se encuentre ejecutándose en el puerto 3000.</p>
+      <button mat-flat-button type="button" (click)="store.loadRentals()">Intentar nuevamente</button>
+    </div>
+  } @else if (store.rentals().length === 0) {
+    <div class="state-message">
+      <span class="state-icon" aria-hidden="true">0</span>
+      <h2>No hay reservas registradas</h2>
+      <p>Solicita el alquiler de una maquinaria desde el catálogo.</p>
+      <a mat-flat-button routerLink="/fleet/machinery">Ver catálogo</a>
+    </div>
+  } @else {
+    <div class="rental-grid">
+      @for (rental of store.rentals(); track rental.id) {
+        <article class="rental-card">
+          <div class="card-heading">
+            <span class="status" [class]="rentalStatusClass(rental.status)">
+              {{ rentalStatusLabel(rental.status) }}
+            </span>
+          </div>
+
+          <div class="card-body">
+            <h2>{{ machineryName(rental.machineryId) }}</h2>
+
+            <dl class="details">
+              <div>
+                <dt>Periodo</dt>
+                <dd>
+                  {{ rental.period.startDate | date: 'dd/MM/yyyy' }} –
+                  {{ rental.period.endDate | date: 'dd/MM/yyyy' }}
+                </dd>
+              </div>
+
+              <div>
+                <dt>Total</dt>
+                <dd>S/ {{ rental.totalAmount.amount | number: '1.2-2' }} {{ rental.totalAmount.currency }}</dd>
+              </div>
+
+              @if (rental.cancellationReason) {
+                <div>
+                  <dt>Motivo de cancelación</dt>
+                  <dd>{{ rental.cancellationReason }}</dd>
+                </div>
+              }
+            </dl>
+          </div>
+
+          <div class="card-management">
+            @if (isMachineryOwner(rental)) {
+              <span class="relation-tag">Tu maquinaria</span>
+            } @else if (isRequester(rental)) {
+              <span class="relation-tag">Tu solicitud</span>
+            }
+
+            @if (rental.isPending()) {
+              @if (isMachineryOwner(rental)) {
+                <button mat-stroked-button type="button" (click)="performConfirm(rental)">
+                  Confirmar
+                </button>
+                <button mat-button type="button" (click)="performCancel(rental)">Rechazar</button>
+              } @else if (isRequester(rental)) {
+                <button mat-button type="button" (click)="performCancel(rental)">
+                  Cancelar solicitud
+                </button>
+              }
+            } @else if (rental.isActive() && (isMachineryOwner(rental) || isRequester(rental))) {
+              <button mat-button type="button" (click)="performCancel(rental)">Cancelar</button>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  }
+</section>

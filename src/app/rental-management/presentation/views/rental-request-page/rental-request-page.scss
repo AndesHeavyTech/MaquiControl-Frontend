@@ -29,10 +29,30 @@ h1 {
   font-size: clamp(1.75rem, 4vw, 2.25rem);
 }
 
-h2 {
-  margin: 1.5rem 0 0.5rem;
+.machinery-summary {
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  border: 1px solid var(--mc-border);
+  border-radius: 0.75rem;
+  background: var(--mc-background);
+}
+
+.machinery-summary h2 {
+  margin: 0 0 0.35rem;
   color: var(--mc-text);
   font-size: 1.1rem;
+}
+
+.machinery-summary p {
+  margin: 0;
+  color: var(--mc-secondary-text);
+  font-size: 0.9rem;
+}
+
+.hint {
+  margin: 0 0 1rem;
+  color: var(--mc-secondary-text);
+  font-size: 0.9rem;
 }
 
 label {
@@ -42,9 +62,7 @@ label {
   font-weight: 600;
 }
 
-input,
-select,
-textarea {
+input {
   padding: 0.75rem 0.9rem;
   margin-bottom: 0.75rem;
   border: 1px solid var(--mc-border);
@@ -54,26 +72,9 @@ textarea {
   font: inherit;
 }
 
-textarea {
-  resize: vertical;
-}
-
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
+input:focus-visible {
   outline: 2px solid var(--mc-accent);
   outline-offset: 1px;
-}
-
-.field-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.field-row > div {
-  display: flex;
-  flex-direction: column;
 }
 
 .error-message {
@@ -97,10 +98,4 @@ textarea:focus-visible {
 .submit-action {
   background: var(--mc-accent) !important;
   color: var(--mc-background) !important;
-}
-
-@media (max-width: 600px) {
-  .field-row {
-    grid-template-columns: 1fr;
-  }
 }
