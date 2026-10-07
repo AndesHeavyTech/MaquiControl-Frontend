@@ -1,0 +1,133 @@
+<section class="catalog">
+  <header class="catalog-header">
+    <div>
+      <span class="eyebrow">Maintenance Management</span>
+      <h1>Mantenimiento</h1>
+      <p>Programa, inicia y completa el mantenimiento preventivo y correctivo de tu maquinaria.</p>
+    </div>
+
+    <div class="catalog-summary" aria-label="Resumen de mantenimiento">
+      <div>
+        <strong>{{ ownedMaintenance.length }}</strong>
+        <span>registros</span>
+      </div>
+      <div>
+        <strong>{{ store.pendingMaintenanceCount() }}</strong>
+        <span>pendientes</span>
+      </div>
+    </div>
+  </header>
+
+  @if (ownedMachinery.length === 0) {
+    <div class="state-message">
+      <span class="state-icon" aria-hidden="true">0</span>
+      <h2>Aún no tienes maquinaria registrada</h2>
+      <p>Registra una maquinaria en tu catálogo para poder programarle mantenimiento.</p>
+    </div>
+  } @else {
+    <form class="form-card" [formGroup]="form" (ngSubmit)="performSchedule()">
+      <h2>Programar mantenimiento</h2>
+
+      <label for="machineryId">Maquinaria</label>
+      <select id="machineryId" formControlName="machineryId">
+        <option value="" disabled>Selecciona una maquinaria</option>
+        @for (machinery of ownedMachinery; track machinery.id) {
+          <option [value]="machinery.id">{{ machinery.name }}</option>
+        }
+      </select>
+
+      <label for="type">Tipo</label>
+      <select id="type" formControlName="type">
+        @for (type of maintenanceTypes; track type) {
+          <option [value]="type">{{ type }}</option>
+        }
+      </select>
+
+      <label for="description">Descripción</label>
+      <input id="description" type="text" formControlName="description" />
+
+      <label for="scheduledDate">Fecha programada</label>
+      <input id="scheduledDate" type="date" formControlName="scheduledDate" />
+
+      @if (store.saveError()) {
+        <span class="error-message">{{ store.saveError() }}</span>
+      }
+
+      <div class="form-actions">
+        <button mat-flat-button class="submit-action" type="submit" [disabled]="store.saving()">
+          {{ store.saving() ? 'Guardando…' : 'Programar' }}
+        </button>
+      </div>
+    </form>
+
+    @if (store.loading()) {
+      <div class="state-message" role="status" aria-live="polite">
+        <span class="spinner" aria-hidden="true"></span>
+        <h2>Cargando mantenimiento</h2>
+      </div>
+    } @else if (ownedMaintenance.length === 0) {
+      <div class="state-message">
+        <span class="state-icon" aria-hidden="true">0</span>
+        <h2>No hay mantenimiento registrado</h2>
+        <p>Programa el primer mantenimiento para tu maquinaria con el formulario de arriba.</p>
+      </div>
+    } @else {
+      <div class="maintenance-grid">
+        @for (maintenance of ownedMaintenance; track maintenance.id) {
+          <article class="maintenance-card">
+            <div class="card-heading">
+              <span class="status" [class]="maintenanceStatusClass(maintenance.status)">
+                {{ maintenanceStatusLabel(maintenance.status) }}
+              </span>
+            </div>
+
+            <div class="card-body">
+              <h2>{{ machineryName(maintenance.machineryId) }}</h2>
+              <p class="description">{{ maintenance.description }}</p>
+
+              <dl class="details">
+                <div>
+                  <dt>Tipo</dt>
+                  <dd>{{ maintenance.type }}</dd>
+                </div>
+                <div>
+                  <dt>Programado</dt>
+                  <dd>{{ maintenance.scheduledDate | date: 'dd/MM/yyyy' }}</dd>
+                </div>
+                @if (maintenance.technicianName) {
+                  <div>
+                    <dt>Técnico</dt>
+                    <dd>{{ maintenance.technicianName }}</dd>
+                  </div>
+                }
+                @if (maintenance.cost) {
+                  <div>
+                    <dt>Costo</dt>
+                    <dd>S/ {{ maintenance.cost.amount | number: '1.2-2' }} {{ maintenance.cost.currency }}</dd>
+                  </div>
+                }
+              </dl>
+
+              @if (maintenance.breakdownReports.length > 0) {
+                <div class="breakdown-list">
+                  <span class="eyebrow-small">Averías reportadas</span>
+                  @for (report of maintenance.breakdownReports; track report.id) {
+                    <p class="breakdown-item">{{ report.severity }}: {{ report.description }}</p>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="card-management">
+              @if (maintenance.status === 'SCHEDULED') {
+                <button mat-stroked-button type="button" (click)="performStart(maintenance)">Iniciar</button>
+              } @else if (maintenance.status === 'IN_PROGRESS') {
+                <button mat-stroked-button type="button" (click)="performComplete(maintenance)">Completar</button>
+              }
+            </div>
+          </article>
+        }
+      </div>
+    }
+  }
+</section>
