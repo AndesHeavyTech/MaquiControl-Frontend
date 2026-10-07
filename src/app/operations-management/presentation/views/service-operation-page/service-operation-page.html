@@ -1,0 +1,80 @@
+<section class="form-screen">
+  <div class="panel">
+    <span class="eyebrow">Operations Management</span>
+    <h1>Operación de servicio</h1>
+
+    @if (!rental) {
+      <p class="hint">Cargando reserva…</p>
+    } @else {
+      <p class="hint">
+        Maquinaria: {{ fleetManagementStore.machineryById(rental.machineryId)?.name ?? ('#' + rental.machineryId) }}
+      </p>
+
+      @if (!operation) {
+        <p class="hint">Esta reserva aún no tiene una operación de servicio iniciada.</p>
+
+        @if (isContractor) {
+          <button mat-flat-button class="submit-action" type="button" (click)="performStart()">
+            Iniciar operación
+          </button>
+        }
+      } @else {
+        <div class="status-row">
+          <span class="status" [class.in-progress]="operation.isInProgress()">
+            {{ operation.status }}
+          </span>
+          <span class="total-hours">
+            Total: {{ operation.calculateTotalHours() | number: '1.1-2' }} h
+          </span>
+        </div>
+
+        @if (operation.workedHours.length === 0) {
+          <p class="hint">Aún no se registran horas trabajadas.</p>
+        } @else {
+          <ul class="hours-list">
+            @for (record of operation.workedHours; track record.id) {
+              <li>
+                <div>
+                  <strong>{{ record.workDate | date: 'dd/MM/yyyy' }}</strong>
+                  <span>{{ record.startTime }} – {{ record.endTime }} ({{ record.totalHours }} h)</span>
+                  @if (record.observations) {
+                    <span class="observations">{{ record.observations }}</span>
+                  }
+                </div>
+
+                <div class="hours-actions">
+                  <span class="status" [class]="record.status.toLowerCase()">
+                    {{ workedHoursStatusLabel(record.status) }}
+                  </span>
+
+                  @if (isMachineryOwner && record.status === 'PENDING') {
+                    <button mat-button type="button" (click)="performValidate(record, true)">Validar</button>
+                    <button mat-button type="button" (click)="performValidate(record, false)">Rechazar</button>
+                  }
+                </div>
+              </li>
+            }
+          </ul>
+        }
+
+        @if (isContractor && operation.isInProgress()) {
+          <app-worked-hours-form (recorded)="performRecord($event)" />
+        }
+
+        @if (isMachineryOwner && operation.isInProgress()) {
+          <button mat-stroked-button type="button" (click)="performComplete()">
+            Completar operación
+          </button>
+        }
+
+        @if (store.saveError()) {
+          <span class="error-message">{{ store.saveError() }}</span>
+        }
+      }
+    }
+
+    <div class="form-actions">
+      <a mat-button routerLink="/rental/reservations">Volver a reservas</a>
+    </div>
+  </div>
+</section>
