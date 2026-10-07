@@ -28,5 +28,6 @@ export class Layout {
   protected readonly options = signal<NavigationOption[]>([
     { link: '/home', label: 'Inicio' },
     { link: '/fleet/machinery', label: 'Maquinaria' },
+    { link: '/profile', label: 'Mi perfil' },
   ]);
 }
