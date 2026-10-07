@@ -52,7 +52,6 @@ export class OrganizationForm {
     return `enums.organization-type.${type}`;
   }
 
-  /** Same reasoning as `ProfilePage.nextProfileId()`. */
   private nextOrganizationId(): number {
     const existingIds = this.store.organizations().map((organization) => organization.id);
     return existingIds.length > 0 ? Math.max(...existingIds) + 1 : 1;

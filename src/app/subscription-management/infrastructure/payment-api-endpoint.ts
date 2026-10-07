@@ -12,10 +12,6 @@ interface PaymentResource {
   externalReference: string | null;
 }
 
-/**
- * Mercado Pago (sandbox) through the platform API: the Access Token is a
- * secret, so the frontend never calls Mercado Pago directly.
- */
 export class PaymentApiEndpoint extends ErrorHandlingEnabledBaseType {
   readonly #endpointUrl = `${environment.paymentsApiBaseUrl}/payments`;
 

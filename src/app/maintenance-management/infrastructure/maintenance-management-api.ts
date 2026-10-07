@@ -18,8 +18,6 @@ export class MaintenanceManagementApi extends BaseApi {
     return this.#maintenanceEndpoint.create(maintenance);
   }
 
-  /** Start, complete and breakdown-reporting are all persisted as a PUT of
-   *  the whole aggregate — same reasoning as `RentalManagementApi.updateRental()`. */
   updateMaintenance(maintenance: Maintenance, id: number): Observable<Maintenance> {
     return this.#maintenanceEndpoint.update(maintenance, id);
   }

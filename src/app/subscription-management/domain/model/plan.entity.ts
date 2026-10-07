@@ -2,7 +2,6 @@ import { BaseEntity } from '../../../shared/domain/model/base-entity';
 import { Money } from './money.value-object';
 import { PlanCode } from './plan-code';
 
-/** A monthly subscription plan for fleet owners (US-041). Its texts live in i18n under `plans.<code>`. */
 export class Plan implements BaseEntity {
   readonly #id: number;
   readonly #code: PlanCode;

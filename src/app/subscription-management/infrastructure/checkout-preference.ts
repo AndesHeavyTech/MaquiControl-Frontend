@@ -1,4 +1,3 @@
-/** What the platform API needs to open a Mercado Pago Checkout Pro page. */
 export interface CheckoutPreferenceRequest {
   title: string;
   unitPrice: number;

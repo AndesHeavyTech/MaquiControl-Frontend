@@ -18,8 +18,6 @@ export class RentalManagementApi extends BaseApi {
     return this.#rentalEndpoint.create(rental);
   }
 
-  /** Confirm and cancel are both status transitions, persisted as a PUT —
-   *  the diagram's `Rental` has no delete/remove use case, only `cancel()`. */
   updateRental(rental: Rental, id: number): Observable<Rental> {
     return this.#rentalEndpoint.update(rental, id);
   }

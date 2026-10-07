@@ -3,10 +3,6 @@ import { AccountStatus } from '../domain/model/account-status';
 import { SignUpRequest } from './sign-up.request';
 import { SignUpResource, SignUpResponse } from './sign-up-response';
 
-/**
- * The person signing up picks one of the two self-service roles, Contractor
- * or Fleet Owner (see `SignUpForm`); the command carries that role's id.
- */
 export class SignUpAssembler {
   toRequestFromCommand(command: SignUpCommand): SignUpRequest {
     const now = new Date().toISOString();

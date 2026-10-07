@@ -29,7 +29,6 @@ export class Category implements BaseEntity {
     return new Category({ id: this.#id, name });
   }
 
-  /** Category names are compared ignoring case and surrounding spaces. */
   hasName(name: string): boolean {
     return this.#name.toLocaleLowerCase() === name.trim().toLocaleLowerCase();
   }

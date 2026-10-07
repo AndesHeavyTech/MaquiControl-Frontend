@@ -3,11 +3,6 @@ import { SubscriptionStatus } from './subscription-status';
 
 const SUBSCRIPTION_PERIOD_MONTHS = 1;
 
-/**
- * A fleet owner's subscription to a `Plan` (US-042). It is created as
- * `PENDING_PAYMENT` before going to Mercado Pago and only becomes `ACTIVE`
- * once Mercado Pago confirms the payment.
- */
 export class Subscription implements BaseEntity {
   readonly #id: number;
   readonly #userAccountId: number;

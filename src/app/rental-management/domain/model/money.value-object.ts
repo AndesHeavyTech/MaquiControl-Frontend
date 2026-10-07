@@ -1,10 +1,3 @@
-/**
- * Rental Management keeps its own `Money`, separate from Fleet
- * Management's, per each bounded context's own class diagram — they are
- * conceptually similar but owned independently, so a change to one never
- * ripples into the other. The presentation layer translates between them
- * at the boundary (see `RentalRequestPage`).
- */
 export type Currency = 'PEN' | 'USD';
 
 export class Money {

@@ -20,7 +20,6 @@ export class ProfilePage {
   protected readonly identityAccessStore = inject(IdentityAccessStore);
   readonly #router = inject(Router);
 
-  /** Guards against the reactive patch effect overwriting what the user is typing. */
   private formPatched = false;
 
   protected readonly form = new FormGroup({
@@ -37,14 +36,6 @@ export class ProfilePage {
   protected readonly justSaved = signal(false);
 
   constructor() {
-    /**
-     * `currentProfile()` only resolves once the initial GET in
-     * `ProfilesManagementStore` completes, which can be after this
-     * component is already mounted (unlike `MachineryForm`, which only
-     * reads an id that was already loaded by the catalog list page). An
-     * `effect()` patches the form reactively instead of a one-shot
-     * `ngOnInit` read.
-     */
     effect(() => {
       const profile = this.store.currentProfile();
 
@@ -64,11 +55,6 @@ export class ProfilePage {
     });
   }
 
-  /**
-   * Same reasoning as `MachineryForm.nextMachineryId()`: `json-server`
-   * rejects a create whose id already exists in the collection, so the
-   * next free id is computed from what is already loaded.
-   */
   private nextProfileId(): number {
     const existingIds = this.store.profiles().map((profile) => profile.id);
     return existingIds.length > 0 ? Math.max(...existingIds) + 1 : 1;

@@ -76,11 +76,6 @@ export class ProfilesManagementStore {
       });
   }
 
-  /**
-   * Create and update are never retried automatically: same reasoning as
-   * FleetManagementStore/IdentityAccessStore, retrying a mutating request
-   * after a transient failure could duplicate or mis-apply the change.
-   */
   saveProfile(profile: Profile, onSuccess: () => void): void {
     this.#saving.set(true);
     this.#saveError.set(null);
@@ -103,13 +98,6 @@ export class ProfilesManagementStore {
     });
   }
 
-  /**
-   * Organization is its own aggregate (its own table/id, per the
-   * Profiles Management database diagram) referenced from Profile by
-   * `organizationId`. Creating a brand-new organization therefore needs a
-   * second step that links the freshly-assigned id back onto the profile;
-   * editing an already-linked organization does not.
-   */
   saveOrganization(organization: Organization, onSuccess: () => void): void {
     this.#saving.set(true);
     this.#saveError.set(null);
