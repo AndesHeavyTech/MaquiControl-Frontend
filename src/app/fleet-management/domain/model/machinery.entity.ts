@@ -1,7 +1,6 @@
 import { BaseEntity } from '../../../shared/domain/model/base-entity';
 import { MachineryLocation } from './machinery-location.value-object';
 import { MachineryStatus } from './machinery-status';
-import { MachineryType } from './machinery-type';
 import { Money } from './money.value-object';
 
 export class Machinery implements BaseEntity {
@@ -10,7 +9,6 @@ export class Machinery implements BaseEntity {
   readonly #categoryId: number;
   readonly #name: string;
   readonly #description: string;
-  readonly #type: MachineryType;
   readonly #brand: string;
   readonly #model: string;
   readonly #manufactureYear: number;
@@ -26,7 +24,6 @@ export class Machinery implements BaseEntity {
     categoryId: number;
     name: string;
     description: string;
-    type: MachineryType;
     brand: string;
     model: string;
     manufactureYear: number;
@@ -59,7 +56,6 @@ export class Machinery implements BaseEntity {
     this.#categoryId = props.categoryId;
     this.#name = props.name.trim();
     this.#description = props.description.trim();
-    this.#type = props.type;
     this.#brand = props.brand.trim();
     this.#model = props.model.trim();
     this.#manufactureYear = props.manufactureYear;
@@ -88,10 +84,6 @@ export class Machinery implements BaseEntity {
 
   get description(): string {
     return this.#description;
-  }
-
-  get type(): MachineryType {
-    return this.#type;
   }
 
   get brand(): string {

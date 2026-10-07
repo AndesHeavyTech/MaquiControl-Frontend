@@ -8,14 +8,7 @@ import { FleetManagementStore } from '../../../application/fleet-management-stor
 import { Machinery } from '../../../domain/model/machinery.entity';
 import { MachineryLocation } from '../../../domain/model/machinery-location.value-object';
 import { MachineryStatus } from '../../../domain/model/machinery-status';
-import { MachineryType } from '../../../domain/model/machinery-type';
 import { Currency, Money } from '../../../domain/model/money.value-object';
-
-/** Fallback owner reference for the seed machinery created before the
- *  Profiles Management bounded context existed (ids 101-106 in
- *  `server/db.json`); it never matches a real profile, so none of
- *  those legacy records will ever show owner-only actions. */
-const FALLBACK_OWNER_PROFILE_ID = 1;
 
 @Component({
   selector: 'app-machinery-form',
@@ -35,7 +28,6 @@ export class MachineryForm implements OnInit {
     return !!this.#profilesManagementStore.currentProfile();
   }
 
-  protected readonly machineryTypes = Object.values(MachineryType);
   protected readonly machineryStatuses = Object.values(MachineryStatus);
   protected readonly currencies: Currency[] = ['PEN', 'USD'];
 
@@ -43,7 +35,6 @@ export class MachineryForm implements OnInit {
     categoryId: new FormControl<number | null>(null, { validators: [Validators.required] }),
     name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     description: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    type: new FormControl<MachineryType>(MachineryType.Excavator, { nonNullable: true }),
     brand: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     model: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     manufactureYear: new FormControl(new Date().getFullYear(), {
@@ -78,7 +69,6 @@ export class MachineryForm implements OnInit {
       categoryId: machinery.categoryId,
       name: machinery.name,
       description: machinery.description,
-      type: machinery.type,
       brand: machinery.brand,
       model: machinery.model,
       manufactureYear: machinery.manufactureYear,
@@ -106,7 +96,11 @@ export class MachineryForm implements OnInit {
   }
 
   protected performSave(): void {
-    if (this.form.invalid) {
+    // `ownerProfileId` references Profiles Management's `Profile`, not the
+    // signed-in `UserAccount` directly (per the Fleet Management database
+    // diagram): without a profile there is no owner to publish under.
+    const ownerProfile = this.#profilesManagementStore.currentProfile();
+    if (this.form.invalid || !ownerProfile) {
       this.form.markAllAsTouched();
       return;
     }
@@ -115,14 +109,10 @@ export class MachineryForm implements OnInit {
 
     const machinery = new Machinery({
       id: this.editingId ?? this.nextMachineryId(),
-      // `ownerProfileId` references Profiles Management's `Profile`, not
-      // the signed-in `UserAccount` directly (per the Fleet Management
-      // database diagram), so it must come from `ProfilesManagementStore`.
-      ownerProfileId: this.#profilesManagementStore.currentProfile()?.id ?? FALLBACK_OWNER_PROFILE_ID,
+      ownerProfileId: ownerProfile.id,
       categoryId: value.categoryId!,
       name: value.name,
       description: value.description,
-      type: value.type,
       brand: value.brand,
       model: value.model,
       manufactureYear: value.manufactureYear,

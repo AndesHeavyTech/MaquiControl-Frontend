@@ -10,7 +10,6 @@ export interface MachineryResource extends BaseResource {
   categoryId: number;
   name: string;
   description: string;
-  type: string;
   brand: string;
   model: string;
   manufactureYear: number;

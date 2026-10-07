@@ -11,6 +11,8 @@ import { ServiceOperationPage } from './operations-management/presentation/views
 import { PageNotFound } from './shared/presentation/views/page-not-found/page-not-found';
 import { TermsOfService } from './shared/presentation/views/terms-of-service/terms-of-service';
 import { identityAccessGuard } from './identity-access-management/infrastructure/identity-access.guard';
+import { roleGuard } from './identity-access-management/infrastructure/role.guard';
+import { RoleName } from './identity-access-management/domain/model/role-name';
 
 const identityAccessManagementRoutes = () =>
   import('./identity-access-management/presentation/identity-access-management.routes').then(
@@ -39,13 +41,13 @@ export const routes: Routes = [
     path: 'fleet/machinery/new',
     component: MachineryForm,
     title: 'titles.publish-machinery',
-    canActivate: [identityAccessGuard],
+    canActivate: [identityAccessGuard, roleGuard(RoleName.FleetOwner)],
   },
   {
     path: 'fleet/machinery/:id/edit',
     component: MachineryForm,
     title: 'titles.edit-machinery',
-    canActivate: [identityAccessGuard],
+    canActivate: [identityAccessGuard, roleGuard(RoleName.FleetOwner)],
   },
   {
     path: 'profile',
@@ -57,7 +59,7 @@ export const routes: Routes = [
     path: 'rental/request/:machineryId',
     component: RentalRequestPage,
     title: 'titles.rental-request',
-    canActivate: [identityAccessGuard],
+    canActivate: [identityAccessGuard, roleGuard(RoleName.Contractor)],
   },
   {
     path: 'rental/reservations',
@@ -69,13 +71,13 @@ export const routes: Routes = [
     path: 'maintenance',
     component: MaintenanceSchedulePage,
     title: 'titles.maintenance',
-    canActivate: [identityAccessGuard],
+    canActivate: [identityAccessGuard, roleGuard(RoleName.FleetOwner)],
   },
   {
     path: 'maintenance/report/:machineryId',
     component: BreakdownReportForm,
     title: 'titles.breakdown-report',
-    canActivate: [identityAccessGuard],
+    canActivate: [identityAccessGuard, roleGuard(RoleName.Contractor)],
   },
   {
     path: 'operations/:rentalId',

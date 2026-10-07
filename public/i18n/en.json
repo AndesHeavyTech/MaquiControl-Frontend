@@ -156,14 +156,6 @@
     "confirm-delete": "Delete \"{{ name }}\" from the catalog? This action cannot be undone."
   },
   "enums": {
-    "machinery-type": {
-      "EXCAVATOR": "Excavator",
-      "BACKHOE_LOADER": "Backhoe loader",
-      "LOADER": "Loader",
-      "CRANE": "Crane",
-      "BULLDOZER": "Bulldozer",
-      "OTHER": "Other"
-    },
     "machinery-status": {
       "AVAILABLE": "Available",
       "RESERVED": "Reserved",

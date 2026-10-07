@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink, Router } from '@angular/router';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IdentityAccessStore } from '../../../application/identity-access-store';
@@ -13,6 +13,12 @@ import { RoleName } from '../../../domain/model/role-name';
  * an organization or by the platform, never self-assigned.
  */
 const SELF_SERVICE_ROLES: RoleName[] = [RoleName.Contractor, RoleName.FleetOwner];
+
+/** `?role=` values the landing page links with, e.g. `/identity/sign-up?role=fleet-owner`. */
+const ROLE_QUERY_VALUES: Record<string, RoleName> = {
+  contractor: RoleName.Contractor,
+  'fleet-owner': RoleName.FleetOwner,
+};
 
 @Component({
   selector: 'app-sign-up-form',
@@ -38,6 +44,14 @@ export class SignUpForm {
       validators: [Validators.required],
     }),
   });
+
+  constructor() {
+    const requestedRole = inject(ActivatedRoute).snapshot.queryParamMap.get('role');
+    const roleName = requestedRole ? ROLE_QUERY_VALUES[requestedRole] : undefined;
+    if (roleName) {
+      this.form.controls.roleName.setValue(roleName);
+    }
+  }
 
   protected performSignUp(): void {
     if (this.form.invalid) {
