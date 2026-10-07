@@ -1,0 +1,130 @@
+:host {
+  display: block;
+  padding: clamp(2rem, 6vw, 4rem) 1rem;
+}
+
+.categories {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: min(44rem, 100%);
+  margin: 0 auto;
+}
+
+.eyebrow {
+  color: var(--mc-accent);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0.75rem 0 0.5rem;
+  color: var(--mc-text);
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+}
+
+header p,
+small,
+.state-message {
+  color: var(--mc-secondary-text);
+}
+
+label {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: var(--mc-secondary-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.field-with-action {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+input {
+  flex: 1;
+  min-width: 12rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--mc-border);
+  border-radius: 0.6rem;
+  background: var(--mc-background);
+  color: var(--mc-text);
+  font: inherit;
+}
+
+input:focus-visible {
+  outline: 2px solid var(--mc-accent);
+  outline-offset: 1px;
+}
+
+.category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.category-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--mc-border);
+  border-radius: 1rem;
+  background: var(--mc-surface);
+}
+
+.category-row > form {
+  flex: 1;
+}
+
+.category-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: var(--mc-text);
+}
+
+.category-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.error-message {
+  min-height: 1.1rem;
+  margin: 0.4rem 0 0;
+  color: #f87171;
+  font-size: 0.85rem;
+}
+
+.submit-action {
+  background: var(--mc-accent) !important;
+  color: var(--mc-background) !important;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+a[mat-stroked-button] {
+  align-self: flex-start;
+}
+
+.category-actions button:not(:disabled),
+a[mat-stroked-button] {
+  color: var(--mc-text) !important;
+}

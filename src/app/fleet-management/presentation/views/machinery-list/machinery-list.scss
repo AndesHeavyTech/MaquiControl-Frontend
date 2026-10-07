@@ -268,6 +268,13 @@ h1 {
   }
 }
 
+.catalog-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-self: center;
+}
+
 .publish-action {
   align-self: center;
   background: var(--mc-accent) !important;

@@ -36,4 +36,16 @@ export class FleetManagementApi extends BaseApi {
   getCategories(): Observable<Category[]> {
     return this.#categoryEndpoint.getAll();
   }
+
+  createCategory(category: Category): Observable<Category> {
+    return this.#categoryEndpoint.create(category);
+  }
+
+  updateCategory(category: Category): Observable<Category> {
+    return this.#categoryEndpoint.update(category, category.id);
+  }
+
+  deleteCategory(id: number): Observable<void> {
+    return this.#categoryEndpoint.delete(id);
+  }
 }
